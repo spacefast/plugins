@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-29T22:09:56.339Z",
+  "generatedAt": "2026-06-29T22:12:55.634Z",
   "packageManager": "bun@1.3.11",
   "publicRepoRoot": ".",
   "marketplaces": {
@@ -30,6 +30,6 @@
   "releaseCommands": [
     "bun run generate:agent-artifacts",
     "bun run plugins:package",
-    "cd plugins/claude-desktop && npx -y @anthropic-ai/dxt pack"
+    "cd plugins/claude-desktop && npx -y @anthropic-ai/mcpb pack"
   ]
 }
