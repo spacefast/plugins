@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-06-29T22:09:56.339Z",
+  "packageManager": "bun@1.3.11",
+  "publicRepoRoot": ".",
+  "marketplaces": {
+    "claudeCode": ".claude-plugin/marketplace.json",
+    "codex": ".agents/plugins/marketplace.json",
+    "skills": "skills/spacefast/SKILL.md"
+  },
+  "plugins": [
+    {
+      "name": "codex",
+      "archive": "codex.tgz",
+      "source": "codex"
+    },
+    {
+      "name": "claude-code",
+      "archive": "claude-code.tgz",
+      "source": "claude-code"
+    },
+    {
+      "name": "claude-desktop",
+      "archive": "claude-desktop.tgz",
+      "source": "claude-desktop"
+    }
+  ],
+  "archives": [
+    "spacefast-plugins.tgz"
+  ],
+  "releaseCommands": [
+    "bun run generate:agent-artifacts",
+    "bun run plugins:package",
+    "cd plugins/claude-desktop && npx -y @anthropic-ai/dxt pack"
+  ]
+}

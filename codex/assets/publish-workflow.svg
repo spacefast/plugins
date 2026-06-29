@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Spacefast publish workflow in Codex">
+  <rect width="1280" height="720" fill="#f8fafc"/>
+  <rect x="72" y="64" width="1136" height="592" rx="28" fill="#ffffff" stroke="#dbe3ea" stroke-width="2"/>
+  <rect x="112" y="104" width="1056" height="72" rx="16" fill="#0f172a"/>
+  <text x="144" y="150" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Codex + Spacefast</text>
+  <text x="144" y="220" fill="#0f172a" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700">Publish this project</text>
+  <rect x="144" y="256" width="992" height="84" rx="14" fill="#eff6ff" stroke="#bfdbfe"/>
+  <text x="176" y="307" fill="#1e3a8a" font-family="Inter, Arial, sans-serif" font-size="24">Agent builds, publishes, and returns the live URL plus claim link.</text>
+  <rect x="144" y="384" width="300" height="132" rx="16" fill="#ecfeff" stroke="#67e8f9"/>
+  <text x="176" y="431" fill="#155e75" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">1. Build</text>
+  <text x="176" y="470" fill="#164e63" font-family="Inter, Arial, sans-serif" font-size="18">Detect output root</text>
+  <rect x="490" y="384" width="300" height="132" rx="16" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="522" y="431" fill="#166534" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">2. Publish</text>
+  <text x="522" y="470" fill="#14532d" font-family="Inter, Arial, sans-serif" font-size="18">Use curl, CLI, or MCP</text>
+  <rect x="836" y="384" width="300" height="132" rx="16" fill="#fff7ed" stroke="#fed7aa"/>
+  <text x="868" y="431" fill="#9a3412" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">3. Share</text>
+  <text x="868" y="470" fill="#7c2d12" font-family="Inter, Arial, sans-serif" font-size="18">Live URL + version URL</text>
+  <text x="144" y="590" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="20">Structured MCP adds approvals, logs, rollback, CI, and workspace edits.</text>
+</svg>

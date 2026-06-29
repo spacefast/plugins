@@ -1,0 +1,33 @@
+{
+  "name": "spacefast",
+  "version": "0.1.0",
+  "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
+  "author": {
+    "name": "Automattic",
+    "url": "https://spacefast.com"
+  },
+  "homepage": "https://spacefast.com/docs/agents",
+  "repository": "https://github.com/spacefast/plugins",
+  "license": "MIT",
+  "keywords": ["spacefast", "publish", "static-hosting", "deploy", "share", "immutable-url"],
+  "privacyPolicyURL": "https://automattic.com/privacy/",
+  "termsOfServiceURL": "https://wordpress.com/tos/",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Spacefast",
+    "shortDescription": "Publish files and folders to the web instantly.",
+    "longDescription": "Spacefast is the static host where AI-made things are kept. Publish any file or folder and get a permanent URL, an immutable version URL, and — for anonymous publishes — a one-time claim link. Supports custom domains, passwords, version history, rollback, logs, signed uploads, and On-Device MCP workspace tools.",
+    "developerName": "Automattic",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://spacefast.com",
+    "privacyPolicyURL": "https://automattic.com/privacy/",
+    "termsOfServiceURL": "https://wordpress.com/tos/",
+    "defaultPrompt": "Use Spacefast to publish this project, share the live URL, and include the anonymous claim link if the publish is unclaimed.",
+    "brandColor": "#3DA0FF",
+    "composerIcon": "./assets/logo.svg",
+    "logo": "./assets/logo.svg",
+    "screenshots": ["./assets/publish-workflow.svg"]
+  }
+}

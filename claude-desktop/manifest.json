@@ -1,0 +1,141 @@
+{
+  "manifest_version": "0.3",
+  "name": "spacefast",
+  "display_name": "Spacefast",
+  "version": "0.1.0",
+  "description": "Publish files and folders to Spacefast from Claude Desktop. Permanent URLs, immutable versions, anonymous publish with a claim link.",
+  "long_description": "Spacefast is the static host where AI-made things are kept. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files, orchestrate signed uploads, import archives, claim anonymous spaces, inspect status and version history, diff versions, roll back, read logs, run approval-resumable workflows, and make bounded workspace edits.",
+  "author": {
+    "name": "Automattic",
+    "email": "hello@spacefast.com",
+    "url": "https://spacefast.com"
+  },
+  "homepage": "https://spacefast.com/docs/agents",
+  "privacy_url": "https://automattic.com/privacy/",
+  "terms_url": "https://wordpress.com/tos/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spacefast/plugins"
+  },
+  "license": "MIT",
+  "keywords": ["spacefast", "publish", "static-hosting", "deploy", "immutable-url"],
+  "server": {
+    "type": "node",
+    "mcp_config": {
+      "command": "npx",
+      "args": ["-y", "spacefast", "mcp"],
+      "env": {
+        "SPACEFAST_TOKEN": "${user_config.api_token}"
+      }
+    }
+  },
+  "user_config": {
+    "api_token": {
+      "type": "string",
+      "title": "Spacefast API token",
+      "description": "Your Spacefast account token (from spacefast.com/account/tokens). Leave blank to publish anonymously.",
+      "sensitive": true,
+      "required": false
+    }
+  },
+  "tools": [
+    {
+      "name": "search_spacefast",
+      "description": "Search the local Spacefast agent guide, API guidance, CLI/MCP notes, safety rules, and recipes. Call this before code-mode execution or when you need the exact Spacefast workflow without loading a large manual"
+    },
+    {
+      "name": "publish",
+      "description": "Publish a local directory, file, or archive (or inline files) to Spacefast and get a live URL in seconds. Without spaceId it creates a new space; anonymous publishes return a one-time claim link and expiry. Pass spaceId (and claimToken for unclaimed spaces) to publish a new version of an existing space. Always paste the returned shareBlurb into your reply; do not print claim tokens into chat transcripts"
+    },
+    {
+      "name": "prepare_publish",
+      "description": "Create a manifest-based publish session and return signed upload instructions without sending file bytes through MCP. Use this for large files, cloud agents, or any publish where base64/inline content would be awkward. Upload returned paths to the signed upload URLs, then call finalize_publish. For On-Device path-based publishes, prefer the publish tool through On-Device MCP"
+    },
+    {
+      "name": "resume_publish",
+      "description": "Get fresh signed upload instructions for an unfinished manifest-based publish. Use this when an upload token expired, more files are needed, or a large publish is being continued"
+    },
+    {
+      "name": "finalize_publish",
+      "description": "Finalize a manifest/open upload session after all advertised files have been uploaded to the signed upload URLs. This compiles routing headers and optionally promotes the version live"
+    },
+    {
+      "name": "import_from_url",
+      "description": "Import a stattic_export_v1 archive from a public HTTPS URL into an existing claimed space. Use this for cloud-agent big-file handoff when the archive already lives at a URL; no base64 or local filesystem access is needed"
+    },
+    {
+      "name": "prepare_import_upload",
+      "description": "Create an import handle that returns signed upload instructions for one stattic_export_v1 archive. PUT the archive to `${archiveUpload.baseUrl}/${archiveUpload.files[0]}` with the upload token, then call finalize_import_upload"
+    },
+    {
+      "name": "resume_import_upload",
+      "description": "Fetch an existing upload-sourced archive import and return fresh archiveUpload instructions. Use this when an archive upload token expired before finalize_import_upload"
+    },
+    {
+      "name": "finalize_import_upload",
+      "description": "Finalize an upload-sourced archive import after the archive has been uploaded with prepare_import_upload instructions"
+    },
+    {
+      "name": "claim",
+      "description": "Attach an anonymously published space to the authenticated account or a team, removing its expiry. Requires authenticated Spacefast credentials. Without them, give the user the claim URL and claim token from the publish receipt so they can claim it themselves"
+    },
+    {
+      "name": "status",
+      "description": "Get the current state of a space in one call: live URL, claim/expiry state, configuration, and its most recent versions"
+    },
+    {
+      "name": "versions",
+      "description": "List a space's immutable versions, newest first, with status, immutable URL, source, and description for each. Use the returned ids with the rollback and diff tools"
+    },
+    {
+      "name": "diff",
+      "description": "Show what changed between two versions of a space as per-file added/modified/deleted statuses with unified text patches. Compares against the immediately previous version unless baseVersionId is set"
+    },
+    {
+      "name": "rollback",
+      "description": "Make an earlier ready version live again without rebuilding or re-uploading. Promotes the given version to the live channel; use the versions tool to find version ids. Waits for the live pointer to move by default; if promotion is still in progress it returns an operation handle to poll instead of failing. Pass async to queue and return that handle immediately"
+    },
+    {
+      "name": "logs",
+      "description": "Fetch recent access or runtime log entries for a space, within the plan's retention window. Use access logs for traffic questions and runtime logs for serving diagnostics. For build/publish logs of one version, use the build_logs tool instead"
+    },
+    {
+      "name": "build_logs",
+      "description": "Fetch the publish and finalize log entries for one version — the build log for diagnosing why a publish failed or stalled. Use the versions tool to find the versionId, typically the most recent one from a publish receipt"
+    },
+    {
+      "name": "workspace_list",
+      "description": "Quickly list files without reading contents by default. On-Device MCP lists the bounded local workspace root; hosted MCP lists the durable virtual workspace for this MCP session"
+    },
+    {
+      "name": "workspace_read",
+      "description": "Read a UTF-8 text file. On-Device MCP reads from the bounded local workspace root; hosted MCP reads from the durable virtual workspace. Refuses absolute paths, path traversal, binary files, large files, and secret-like paths"
+    },
+    {
+      "name": "workspace_write",
+      "description": "Create or replace a workspace file. On-Device MCP writes to the bounded local workspace root; hosted MCP writes to the durable virtual workspace. Use utf8 for text and base64 for small generated binary assets. Returns a diff for text content"
+    },
+    {
+      "name": "workspace_apply_patch",
+      "description": "Apply exact string replacements to workspace files. This is safer for agents than whole-file rewrites when the target text is known. Hosted MCP patches the durable virtual workspace; On-Device MCP patches the bounded local workspace root"
+    },
+    {
+      "name": "workspace_diff",
+      "description": "Show diffs for workspace files changed since this MCP server first read or wrote them. Hosted MCP diffs the durable virtual workspace; On-Device MCP diffs local files under the bounded workspace root"
+    },
+    {
+      "name": "execute_spacefast",
+      "description": "Run sandboxed JavaScript code against Spacefast tools through a QuickJS code-mode runtime. Use spacefast.search(\"query\"), spacefast.publish({...}), spacefast.workspace.read({...}), tools.search({...}), and tools.describe({name}). Legacy JSON/JSONL workflows are still accepted with mode=workflow or auto detection. Defaults to dryRun=true so mutating calls are planned rather than executed. With dryRun=false, Spacefast can return an approval_required checkpoint for resume_spacefast"
+    },
+    {
+      "name": "resume_spacefast",
+      "description": "Resume, approve, or deny a pending execute_spacefast approval checkpoint. If decision is omitted, Spacefast uses the browser decision recorded for the approval"
+    }
+  ],
+  "compatibility": {
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=20"
+    }
+  }
+}

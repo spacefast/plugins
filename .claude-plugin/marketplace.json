@@ -1,0 +1,29 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "spacefast",
+  "description": "Official Spacefast plugin for Claude Code.",
+  "owner": {
+    "name": "Automattic",
+    "url": "https://spacefast.com"
+  },
+  "plugins": [
+    {
+      "name": "spacefast",
+      "displayName": "Spacefast",
+      "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
+      "author": {
+        "name": "Automattic",
+        "url": "https://spacefast.com"
+      },
+      "category": "deployment",
+      "homepage": "https://spacefast.com/docs/agents",
+      "keywords": [
+        "spacefast",
+        "publish",
+        "static-hosting",
+        "deploy"
+      ],
+      "source": "./claude-code"
+    }
+  ]
+}
