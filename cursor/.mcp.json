@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "spacefast": {
+      "command": "npx",
+      "args": ["-y", "spacefast", "mcp"],
+      "env": {}
+    }
+  }
+}

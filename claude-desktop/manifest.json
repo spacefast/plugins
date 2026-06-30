@@ -15,6 +15,7 @@
     "type": "git",
     "url": "https://github.com/spacefast/plugins"
   },
+  "icon": "assets/logo.png",
   "license": "MIT",
   "keywords": ["spacefast", "publish", "static-hosting", "deploy", "immutable-url"],
   "server": {
@@ -44,11 +45,11 @@
     },
     {
       "name": "publish",
-      "description": "Publish a local directory, file, or archive (or inline files) to Spacefast and get a live URL in seconds. Without spaceId it creates a new space; anonymous publishes return a one-time claim link and expiry. Pass spaceId (and claimToken for unclaimed spaces) to publish a new version of an existing space. Always paste the returned shareBlurb into your reply; do not print claim tokens into chat transcripts"
+      "description": "Publish a local directory, file, or archive (or inline files) to Spacefast and get a live URL in seconds. Without spaceId it creates a new space; anonymous publishes return a one-time claim link and expiry. Pass spaceId (from a publish receipt or spaces_list, plus claimToken for unclaimed spaces) to publish a new version of an existing space. Retries are de-duplicated automatically, so a re-run after a network blip will not double-publish. Always paste the returned shareBlurb into your reply; do not print claim tokens into chat transcripts"
     },
     {
       "name": "prepare_publish",
-      "description": "Create a manifest-based publish session and return signed upload instructions without sending file bytes through MCP. Use this for large files, cloud agents, or any publish where base64/inline content would be awkward. Upload returned paths to the signed upload URLs, then call finalize_publish. For On-Device path-based publishes, prefer the publish tool through On-Device MCP"
+      "description": "Create a manifest-based publish session and return signed upload instructions without sending file bytes through MCP. Use this for large files, cloud agents, or any publish where base64/inline content would be awkward. Pass spaceId (from a publish receipt or spaces_list) to add a version to an existing space. Upload returned paths to the signed upload URLs, then call finalize_publish. For On-Device path-based publishes, prefer the publish tool through On-Device MCP"
     },
     {
       "name": "resume_publish",
@@ -56,7 +57,7 @@
     },
     {
       "name": "finalize_publish",
-      "description": "Finalize a manifest/open upload session after all advertised files have been uploaded to the signed upload URLs. This compiles routing headers and optionally promotes the version live"
+      "description": "Finalize a manifest/open upload session after all advertised files have been uploaded to the signed upload URLs. This compiles routing headers and optionally promotes the version live. Retries are de-duplicated automatically"
     },
     {
       "name": "import_from_url",
@@ -77,6 +78,14 @@
     {
       "name": "claim",
       "description": "Attach an anonymously published space to the authenticated account or a team, removing its expiry. Requires authenticated Spacefast credentials. Without them, give the user the claim URL and claim token from the publish receipt so they can claim it themselves"
+    },
+    {
+      "name": "spaces_list",
+      "description": "List the Spacefast spaces your account can access, newest first. Use this for cold start when you have an account but no spaceId yet: each entry returns space.id, slug, and liveUrl to pass to publish, status, versions, and the other space tools"
+    },
+    {
+      "name": "teams_list",
+      "description": "List the Spacefast teams your account can act for, newest first. Use this for cold start to discover a team ref (id or slug) to scope spaces_list or target a new publish"
     },
     {
       "name": "status",
@@ -101,6 +110,10 @@
     {
       "name": "build_logs",
       "description": "Fetch the publish and finalize log entries for one version — the build log for diagnosing why a publish failed or stalled. Use the versions tool to find the versionId, typically the most recent one from a publish receipt"
+    },
+    {
+      "name": "diagnose",
+      "description": "Aggregate a space's current status, recent versions, build logs, and access logs into one ranked findings list so you can self-correct after a failed or stalled publish or build. Read-only: it calls the same endpoints as status, versions, build_logs, and logs and changes nothing. Each finding has a code, severity, where (location), problem, and a fix hint (plus a docs link when available), most severe first. Pass versionId to focus on one version; otherwise the newest version is diagnosed"
     },
     {
       "name": "workspace_list",

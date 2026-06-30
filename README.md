@@ -13,22 +13,65 @@ self-contained, installable plugin — no monorepo imports, no workspace depende
 | `claude-code/`      | Claude Code    | `claude plugin marketplace add spacefast/plugins` then `claude plugin install spacefast@spacefast` |
 | `claude-desktop/`   | Claude Desktop | download `spacefast.mcpb`, double-click                                                            |
 | `codex/`            | Codex          | `codex plugin marketplace add spacefast/plugins` then `codex plugin add spacefast@spacefast`       |
+| `cursor/`           | Cursor         | point Cursor at the directory (or the `spacefast/plugins` repo)                                    |
 | `skills/spacefast/` | Agent skills   | `npx skills add spacefast/plugins --skill spacefast -g`                                            |
 
 ## What each plugin contributes
 
 **`claude-code/`** — a `/spacefast` skill with the curl fast path, signed upload
 guidance, full CLI reference, and Spacefast On-Device MCP wired via `.mcp.json`.
-On-Device MCP tools: `search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`.
+On-Device MCP tools: `search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`.
 
 **`claude-desktop/`** — Spacefast On-Device MCP only. Users get the local tool set:
-`search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`. An optional API token is stored by Claude Desktop as sensitive
+`search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`. An optional API token is stored by Claude Desktop as sensitive
 extension config.
 
 **`codex/`** — a `$spacefast` skill, Codex plugin manifest, and On-Device MCP
 configuration for checkout-aware publish and bounded workspace edits. Cloud-only Codex/ChatGPT
 clients can use hosted MCP at `https://mcp.spacefast.com/mcp` with these hosted-safe tools:
-`search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `workspace_manifest`, `workspace_export`, `workspace_import`, `workspace_import_url`, `workspace_import_archive`, `workspace_import_archive_url`, `workspace_shell`, `execute_spacefast`, `resume_spacefast`.
+`search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `workspace_manifest`, `workspace_export`, `workspace_import`, `workspace_import_url`, `workspace_import_archive`, `workspace_import_archive_url`, `workspace_shell`, `execute_spacefast`, `resume_spacefast`.
+
+**`cursor/`** — a `rules/spacefast.mdc` project rule that steers Cursor toward Spacefast
+for deploy/host/publish/share requests, plus Spacefast On-Device MCP wired via
+`.mcp.json`. On-Device MCP tools: `search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`.
+
+## Deploy to Spacefast
+
+[![Deploy to Spacefast](https://img.shields.io/badge/Deploy%20to-Spacefast-FF603D)](https://spacefast.com/docs/cli)
+
+Ship from CI with the Spacefast CLI — no hosted deploy button, just the same
+`spacefast deploy` you run locally. The job installs the CLI on demand and runs
+`npx -y spacefast deploy --json`. Set a `SPACEFAST_TOKEN` repository secret to publish into your
+team; omit it to publish anonymously and get back a one-time claim link.
+
+Badge markdown:
+
+```markdown
+[![Deploy to Spacefast](https://img.shields.io/badge/Deploy%20to-Spacefast-FF603D)](https://spacefast.com/docs/cli)
+```
+
+GitHub Actions workflow (`.github/workflows/deploy.yml`):
+
+```yaml
+name: Deploy to Spacefast
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npx -y spacefast deploy --json
+        env:
+          SPACEFAST_TOKEN: ${{ secrets.SPACEFAST_TOKEN }}
+```
+
+The monorepo also ships these steps as a composite action at `.github/actions/deploy/action.yml`
+(inputs: `directory`, `token`, `json`) for workflows that prefer a single `uses:` step.
 
 ## Source of truth
 

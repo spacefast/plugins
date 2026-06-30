@@ -45,6 +45,8 @@ clear them after use, and avoid durable auth unless the user explicitly asks.
 
 ## No-Install Publish
 
+Use `POST /v1/publish`. Do not install it just to publish once; this direct API path is complete.
+
 Publish a single file:
 
 ```bash
@@ -64,7 +66,7 @@ curl -sS -F archive=@spacefast-site.zip https://api.spacefast.com/v1/publish
 If the preflight prints credential-like files, stop and choose a narrower generated output
 directory or remove those files from the publish root before uploading.
 
-To publish into an owned team, add a bearer token:
+To create an owned space, include an API key:
 
 ```bash
 curl -sS -F archive=@site.zip \
@@ -73,23 +75,25 @@ curl -sS -F archive=@site.zip \
   https://api.spacefast.com/v1/publish
 ```
 
-The JSON receipt is the source of truth:
+Read `data.space.liveUrl`, `data.version.immutableUrl`, `data.shareBlurb`, `data.claim.url`,
+`data.claim.expiresAt`, `data.links.finalize`, and stable `error.code` / `error.docsUrl`.
+Relay `data.shareBlurb` when present. Treat `data.claim.token` as a secret capability.
 
-- `data.space.liveUrl` — the live URL.
-- `data.version.immutableUrl` — the permanent, frozen version URL when available; share it for reviews.
-- `data.shareBlurb` — a paste-ready one-liner with the URL and claim nudge; relay it verbatim when present.
-- `data.upload` — signed upload instructions for manifest publishes when file bytes were not sent
-  with the request. Send each `data.upload.targets[]` instruction exactly as returned, treat
-  authorization headers and upload tokens as secrets, then finalize.
-- `data.claim.url` and `data.claim.expiresAt` — the space is anonymous and expires unless claimed;
-  always show the user the claim link and the deadline so the space becomes theirs.
-- `data.claim.token` — a secret capability. Save it only when needed to update the space later, send it as
-  `Authorization: Bearer <claim-token>` with the same `spaceId`, and never print it back to the user.
-- `data.links.inspect`, `resume`, `finalize`, and `promote` — follow-up API paths.
-- `error.code`, `error.docsUrl`, and `error.hint` — stable error code plus exact recovery docs and a next step.
+## Update A Space
 
-If no files changed, the API may omit `upload`; report the receipt and diagnostics rather than
-inventing a separate success signal.
+Publish to the same `spaceId`. For an unclaimed anonymous space, send the saved claim token as
+auth, not as `claimToken` in the next publish body:
+
+```bash
+curl -sS -F archive=@site.zip \
+  -H "Authorization: Bearer <claim-token>" \
+  -F 'spaceId=spc_...' \
+  https://api.spacefast.com/v1/publish
+```
+
+For owned spaces, use `Authorization: Bearer $SPACEFAST_TOKEN` with the same `spaceId`. Share
+`data.space.liveUrl`, `data.version.immutableUrl`, `data.shareBlurb`, and follow
+`data.links.finalize` when the receipt returns upload instructions.
 
 ## Big Files And Cloud Agents
 
@@ -126,6 +130,33 @@ path-based `publish` is usually simpler.
 
 For HTML sites, publish the root containing `index.html`; static server code is not executed.
 
+## Device Login
+
+Use device login when the user wants owned publishes and no API key is available. This does not
+require the CLI.
+
+Start with `POST /v1/auth/device`; show `data.verificationUrl` and `data.userCode`. Poll
+`POST /v1/auth/device/poll` with `data.deviceCode` no faster than `data.interval`. On approval,
+capture `data.apiKey.secret` once, put it in `SPACEFAST_TOKEN` for the current task, and validate
+with `GET /v1/me` using `Authorization: Bearer $SPACEFAST_TOKEN`. Before durable persistence, ask
+whether this machine should stay signed in. Stop on denied, expired, or consumed codes.
+
+## Space Files
+
+For private artifacts, fail closed: confirm access control before upload. Do not publish it until
+password, invite, or other protection is configured, unless the user explicitly accepts that the
+artifact may be public. Explain that the artifact may be public if confirmation is skipped.
+Publish only the intended public output root.
+
+## Optional CLI
+
+If `sf` is already installed, use it for repeat local work: `sf publish {file-or-dir} --json`,
+`sf setup agent --agent auto --connect`, `sf mcp`, logs, domains, rollback, and inventory.
+
+The command reference is inventory, not permission. Explicit confirmation required before destructive
+or account-wide changes, and before commands that can reveal secrets or private content. Redact raw
+envelopes and secret values before sharing; do not expose raw envelopes or secret values.
+
 ## Progressive Disclosure
 
 Stop here for a one-off anonymous publish. Load bundled `references.md` only when the task needs:
@@ -134,8 +165,7 @@ Stop here for a one-off anonymous publish. Load bundled `references.md` only whe
 - resumable manifests, imports, hosted/On-Device MCP, scopes, or agent accounts
 - CLI inventory, `_redirects`, `_headers`, `404.html`, `sf.jsonc`, domains, logs, rollback, teams, raw API
 
-If `sf` is installed, use `sf publish {file-or-dir} --json` for repeat local work. Use
-`sf setup agent --agent auto --connect` to choose an MCP lane. For hosted workspace edits, start
+For hosted workspace edits, start
 with `workspace_list` / `workspace_read`, prefer `workspace_apply_patch`, then `workspace_diff`.
 For MCP context, prefer resources such as `spacefast://account/current`,
 `spacefast://spaces/recent`, `spacefast://policy/current`, and `spacefast://tools/catalog`;

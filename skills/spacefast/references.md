@@ -289,8 +289,8 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf access clear` — Clear cloud access policy.
 - `sf access effective` — Show effective access policy.
 - `sf access grant` — Grant access to an identity class.
-- `sf access ls` — List effective access rules.
-- `sf access rm` — Remove a cloud access rule.
+- `sf access ls` (alias: access list) — List effective access rules.
+- `sf access rm` (alias: access remove, access delete) — Remove a cloud access rule.
 - `sf access set` — Replace cloud access policy.
 - `sf access show` — Show cloud access policy.
 - `sf activity` — Show activity events.
@@ -298,62 +298,57 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf annotations` — Manage annotations.
 - `sf annotations export` — Export annotations.
 - `sf annotations get` — Show an annotation.
-- `sf annotations list` — List annotations.
+- `sf annotations list` (alias: annotations ls) — List annotations.
 - `sf annotations reopen` — Reopen an annotation.
 - `sf annotations reply` — Reply to an annotation.
 - `sf annotations resolve` — Resolve an annotation.
 - `sf api` — Call the Spacefast API directly.
 - `sf api-keys` — Manage API keys.
-- `sf api-keys create` — Create an API key.
+- `sf api-keys create` (alias: api-keys add) — Create an API key.
 - `sf api-keys delete` — Revoke an API key.
 - `sf api-keys list` — List API keys.
 - `sf api-keys ls` — List API keys.
 - `sf api-keys revoke` — Revoke an API key.
-- `sf api-keys rm` — Revoke an API key.
+- `sf api-keys rm` (alias: api-keys remove) — Revoke an API key.
 - `sf build` — Build and pack static output.
 - `sf builds cancel` — Cancel a build.
 - `sf builds get` — Show a build.
 - `sf builds logs` — Print build logs.
-- `sf builds ls` — List builds.
+- `sf builds ls` (alias: builds list) — List builds.
 - `sf builds resume-upload` — Refresh source archive upload.
 - `sf builds retry` — Retry a terminal build.
 - `sf channels` — Manage channels.
 - `sf channels history` — Show channel history.
-- `sf channels ls` — List channels.
+- `sf channels ls` (alias: channels list) — List channels.
 - `sf create` — Create a Spacefast project directory.
 - `sf demo` — Run Spacefast demos.
 - `sf demo agent` — Run the local agent/MCP dogfood demo.
 - `sf deploy` — Build and deploy to Spacefast.
-- `sf deployments` — Manage deployments.
-- `sf deployments get` — Show a deployment.
-- `sf deployments ls` — List deployments.
-- `sf deployments promote` — Promote a deployment.
-- `sf deployments rollback` — Roll back to a deployment.
 - `sf doctor` — Diagnose Spacefast CLI setup.
 - `sf domains` — Manage domains.
-- `sf domains add` — Attach a domain.
+- `sf domains add` (alias: domains create) — Attach a domain.
 - `sf domains check` — Check a domain.
 - `sf domains diagnostics` — Inspect domain diagnostics.
 - `sf domains dns` — Manage domain DNS records.
-- `sf domains dns add` — Add a DNS record.
+- `sf domains dns add` (alias: domains dns create) — Add a DNS record.
 - `sf domains dns batch` — Apply a DNS record batch.
 - `sf domains dns capabilities` — Show DNS capabilities.
 - `sf domains dns export` — Export the DNS zone.
-- `sf domains dns ls` — List DNS records.
+- `sf domains dns ls` (alias: domains dns list) — List DNS records.
 - `sf domains dns refresh` — Refresh DNS provider snapshot.
-- `sf domains dns rm` — Delete a DNS record.
+- `sf domains dns rm` (alias: domains dns remove, domains dns delete) — Delete a DNS record.
 - `sf domains dns update` — Update a DNS record.
-- `sf domains ls` — List space domains.
+- `sf domains ls` (alias: domains list) — List space domains.
 - `sf domains nameservers` — Show domain nameservers.
 - `sf domains nameservers set` — Set domain nameservers.
-- `sf domains rm` — Remove a domain.
+- `sf domains rm` (alias: domains remove, domains delete) — Remove a domain.
 - `sf domains search` — Search domain names.
 - `sf env` — Manage env vars.
 - `sf env export-template` — Create a dotenv import template from platform config.
 - `sf env import` — Import variables from a .env file.
-- `sf env ls` — List space variables.
+- `sf env ls` (alias: env list) — List space variables.
 - `sf env pull` — Pull variables.
-- `sf env rm` — Delete a space variable.
+- `sf env rm` (alias: env remove, env delete) — Delete a space variable.
 - `sf env set` — Set a space variable.
 - `sf git build` — Build repository source.
 - `sf git connect` — Connect repository.
@@ -375,7 +370,7 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf password clear` — Clear space password protection.
 - `sf password set` — Set space password protection.
 - `sf profiles` — List provider profiles.
-- `sf profiles rm` — Remove a provider profile.
+- `sf profiles rm` (alias: profiles remove, profiles delete) — Remove a provider profile.
 - `sf profiles set` — Create or update a provider profile.
 - `sf profiles use` — Select the active provider profile.
 - `sf promote` — Promote a version to a channel.
@@ -388,21 +383,16 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf runtime status` — Print runtime status.
 - `sf setup` — Generate setup instructions.
 - `sf setup agent` — Generate agent setup instructions.
-- `sf sites` — Manage sites.
-- `sf sites create` — Create a site.
-- `sf sites get` — Show a site.
-- `sf sites ls` — List sites.
-- `sf sites rm` — Delete a site.
 - `sf spaces` — Manage spaces.
-- `sf spaces add` — Create an empty space.
+- `sf spaces add` (alias: spaces create) — Create an empty space.
 - `sf spaces claim` — Claim an anonymous space.
 - `sf spaces download` — Download a space version.
 - `sf spaces duplicate` — Duplicate a space with a download-and-publish copy.
 - `sf spaces export` — Export a space archive.
 - `sf spaces get` — Show a space.
 - `sf spaces import` — Import a space archive.
-- `sf spaces ls` — List spaces.
-- `sf spaces rm` — Delete a space.
+- `sf spaces ls` (alias: spaces list) — List spaces.
+- `sf spaces rm` (alias: spaces remove, spaces delete) — Delete a space.
 - `sf spaces transfer` — Transfer a space to another team.
 - `sf spaces update` — Patch space metadata.
 - `sf status` — Show CLI status.
@@ -410,14 +400,14 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf sync` — Sync pending changes.
 - `sf teams` — Manage teams.
 - `sf teams invitations` — Manage team invitations.
-- `sf teams invitations add` — Create a team invitation.
+- `sf teams invitations add` (alias: teams invitations create) — Create a team invitation.
 - `sf teams invitations cancel` — Cancel a team invitation.
-- `sf teams invitations ls` — List team invitations.
+- `sf teams invitations ls` (alias: teams invitations list) — List team invitations.
 - `sf teams invitations resend` — Resend a team invitation.
-- `sf teams ls` — List teams.
+- `sf teams ls` (alias: teams list) — List teams.
 - `sf teams members` — Manage team members.
-- `sf teams members ls` — List team members.
-- `sf teams members rm` — Remove a team member.
+- `sf teams members ls` (alias: teams members list) — List team members.
+- `sf teams members rm` (alias: teams members remove, teams members delete) — Remove a team member.
 - `sf teams switch` — Set default team.
 - `sf transfers cancel` — Cancel a space transfer.
 - `sf transfers confirm` — Confirm a space transfer.
@@ -425,8 +415,8 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf versions` — Manage versions.
 - `sf versions download` — Download a version archive.
 - `sf versions get` — Show a version.
-- `sf versions ls` — List space versions.
-- `sf versions rm` — Delete a version.
+- `sf versions ls` (alias: versions list) — List space versions.
+- `sf versions rm` (alias: versions remove, versions delete) — Delete a version.
 - `sf whoami` — Show the current Spacefast account.
 - `sf zero` — Manage Zero runtime apps.
 - `sf zero auth` — Manage Zero auth.
@@ -434,7 +424,7 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf zero create` — Create a Zero app.
 - `sf zero db` — Inspect or dump Zero database data.
 - `sf zero db dump` — Dump Zero database rows.
-- `sf zero db list` — List Zero database tables.
+- `sf zero db list` (alias: zero db ls) — List Zero database tables.
 - `sf zero db migrate` — Plan Zero database migrations.
 - `sf zero deploy` — Build and deploy a Zero app.
 - `sf zero dev` — Run local Zero dev server.
@@ -443,11 +433,11 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf zero new` — Create a Zero app.
 - `sf zero run-many` — Run many local Zero dev servers.
 - `sf zero token` — Manage Zero tokens.
-- `sf zero token create` — Create a Zero token.
+- `sf zero token create` (alias: zero token add) — Create a Zero token.
 - `sf zero token list` — List Zero tokens.
 - `sf zero token ls` — List Zero tokens.
 - `sf zero token revoke` — Revoke a Zero token.
-- `sf zero token rm` — Revoke a Zero token.
+- `sf zero token rm` (alias: zero token remove, zero token delete) — Revoke a Zero token.
 
 For anything without command sugar, `sf api [METHOD] /v1/...` signs a raw request with the active
 credentials and prints the raw `{data}`/`{error}` envelope.
