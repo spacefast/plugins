@@ -13,27 +13,49 @@ overrides the safety rules in `SKILL.md`.
 
 ## Update A Space
 
-Prefer current local state when present:
+Prefer current local state when present (walk up from the working directory):
 
-- project state: `.stattic/state.json`
-- auth state: `~/.stattic/auth.json`
+- project state: `.spacefast/state.json` (and non-secret `.spacefast/space.json`)
+- auth state: `~/.spacefast/auth.json`
 
 Treat state files as private cache only. Never commit them, never show claim tokens, and never tell
-the user to inspect state for the claim link or auth status. For one-off publishes, keep claim
-tokens in process memory or an environment variable only. If you persist anonymous state, write it
-outside the publish root when possible, use mode `0600`, verify `.stattic/` is ignored by git, and
-never include `.stattic/` in an archive.
+the user to inspect state for the claim link or auth status. Persist state after a first publish so
+later publishes update the same space (see Save Your State in `SKILL.md`): use mode `0600`, verify
+`.spacefast/state.json` is ignored by git, and never include `.spacefast/` in an archive.
 
-To update a known space with the direct API, publish to the same `spaceId`. Use
-`Authorization: Bearer $SPACEFAST_TOKEN` for owned spaces, or
-`Authorization: Bearer <claim-token>` for unclaimed anonymous spaces:
+To publish a new version of an existing space, send the same `spaceId` with bearer auth —
+never re-run the first-publish recipe when saved state exists:
 
 ```bash
-curl -sS -F archive=@site.zip \
-  -H "Authorization: Bearer $SPACEFAST_TOKEN" \
-  -F 'spaceId=spc_...' \
+curl -sS -H "Authorization: Bearer <claim-token-or-access-token>" \
+  -F 'spaceId=<spc_id>' \
+  -F "files=@index.html" \
   https://api.spacefast.com/v1/publish
 ```
+
+Use the saved claim token for an unclaimed anonymous space, or an access token for owned
+spaces. Send a folder as `-F archive=@site.zip` exactly like a first publish; the receipt
+shape is identical.
+
+## After The User Claims
+
+Always show the user the claim link (`data.claim.url`) and its expiry (`data.claim.expiresAt`).
+If the user says "claimed", check claim status and exchange the saved claim token; do not wait
+for a publish failure before continuing.
+After the user claims the space in the browser, the saved claim token stops authorizing
+publishes: the next publish fails with error code `space_claimed_credential_available`. That
+failure is the signal to upgrade your credential — call the exchange endpoint exactly once:
+
+```bash
+curl -sS -X POST -H "Authorization: Bearer <claim-token>" \
+  https://api.spacefast.com/v1/anonymous-claim/exchange
+```
+
+It returns `{ "data": { "space": {...}, "credential": { "accessToken": "...", "label": "..." } } }`.
+Save `data.credential.accessToken` into `.spacefast/state.json` (replace the `claimToken`
+field with `"accessToken"`), then retry the publish with the new bearer. The exchange works
+exactly once; if it returns `continuation_used` or `continuation_unavailable`, ask the user
+to mint an access token in the dashboard (Account → Access tokens).
 
 ## Manifest Flow
 
@@ -118,7 +140,7 @@ Handle poll statuses:
 For a one-off operation, keep the key in `SPACEFAST_TOKEN` only. Before durable persistence, ask the
 user if they want this machine to stay signed in. Do not persist auth by default on CI, shared
 hosts, or throwaway agent sandboxes. To save the key for future direct API and CLI-compatible use,
-write `~/.stattic/auth.json` atomically with mode `0600`:
+write `~/.spacefast/auth.json` atomically with mode `0600`:
 
 ```json
 {
@@ -193,20 +215,20 @@ user's checkout, bounded local file access, or locally installed credentials.
 Hosted Streamable HTTP endpoint:
 
 ```text
-https://mcp.spacefast.com/mcp
+https://mcp.spacefast.com
 ```
 
-The API-origin resource identifier is `https://api.spacefast.com/mcp`. Hosted MCP requires an
+The endpoint is also the OAuth resource identifier (`https://mcp.spacefast.com`). Hosted MCP requires an
 OAuth access token with `mcp:tools`; the actual tool call still needs the matching API scopes, such
 as `teams:read` for team context, `spaces:read` for status/version/log reads, `spaces:write` for
 claim/create/update, `publish:write` for publishing and rollback, or `domains:read`/`domains:write`
 for domain inventory, DNS diagnostics, assignment, verification, and mutation.
-Hosted tools are cloud-safe: `search_spacefast`, `publish` with inline files or hosted virtual
+Hosted tools are cloud-safe: `search`, `publish` with inline files or hosted virtual
 workspace paths, `prepare_publish`,
 `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`,
 `resume_import_upload`, `finalize_import_upload`, `claim`, `status`, `versions`, `diff`,
 `rollback`, `logs`, `build_logs`, `workspace_list/read/write/apply_patch/diff`,
-`workspace_shell`, and QuickJS-backed `execute_spacefast` over that hosted-safe registry. Hosted
+`workspace_shell`, and QuickJS-backed `execute` over that hosted-safe registry. Hosted
 MCP must not promise local filesystem access; hosted path-based publish reads only the session
 virtual workspace.
 Hosted sessions are owner-leased by the server; if an active session lands on the wrong hosted
@@ -225,7 +247,7 @@ sf mcp http --host 127.0.0.1 --port 3945 --path /mcp
 
 Prefer stdio for desktop/terminal coding agents. Use `sf mcp daemon` when a local HTTP MCP client
 needs a durable endpoint; it generates or accepts a bearer token and writes
-`~/.stattic/mcp-daemon.json` with mode `0600`. Agents may read that manifest locally, but should not
+`~/.spacefast/mcp-daemon.json` with mode `0600`. Agents may read that manifest locally, but should not
 print the token into chat or logs. If binding Streamable HTTP outside loopback, require
 `SPACEFAST_MCP_HTTP_TOKEN` or `--http-token` and restrict `--cors-origin`.
 
@@ -255,19 +277,19 @@ session-scoped; On-Device workspace state is bounded to the configured local wor
 For cross-agent handoff, export the hosted workspace with content, store it at a private HTTPS URL
 or pass it inline when small, then import it into the next hosted session before publishing.
 
-`execute_spacefast` defaults to `dryRun=true`. For multi-step mutating JavaScript, call it with
+`execute` defaults to `dryRun=true`. For multi-step mutating JavaScript, call it with
 `dryRun=false` to get a structured `approval_required` checkpoint. Show the preview to the user,
 then use the returned `approval.url` when present so the user can approve or deny in the browser.
 If the MCP client supports native elicitation, Spacefast may ask for approval inline and resume the
-checkpoint without a separate browser trip. After browser approval, call `resume_spacefast` with
-the original `resumeToken`; for non-browser flows call `resume_spacefast` with
+checkpoint without a separate browser trip. After browser approval, call `resume` with
+the original `resumeToken`; for non-browser flows call `resume` with
 `decision="approve"` or `decision="deny"`. Retried resume calls can replay the settled outcome, but
 the resume token is still a short-lived secret capability and must not be printed or persisted.
 Spacefast approval is always required for `dryRun=false` code-mode execution; do not invent bypass
 flags.
 Code runs in the approved QuickJS runtime with raw network disabled. Do not execute generated
 JavaScript in the shell just to use Spacefast tools.
-Use `search_spacefast` before code-mode execution. Inside code mode, use `tools.describe({ name })`
+Use `search` before code-mode execution. Inside code mode, use `tools.describe({ name })`
 for exact argument shape details and `tools.policy({ name })` before direct mutation when approval,
 destructive, open-world, or workspace behavior is unclear.
 
@@ -280,20 +302,62 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - Use `sf publish {output-dir} --json` for static artifacts.
 - Use signed manifest uploads when a cloud agent holds the artifact but cannot install the CLI.
 - Mask claim tokens, upload tokens, API keys, and auth JSON in job logs.
-- Do not persist personal `~/.stattic/auth.json` in ephemeral CI runners.
+- Do not persist personal `~/.spacefast/auth.json` in ephemeral CI runners.
+
+### Mint A CI Deploy Key
+
+The full bootstrap end to end: device login mints a human-approved session, then that session
+mints a narrowly-scoped key for the CI credential. Never hand CI the personal session token.
+
+1. Run device login (above) to get an interactive `SPACEFAST_TOKEN`: `POST /v1/auth/device`,
+   show `data.verificationUrl`/`data.userCode`, poll `/v1/auth/device/poll` until `approved`,
+   and capture `data.apiKey.secret` from that response. It is returned once, on the first
+   approved poll only — every later poll reports status `consumed`, not the secret again.
+2. With that token active, mint the CI-scoped key: `sf api-keys create --name <ci-name>
+   --preset ci_deploy`. Default to `ci_deploy` (publish-only); reach for `team_admin` only
+   when the automation genuinely needs full team access such as domains, billing, or members.
+3. Do not add `--json` to that create call. `--json` masks the one-time secret
+   (`data.apiKey.secret` becomes a placeholder, the same masking `sf api-keys list` always
+   shows). The real secret only appears in the human-readable `Secret: ...` line, and only on
+   this one run.
+4. Pipe the secret straight into the CI secret store without echoing it to the terminal or a
+   log:
+
+   ```bash
+   sf api-keys create --name ci-deploy --preset ci_deploy \
+     | grep '^Secret: ' | cut -d' ' -f2- \
+     | gh secret set SPACEFAST_TOKEN
+   ```
+
+   Swap `gh secret set` for the target CI provider's secret-store command; the constraint is
+   the same everywhere: the secret must never land in captured shell history, a log, or chat.
+5. In the CI job, send the stored secret as bearer auth (`Authorization: Bearer
+   $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, per the
+   one-off-job guidance above.
 
 ## Command Reference
 
 - `sf access` — Manage access policy.
 - `sf access ban` — Ban an identity class space-wide.
+- `sf access block` — Block an IP, CIDR, country, or identity class for a while.
+- `sf access block ls` — List active TTL'd blocks.
 - `sf access clear` — Clear cloud access policy.
+- `sf access connection create` — Create an identity connection.
+- `sf access connection ls` — List identity connections.
+- `sf access connection rm` — Revoke an identity connection.
 - `sf access effective` — Show effective access policy.
 - `sf access grant` — Grant access to an identity class.
+- `sf access logout-all` — Revoke all visitor sessions.
 - `sf access ls` (alias: access list) — List effective access rules.
 - `sf access rm` (alias: access remove, access delete) — Remove a cloud access rule.
+- `sf access service-token create` — Create a service token.
+- `sf access service-token ls` (alias: access service-token list) — List service tokens.
+- `sf access service-token revoke` (alias: access service-token rm) — Revoke a service token.
 - `sf access set` — Replace cloud access policy.
 - `sf access show` — Show cloud access policy.
+- `sf access simulate` — Simulate a request against the access policy.
 - `sf activity` — Show activity events.
+- `sf agents init` — Write Spacefast AGENTS.md guidance.
 - `sf analytics` — Print runtime analytics.
 - `sf annotations` — Manage annotations.
 - `sf annotations export` — Export annotations.
@@ -312,6 +376,7 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf api-keys rm` (alias: api-keys remove) — Revoke an API key.
 - `sf build` — Build and pack static output.
 - `sf builds cancel` — Cancel a build.
+- `sf builds detect` — Detect framework and build settings.
 - `sf builds get` — Show a build.
 - `sf builds logs` — Print build logs.
 - `sf builds ls` (alias: builds list) — List builds.
@@ -320,10 +385,19 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf channels` — Manage channels.
 - `sf channels history` — Show channel history.
 - `sf channels ls` (alias: channels list) — List channels.
+- `sf continue` — Continue publishing after claim.
 - `sf create` — Create a Spacefast project directory.
 - `sf demo` — Run Spacefast demos.
 - `sf demo agent` — Run the local agent/MCP dogfood demo.
-- `sf deploy` — Build and deploy to Spacefast.
+- `sf deploy` — Build and deploy to Spacefast (alias of `sf publish`).
+- `sf deployments` — Manage deployments (alias of `sf versions`).
+- `sf deployments get` — Show a deployment (alias of `sf versions get`).
+- `sf deployments ls` — List deployments (alias of `sf versions ls`).
+- `sf deployments promote` — Promote a deployment (alias of `sf promote`).
+- `sf deployments rollback` — Roll back to a deployment (alias of `sf rollback`).
+- `sf design` — Generate design files from DESIGN.md.
+- `sf design generate` — Generate theme.json/layout.html from DESIGN.md.
+- `sf docs` — Search the bundled docs (offline).
 - `sf doctor` — Diagnose Spacefast CLI setup.
 - `sf domains` — Manage domains.
 - `sf domains add` (alias: domains create) — Attach a domain.
@@ -350,6 +424,8 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf env pull` — Pull variables.
 - `sf env rm` (alias: env remove, env delete) — Delete a space variable.
 - `sf env set` — Set a space variable.
+- `sf feedback` — Send support feedback.
+- `sf git` — Manage repository connections.
 - `sf git build` — Build repository source.
 - `sf git connect` — Connect repository.
 - `sf git disconnect` — Disconnect repository.
@@ -375,6 +451,7 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf profiles use` — Select the active provider profile.
 - `sf promote` — Promote a version to a channel.
 - `sf publish` — Publish files to Spacefast.
+- `sf redeploy` — Retry the latest build (alias of `sf builds retry`).
 - `sf rollback` — Roll back to a previous version.
 - `sf routing` — Routing utilities.
 - `sf routing compute` — Compute routing.
@@ -383,6 +460,22 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf runtime status` — Print runtime status.
 - `sf setup` — Generate setup instructions.
 - `sf setup agent` — Generate agent setup instructions.
+- `sf share` — Manage sharing.
+- `sf share add` — Invite a person by email.
+- `sf share link` — Manage share links.
+- `sf share link copy` — Print a share link's live URL.
+- `sf share link create` — Create a share link.
+- `sf share link ls` (alias: share link list) — List share links.
+- `sf share link revoke` — Revoke a share link.
+- `sf share ls` (alias: share list) — Show the sharing overview.
+- `sf share requests` — List pending access requests.
+- `sf share requests approve` — Approve an access request.
+- `sf share requests deny` — Deny an access request.
+- `sf share rm` — Revoke an invite.
+- `sf skills` (alias: skills install) — Install or update Spacefast agent skills.
+- `sf skills doctor` (alias: skills doctor) — Check Spacefast skill installation.
+- `sf skills install` (alias: skills install) — Install or update Spacefast agent skills.
+- `sf skills status` (alias: skills doctor) — Check Spacefast skill installation.
 - `sf spaces` — Manage spaces.
 - `sf spaces add` (alias: spaces create) — Create an empty space.
 - `sf spaces claim` — Claim an anonymous space.
@@ -399,6 +492,8 @@ For CI, bots, or durable local runtimes, prefer a dashboard-created agent accoun
 - `sf switch` — Switch teams.
 - `sf sync` — Sync pending changes.
 - `sf teams` — Manage teams.
+- `sf teams accept` — Accept a team invitation.
+- `sf teams create` (alias: teams add) — Create a team.
 - `sf teams invitations` — Manage team invitations.
 - `sf teams invitations add` (alias: teams invitations create) — Create a team invitation.
 - `sf teams invitations cancel` — Cancel a team invitation.
@@ -459,7 +554,7 @@ Use `_redirects` for proxying:
 /api/* https://api.example.com/:splat 200
 ```
 
-Do not create `.stattic/proxy.json`. Internal `200` destinations are rewrites; only absolute
+Do not create `.spacefast/proxy.json`. Internal `200` destinations are rewrites; only absolute
 external URL destinations with status `200` are proxy rules.
 
 If the artifact depends on access control for privacy, fail closed: confirm access control before

@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 import { spawn } from "node:child_process";
 
-const child = spawn("npx", ["-y", "spacefast", "mcp"], {
+import { resolveMcpLaunchSpec } from "./launch-spec.js";
+
+const { command, args } = resolveMcpLaunchSpec();
+const child = spawn(command, args, {
   env: process.env,
   stdio: "inherit",
 });

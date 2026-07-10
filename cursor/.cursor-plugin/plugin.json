@@ -1,11 +1,10 @@
 {
   "name": "spacefast",
   "displayName": "Spacefast",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
   "author": {
-    "name": "Automattic",
-    "url": "https://spacefast.com"
+    "name": "Automattic"
   },
   "homepage": "https://spacefast.com/docs/agents",
   "repository": "https://github.com/spacefast/plugins",

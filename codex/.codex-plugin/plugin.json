@@ -1,6 +1,6 @@
 {
   "name": "spacefast",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
   "author": {
     "name": "Automattic",
@@ -25,7 +25,7 @@
     "privacyPolicyURL": "https://automattic.com/privacy/",
     "termsOfServiceURL": "https://wordpress.com/tos/",
     "defaultPrompt": "Use Spacefast to publish this project, share the live URL, and include the anonymous claim link if the publish is unclaimed.",
-    "brandColor": "#3DA0FF",
+    "brandColor": "#FF603D",
     "composerIcon": "./assets/logo.svg",
     "logo": "./assets/logo.svg",
     "screenshots": ["./assets/publish-workflow.svg"]

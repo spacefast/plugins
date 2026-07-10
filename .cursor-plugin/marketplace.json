@@ -1,0 +1,16 @@
+{
+  "name": "spacefast",
+  "owner": {
+    "name": "Automattic"
+  },
+  "metadata": {
+    "description": "Official Spacefast plugin for Cursor."
+  },
+  "plugins": [
+    {
+      "name": "spacefast",
+      "source": "cursor",
+      "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link."
+    }
+  ]
+}

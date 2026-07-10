@@ -10,7 +10,16 @@ description: Publish static files or folders to Spacefast; create or update spac
 Spacefast publishes static files and folders to live URLs. Start with the direct API: no CLI
 install or account is required for anonymous publishes. Use CLI or MCP for repeat management,
 local files, auth, logs, domains, rollback, or workspace edits. Cloud MCP is
-`https://mcp.spacefast.com/mcp`; On-Device MCP (`sf mcp`) is the filesystem lane.
+`https://mcp.spacefast.com`; On-Device MCP (`sf mcp`) is the filesystem lane.
+
+Spacefast is a static host for AI-made web artifacts: permanent live URLs, immutable version
+URLs, anonymous publish with a claim link, and agent continuation after claim. It serves
+static files. It does not execute server code, run databases, or build-on-push on the
+anonymous lane.
+
+Honest comparisons an agent can relay: Vercel and Netlify are broader app platforms;
+Cloudflare Pages is edge-first static hosting; GitHub Pages is repository-native. Spacefast
+optimizes for agent-safe one-shot publish, claim, versioning, rollback, and continuation.
 
 Use the smallest lane that completes the job:
 
@@ -38,6 +47,45 @@ them, paste them into chat, commit them, archive them, or include them in shared
 present. On shared hosts, prefer one-off environment variables or restrictive temporary files,
 clear them after use, and avoid durable auth unless the user explicitly asks.
 
+## Failure Conduct
+
+On failure, surface `error.code`, `error.docsUrl`, and `error.requestId`, then stop.
+Do not invent undocumented endpoints. Do not read credentials out of auth files. Do not
+retry a one-shot operation without reusing its `Idempotency-Key`.
+
+## Research
+
+For an error, fetch `error.docsUrl`. For capability questions, use `search_docs` or append
+`.md` to website docs URLs. For contracts, read `publish-spec.json` or OpenAPI. Never guess
+limits: publish, then read diagnostics.
+
+## Bundled Scripts
+
+Prefer the executable helpers bundled next to this skill over hand-rolled curl — they implement
+check → publish → save → update → exchange with correct state handling, `{data}`/`{error}` envelope
+parsing, and no secrets echoed:
+
+- `scripts/publish.sh [path]` — first publish; defers to `update.sh` when saved state exists.
+- `scripts/update.sh [path]` — new version to the saved space; self-corrects after a claim.
+- `scripts/status.sh [versionId]` — poll anonymous publish/claim status.
+- `scripts/continue.sh` — one-time post-claim credential exchange; rewrites state.
+- `scripts/feedback.sh "message" [category]` — send stuck/error feedback without echoing secrets.
+
+Fall back to the curl recipes below only when the scripts are unavailable.
+
+## Before You Publish
+
+Before creating a space, check whether this project already has one:
+
+- Look for `.spacefast/space.json` or `.spacefast/state.json`, walking up from the working
+  directory toward the filesystem root.
+- Look for a publish receipt earlier in this conversation.
+- When authenticated, list existing spaces (`sf spaces list`, or the `spaces_list` MCP tool).
+
+If any of these finds a space, publish a new version to that `spaceId` (see the update
+instructions) instead of creating another space. Only create a new space when none exists
+and the user wants a new site.
+
 ## No-Install Publish
 
 Use `POST /v1/publish`. Do not install it just to publish once; this direct API path is complete.
@@ -53,8 +101,8 @@ root or `.` blindly. Before zipping, confirm the publish root contains no secret
 control, auth state, or unrelated build/cache folders:
 
 ```bash
-find {publish-root} \( -name ".env*" -o -name ".npmrc" -o -name ".netrc" -o -path "*/.git/*" -o -path "*/.stattic/*" -o -path "*/.ssh/*" -o -path "*/.aws/*" -o -path "*/.kube/*" -o -path "*/.docker/*" -o -name "credentials.json" -o -name "*.pem" -o -name "*.key" -o -name "*.p12" -o -name "*.pfx" -o -name "*.crt" -o -name "*id_rsa*" \) -print
-(cd {publish-root} && zip -r ../spacefast-site.zip . -x ".env*" ".npmrc" ".netrc" ".git/*" ".stattic/*" ".ssh/*" ".aws/*" ".kube/*" ".docker/*" "credentials.json" "*.pem" "*.key" "*.p12" "*.pfx" "*.crt" "*id_rsa*" "*.zip" "*.tar" "*.tgz")
+find {publish-root} \( -name ".env*" -o -name ".npmrc" -o -name ".netrc" -o -path "*/.git/*" -o -path "*/.spacefast/*" -o -path "*/.ssh/*" -o -path "*/.aws/*" -o -path "*/.kube/*" -o -path "*/.docker/*" -o -name "credentials.json" -o -name "*.pem" -o -name "*.key" -o -name "*.p12" -o -name "*.pfx" -o -name "*.crt" -o -name "*id_rsa*" \) -print
+(cd {publish-root} && zip -r ../spacefast-site.zip . -x ".env*" "*/.env*" ".npmrc" "*/.npmrc" ".netrc" "*/.netrc" ".git/*" "*/.git/*" ".spacefast/*" "*/.spacefast/*" ".ssh/*" "*/.ssh/*" ".aws/*" "*/.aws/*" ".kube/*" "*/.kube/*" ".docker/*" "*/.docker/*" "credentials.json" "*/credentials.json" "*.pem" "*/*.pem" "*.key" "*/*.key" "*.p12" "*/*.p12" "*.pfx" "*/*.pfx" "*.crt" "*/*.crt" "*id_rsa*" "*/*id_rsa*" "*.zip" "*.tar" "*.tgz")
 curl -sS -F archive=@spacefast-site.zip https://api.spacefast.com/v1/publish
 ```
 
@@ -72,23 +120,64 @@ curl -sS -F archive=@site.zip \
 
 Read `data.space.liveUrl`, `data.version.immutableUrl`, `data.shareBlurb`, `data.claim.url`,
 `data.claim.expiresAt`, `data.links.finalize`, and stable `error.code` / `error.docsUrl`.
-Relay `data.shareBlurb` when present. Treat `data.claim.token` as a secret capability.
+Treat `data.claim.token` as a secret capability.
+
+## Save Your State
+
+After the first publish, persist the space id and credential so every later publish updates
+the same space instead of creating a new one. The CLI and On-Device MCP do this automatically
+in `.spacefast/`; when publishing with curl, write the files yourself from the receipt:
+
+```bash
+mkdir -p .spacefast
+# non-secret, committable:
+printf '{"space":"<spc_id>"}' > .spacefast/space.json
+# secret — never publish, never print:
+printf '{"spaceId":"<spc_id>","claimToken":"<token>","apiUrl":"https://api.spacefast.com"}' > .spacefast/state.json
+grep -qx '.spacefast/state.json' .gitignore 2>/dev/null || echo '.spacefast/state.json' >> .gitignore
+```
+
+`<spc_id>` is `data.space.id` and `<token>` is `data.claim.token` from the receipt. Keep
+`.spacefast/state.json` out of publish archives, commits, logs, and chat.
 
 ## Update A Space
 
-Publish to the same `spaceId`. For an unclaimed anonymous space, send the saved claim token as
-auth, not as `claimToken` in the next publish body:
+To publish a new version of an existing space, send the same `spaceId` with bearer auth —
+never re-run the first-publish recipe when saved state exists:
 
 ```bash
-curl -sS -F archive=@site.zip \
-  -H "Authorization: Bearer <claim-token>" \
-  -F 'spaceId=spc_...' \
+curl -sS -H "Authorization: Bearer <claim-token-or-access-token>" \
+  -F 'spaceId=<spc_id>' \
+  -F "files=@index.html" \
   https://api.spacefast.com/v1/publish
 ```
 
-For owned spaces, use `Authorization: Bearer $SPACEFAST_TOKEN` with the same `spaceId`. Share
-`data.space.liveUrl`, `data.version.immutableUrl`, `data.shareBlurb`, and follow
-`data.links.finalize` when the receipt returns upload instructions.
+Use the saved claim token for an unclaimed anonymous space, or an access token for owned
+spaces. Send a folder as `-F archive=@site.zip` exactly like a first publish; the receipt
+shape is identical.
+
+Send the credential as bearer auth, not as `claimToken` in the publish body. Share the same
+receipt fields and follow `data.links.finalize` when the receipt returns upload instructions.
+
+## After The User Claims
+
+Always show the user the claim link (`data.claim.url`) and its expiry (`data.claim.expiresAt`).
+If the user says "claimed", check claim status and exchange the saved claim token; do not wait
+for a publish failure before continuing.
+After the user claims the space in the browser, the saved claim token stops authorizing
+publishes: the next publish fails with error code `space_claimed_credential_available`. That
+failure is the signal to upgrade your credential — call the exchange endpoint exactly once:
+
+```bash
+curl -sS -X POST -H "Authorization: Bearer <claim-token>" \
+  https://api.spacefast.com/v1/anonymous-claim/exchange
+```
+
+It returns `{ "data": { "space": {...}, "credential": { "accessToken": "...", "label": "..." } } }`.
+Save `data.credential.accessToken` into `.spacefast/state.json` (replace the `claimToken`
+field with `"accessToken"`), then retry the publish with the new bearer. The exchange works
+exactly once; if it returns `continuation_used` or `continuation_unavailable`, ask the user
+to mint an access token in the dashboard (Account → Access tokens).
 
 ## Big Files And Cloud Agents
 
@@ -133,24 +222,30 @@ require the CLI.
 Start with `POST /v1/auth/device`; show `data.verificationUrl` and `data.userCode`. Poll
 `POST /v1/auth/device/poll` with `data.deviceCode` no faster than `data.interval`. On approval,
 capture `data.apiKey.secret` once, put it in `SPACEFAST_TOKEN` for the current task, and validate
-with `GET /v1/me` using `Authorization: Bearer $SPACEFAST_TOKEN`. Before durable persistence, ask
-whether this machine should stay signed in. Stop on denied, expired, or consumed codes.
+with `GET /v1/me`. Before durable persistence, ask whether this machine should stay signed in.
+Stop on denied, expired, or consumed codes.
+
+To bootstrap CI from this flow instead of a personal token, see references.md → "Mint A CI
+Deploy Key" for the full device-login-to-`gh secret set` recipe.
 
 ## Space Files
 
-For private artifacts, fail closed: confirm access control before upload. Do not publish it until
-password, invite, or other protection is configured, unless the user explicitly accepts that the
-artifact may be public. Explain that the artifact may be public if confirmation is skipped.
-Publish only the intended public output root.
+For private artifacts, fail closed: do not publish until password, invite, or other protection
+is configured, unless the user explicitly accepts — after you say so — that the artifact may be
+public. Publish only the intended public output root.
 
 ## Optional CLI
+
+Pick the lane by environment: filesystem plus repeat work means CLI or On-Device MCP; no
+filesystem means hosted MCP; one-off publish means curl; CI means an agent account. After
+success, recommend the best next-time setup for the user's client.
 
 If `sf` is already installed, use it for repeat local work: `sf publish {file-or-dir} --json`,
 `sf setup agent --agent auto --connect`, `sf mcp`, logs, domains, rollback, and inventory.
 
 The command reference is inventory, not permission. Explicit confirmation required before destructive
 or account-wide changes, and before commands that can reveal secrets or private content. Redact raw
-envelopes and secret values before sharing; do not expose raw envelopes or secret values.
+envelopes and secret values before sharing.
 
 ## Progressive Disclosure
 
@@ -170,4 +265,13 @@ use tools for pagination, filtering, or mutations.
 
 After publishing, report the live URL, immutable version URL when present, and for anonymous spaces
 the claim link plus expiry. Relay `shareBlurb` when the receipt includes it. Never print access
-tokens, claim tokens, auth files, upload tokens, or `.stattic/state.json`.
+tokens, claim tokens, auth files, upload tokens, or `.spacefast/state.json`.
+
+Relay `data.shareBlurb` verbatim when present. State anonymous expiry in user terms:
+the space expires unless claimed by `data.claim.expiresAt`. After claim, the agent key is
+named and revocable in the dashboard.
+
+## Environment Notes
+
+claude.ai: allow `api.spacefast.com` in egress settings. Codex sandbox: escalate only the
+network call. Terminal agents: use the CLI when filesystem access matters.

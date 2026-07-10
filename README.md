@@ -13,27 +13,27 @@ self-contained, installable plugin — no monorepo imports, no workspace depende
 | `claude-code/`      | Claude Code    | `claude plugin marketplace add spacefast/plugins` then `claude plugin install spacefast@spacefast` |
 | `claude-desktop/`   | Claude Desktop | download `spacefast.mcpb`, double-click                                                            |
 | `codex/`            | Codex          | `codex plugin marketplace add spacefast/plugins` then `codex plugin add spacefast@spacefast`       |
-| `cursor/`           | Cursor         | point Cursor at the directory (or the `spacefast/plugins` repo)                                    |
-| `skills/spacefast/` | Agent skills   | `npx skills add spacefast/plugins --skill spacefast -g`                                            |
+| `cursor/`           | Cursor         | add `spacefast/plugins` as a Cursor marketplace, then install `spacefast`                          |
+| `skills/spacefast/` | Agent skills   | `npx -y skills add spacefast/plugins --skill spacefast -g -a codex -y`                             |
 
 ## What each plugin contributes
 
 **`claude-code/`** — a `/spacefast` skill with the curl fast path, signed upload
 guidance, full CLI reference, and Spacefast On-Device MCP wired via `.mcp.json`.
-On-Device MCP tools: `search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`.
+On-Device MCP tools: `search`, `search_docs`, `feedback`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `claim_status`, `continue_space`, `spaces_list`, `teams_list`, `create_team`, `status`, `versions`, `diff`, `rollback`, `operation_status`, `logs`, `build_logs`, `builds_list`, `build_get`, `build_logs_by_id`, `build_retry`, `build_cancel`, `repository_status`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute`, `resume`.
 
 **`claude-desktop/`** — Spacefast On-Device MCP only. Users get the local tool set:
-`search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`. An optional API token is stored by Claude Desktop as sensitive
+`search`, `search_docs`, `feedback`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `claim_status`, `continue_space`, `spaces_list`, `teams_list`, `create_team`, `status`, `versions`, `diff`, `rollback`, `operation_status`, `logs`, `build_logs`, `builds_list`, `build_get`, `build_logs_by_id`, `build_retry`, `build_cancel`, `repository_status`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute`, `resume`. An optional API token is stored by Claude Desktop as sensitive
 extension config.
 
 **`codex/`** — a `$spacefast` skill, Codex plugin manifest, and On-Device MCP
 configuration for checkout-aware publish and bounded workspace edits. Cloud-only Codex/ChatGPT
-clients can use hosted MCP at `https://mcp.spacefast.com/mcp` with these hosted-safe tools:
-`search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `workspace_manifest`, `workspace_export`, `workspace_import`, `workspace_import_url`, `workspace_import_archive`, `workspace_import_archive_url`, `workspace_shell`, `execute_spacefast`, `resume_spacefast`.
+clients can use hosted MCP at `https://mcp.spacefast.com` with these hosted-safe tools:
+`search`, `search_docs`, `feedback`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `claim_status`, `continue_space`, `spaces_list`, `teams_list`, `create_team`, `status`, `versions`, `diff`, `rollback`, `operation_status`, `logs`, `build_logs`, `builds_list`, `build_get`, `build_logs_by_id`, `build_retry`, `build_cancel`, `repository_status`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `workspace_manifest`, `workspace_export`, `workspace_import`, `workspace_import_url`, `workspace_import_archive`, `workspace_import_archive_url`, `workspace_shell`, `execute`, `resume`.
 
 **`cursor/`** — a `rules/spacefast.mdc` project rule that steers Cursor toward Spacefast
 for deploy/host/publish/share requests, plus Spacefast On-Device MCP wired via
-`.mcp.json`. On-Device MCP tools: `search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`.
+`.mcp.json`. On-Device MCP tools: `search`, `search_docs`, `feedback`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `claim_status`, `continue_space`, `spaces_list`, `teams_list`, `create_team`, `status`, `versions`, `diff`, `rollback`, `operation_status`, `logs`, `build_logs`, `builds_list`, `build_get`, `build_logs_by_id`, `build_retry`, `build_cancel`, `repository_status`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute`, `resume`.
 
 ## Deploy to Spacefast
 
@@ -83,6 +83,10 @@ generated from the plugin catalog and MCP tool registry. Regenerate all plugin a
 bun run --cwd packages/cli docs:skill
 ```
 
+Plugin versions are derived from the CLI version by advancing its minor component while keeping
+the major, patch, prerelease, and build components: CLI `0.0.5` becomes plugin `0.1.5`. The root
+`version:packages` command regenerates these artifacts after Changesets updates package versions.
+
 ## Moving to https://github.com/spacefast/plugins
 
 Run the packaging script from the monorepo root:
@@ -94,9 +98,8 @@ bun run plugins:package
 
 It writes `dist/plugins/` as the public repository root. The output includes root marketplace
 files for Claude Code and Codex, a root `skills/spacefast/` copy for `npx skills`,
-one liftable directory per platform, `.tgz` archives, and a `release-manifest.json`. The
-`Plugin artifacts` GitHub Actions workflow performs the same regeneration and packages the
-Claude Desktop `.mcpb` bundle for tagged releases.
+one liftable directory per platform, `.tgz` archives, a freshly built
+`spacefast.mcpb`, and a versioned `release-manifest.json` with SHA-256 checksums.
 
 To publish the separate public plugin repo, copy the entire contents of `dist/plugins/` into
 `https://github.com/spacefast/plugins`.

@@ -1,6 +1,10 @@
 {
   "mcpServers": {
     "spacefast": {
+      "type": "http",
+      "url": "https://mcp.spacefast.com"
+    },
+    "spacefast-local": {
       "command": "npx",
       "args": ["-y", "spacefast", "mcp"],
       "env": {}
