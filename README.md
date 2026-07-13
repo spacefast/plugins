@@ -14,26 +14,26 @@ self-contained, installable plugin — no monorepo imports, no workspace depende
 | `claude-desktop/`   | Claude Desktop | download `spacefast.mcpb`, double-click                                                            |
 | `codex/`            | Codex          | `codex plugin marketplace add spacefast/plugins` then `codex plugin add spacefast@spacefast`       |
 | `cursor/`           | Cursor         | point Cursor at the directory (or the `spacefast/plugins` repo)                                    |
-| `skills/spacefast/` | Agent skills   | `npx skills add spacefast/plugins --skill spacefast -g`                                            |
+| `skills/spacefast/` | Agent skills   | `npx -y skills add spacefast/plugins --skill spacefast -g -a codex -y`                             |
 
 ## What each plugin contributes
 
 **`claude-code/`** — a `/spacefast` skill with the curl fast path, signed upload
 guidance, full CLI reference, and Spacefast On-Device MCP wired via `.mcp.json`.
-On-Device MCP tools: `search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`.
+On-Device MCP tools: `search`, `search_docs`, `feedback`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `claim_status`, `continue_space`, `spaces_list`, `teams_list`, `create_team`, `status`, `versions`, `diff`, `rollback`, `operation_status`, `logs`, `build_logs`, `builds_list`, `build_get`, `build_logs_by_id`, `build_retry`, `build_cancel`, `repository_status`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute`, `resume`.
 
 **`claude-desktop/`** — Spacefast On-Device MCP only. Users get the local tool set:
-`search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`. An optional API token is stored by Claude Desktop as sensitive
+`search`, `search_docs`, `feedback`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `claim_status`, `continue_space`, `spaces_list`, `teams_list`, `create_team`, `status`, `versions`, `diff`, `rollback`, `operation_status`, `logs`, `build_logs`, `builds_list`, `build_get`, `build_logs_by_id`, `build_retry`, `build_cancel`, `repository_status`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute`, `resume`. An optional API token is stored by Claude Desktop as sensitive
 extension config.
 
 **`codex/`** — a `$spacefast` skill, Codex plugin manifest, and On-Device MCP
 configuration for checkout-aware publish and bounded workspace edits. Cloud-only Codex/ChatGPT
-clients can use hosted MCP at `https://mcp.spacefast.com/mcp` with these hosted-safe tools:
-`search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `workspace_manifest`, `workspace_export`, `workspace_import`, `workspace_import_url`, `workspace_import_archive`, `workspace_import_archive_url`, `workspace_shell`, `execute_spacefast`, `resume_spacefast`.
+clients can use hosted MCP at `https://mcp.spacefast.com` with these hosted-safe tools:
+`search`, `search_docs`, `feedback`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `claim_status`, `continue_space`, `spaces_list`, `teams_list`, `create_team`, `status`, `versions`, `diff`, `rollback`, `operation_status`, `logs`, `build_logs`, `builds_list`, `build_get`, `build_logs_by_id`, `build_retry`, `build_cancel`, `repository_status`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `workspace_manifest`, `workspace_export`, `workspace_import`, `workspace_import_url`, `workspace_import_archive`, `workspace_import_archive_url`, `workspace_shell`, `execute`, `resume`.
 
 **`cursor/`** — a `rules/spacefast.mdc` project rule that steers Cursor toward Spacefast
 for deploy/host/publish/share requests, plus Spacefast On-Device MCP wired via
-`.mcp.json`. On-Device MCP tools: `search_spacefast`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `spaces_list`, `teams_list`, `status`, `versions`, `diff`, `rollback`, `logs`, `build_logs`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute_spacefast`, `resume_spacefast`.
+`.mcp.json`. On-Device MCP tools: `search`, `search_docs`, `feedback`, `publish`, `prepare_publish`, `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`, `resume_import_upload`, `finalize_import_upload`, `claim`, `claim_status`, `continue_space`, `spaces_list`, `teams_list`, `create_team`, `status`, `versions`, `diff`, `rollback`, `operation_status`, `logs`, `build_logs`, `builds_list`, `build_get`, `build_logs_by_id`, `build_retry`, `build_cancel`, `repository_status`, `diagnose`, `workspace_list`, `workspace_read`, `workspace_write`, `workspace_apply_patch`, `workspace_diff`, `execute`, `resume`.
 
 ## Deploy to Spacefast
 

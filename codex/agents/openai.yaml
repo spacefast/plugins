@@ -1,7 +1,7 @@
 interface:
   display_name: "Spacefast"
   short_description: "Publish files and folders to Spacefast."
-  brand_color: "#7c3aed"
+  brand_color: "#FF603D"
 
 policy:
   allow_implicit_invocation: true
@@ -11,4 +11,5 @@ dependencies:
     - type: "mcp"
       value: "spacefast"
       description: "Spacefast MCP server for managing your spaces, domains and more."
-      transport: "stdio"
+      transport: "streamable_http"
+      url: "https://mcp.spacefast.com"
