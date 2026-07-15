@@ -223,7 +223,7 @@ OAuth access token with `mcp:tools`; the actual tool call still needs the matchi
 as `teams:read` for team context, `spaces:read` for status/version/log reads, `spaces:write` for
 claim/create/update, `publish:write` for publishing and rollback, or `domains:read`/`domains:write`
 for domain inventory, DNS diagnostics, assignment, verification, and mutation.
-Hosted tools are cloud-safe: `search`, `publish` with inline files or hosted virtual
+Hosted tools are cloud-safe: `search_docs`, `publish` with inline files or hosted virtual
 workspace paths, `prepare_publish`,
 `resume_publish`, `finalize_publish`, `import_from_url`, `prepare_import_upload`,
 `resume_import_upload`, `finalize_import_upload`, `claim`, `status`, `versions`, `diff`,
@@ -289,7 +289,7 @@ Spacefast approval is always required for `dryRun=false` code-mode execution; do
 flags.
 Code runs in the approved QuickJS runtime with raw network disabled. Do not execute generated
 JavaScript in the shell just to use Spacefast tools.
-Use `search` before code-mode execution. Inside code mode, use `tools.describe({ name })`
+Use `search_docs` before code-mode execution. Inside code mode, use `tools.describe({ name })`
 for exact argument shape details and `tools.policy({ name })` before direct mutation when approval,
 destructive, open-world, or workspace behavior is unclear.
 
@@ -314,7 +314,7 @@ mints a narrowly-scoped key for the CI credential. Never hand CI the personal se
    and capture `data.apiKey.secret` from that response. It is returned once, on the first
    approved poll only — every later poll reports status `consumed`, not the secret again.
 2. With that token active, mint the CI-scoped key: `sf api-keys create --name <ci-name>
-   --preset ci_deploy`. Default to `ci_deploy` (publish-only); reach for `team_admin` only
+--preset ci_deploy`. Default to `ci_deploy` (publish-only); reach for `team_admin` only
    when the automation genuinely needs full team access such as domains, billing, or members.
 3. Do not add `--json` to that create call. `--json` masks the one-time secret
    (`data.apiKey.secret` becomes a placeholder, the same masking `sf api-keys list` always
@@ -331,8 +331,9 @@ mints a narrowly-scoped key for the CI credential. Never hand CI the personal se
 
    Swap `gh secret set` for the target CI provider's secret-store command; the constraint is
    the same everywhere: the secret must never land in captured shell history, a log, or chat.
+
 5. In the CI job, send the stored secret as bearer auth (`Authorization: Bearer
-   $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, per the
+$SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, per the
    one-off-job guidance above.
 
 ## Command Reference
@@ -513,26 +514,6 @@ mints a narrowly-scoped key for the CI credential. Never hand CI the personal se
 - `sf versions ls` (alias: versions list) — List space versions.
 - `sf versions rm` (alias: versions remove, versions delete) — Delete a version.
 - `sf whoami` — Show the current Spacefast account.
-- `sf zero` — Manage Zero runtime apps.
-- `sf zero auth` — Manage Zero auth.
-- `sf zero build` — Build a Zero artifact manifest.
-- `sf zero create` — Create a Zero app.
-- `sf zero db` — Inspect or dump Zero database data.
-- `sf zero db dump` — Dump Zero database rows.
-- `sf zero db list` (alias: zero db ls) — List Zero database tables.
-- `sf zero db migrate` — Plan Zero database migrations.
-- `sf zero deploy` — Build and deploy a Zero app.
-- `sf zero dev` — Run local Zero dev server.
-- `sf zero inspect` — Inspect Zero runtime metadata.
-- `sf zero logs` — List Zero runtime logs.
-- `sf zero new` — Create a Zero app.
-- `sf zero run-many` — Run many local Zero dev servers.
-- `sf zero token` — Manage Zero tokens.
-- `sf zero token create` (alias: zero token add) — Create a Zero token.
-- `sf zero token list` — List Zero tokens.
-- `sf zero token ls` — List Zero tokens.
-- `sf zero token revoke` — Revoke a Zero token.
-- `sf zero token rm` (alias: zero token remove, zero token delete) — Revoke a Zero token.
 
 For anything without command sugar, `sf api [METHOD] /v1/...` signs a raw request with the active
 credentials and prints the raw `{data}`/`{error}` envelope.

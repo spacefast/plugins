@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "spacefast",
   "display_name": "Spacefast",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Publish files and folders to Spacefast from Claude Desktop. Permanent URLs, immutable versions, anonymous publish with a claim link.",
   "long_description": "Spacefast is the static host where AI-made things are kept. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files, orchestrate signed uploads, import archives, claim anonymous spaces, inspect status and version history, diff versions, roll back, read logs, run approval-resumable workflows, and make bounded workspace edits.",
   "author": {
@@ -39,10 +39,6 @@
     }
   },
   "tools": [
-    {
-      "name": "search",
-      "description": "Deprecated alias for search_docs. Search the local Spacefast docs, workflow guidance, API guidance, CLI/MCP notes, safety rules, and recipes. Prefer search_docs for new clients"
-    },
     {
       "name": "search_docs",
       "description": "Search Spacefast's bundled product documentation in-session — guides, CLI reference, platform API reference, and recipes — without leaving the loop or fetching a URL. An exact topic slug (e.g. \"publishing\", \"api/spaces\") returns that page's full body; any other query ranks matches. Each result includes the doc body, so this is enough to self-correct. Tier-aware: \"full\" (default) covers the standard set, \"essential\" narrows to the core, \"reference\" widens to advanced docs. Use category \"workflow\" for agent/MCP workflow guidance"
