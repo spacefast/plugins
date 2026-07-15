@@ -1,6 +1,6 @@
 {
   "name": "spacefast",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
   "author": {
     "name": "Automattic",
@@ -10,8 +10,6 @@
   "repository": "https://github.com/spacefast/plugins",
   "license": "MIT",
   "keywords": ["spacefast", "publish", "static-hosting", "deploy", "share", "immutable-url"],
-  "privacyPolicyURL": "https://automattic.com/privacy/",
-  "termsOfServiceURL": "https://wordpress.com/tos/",
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {

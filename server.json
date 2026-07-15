@@ -1,8 +1,19 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.spacefast/mcp",
+  "title": "Spacefast",
   "description": "Publish files and folders to the web instantly: permanent URLs, immutable versions, claim links.",
-  "version": "0.0.7",
+  "icons": [
+    {
+      "src": "https://spacefast.com/app-icon-192x192.png",
+      "mimeType": "image/png"
+    },
+    {
+      "src": "https://spacefast.com/app-icon-512x512.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "version": "0.0.8",
   "repository": {
     "url": "https://github.com/spacefast/plugins",
     "source": "github"
@@ -13,7 +24,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "spacefast",
-      "version": "0.0.7",
+      "version": "0.0.8",
       "transport": {
         "type": "stdio"
       }

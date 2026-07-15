@@ -1,6 +1,8 @@
 interface:
   display_name: "Spacefast"
   short_description: "Publish files and folders to Spacefast."
+  icon_small: "./assets/logo.svg"
+  icon_large: "./assets/logo.svg"
   brand_color: "#FF603D"
 
 policy:

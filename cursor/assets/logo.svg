@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 160 160" role="img" aria-label="Spacefast">
+  <rect width="160" height="160" fill="#141419"/>
+  <g transform="rotate(-1 80 80)">
+    <g transform="translate(39.75 55.5) scale(1.5)" fill="#ff4217">
+      <path d="M0 0h24v7H7v7h17v20H0v-7h17v-7H0V0Z"/>
+      <path d="M0 0h25v7H7v6h15v7H7v14H0V0Z" transform="translate(31 0)"/>
+    </g>
+    <g transform="translate(34.75 50.5) scale(1.5)" fill="#fbf8f1">
+      <path d="M0 0h24v7H7v7h17v20H0v-7h17v-7H0V0Z"/>
+      <path d="M0 0h25v7H7v6h15v7H7v14H0V0Z" transform="translate(31 0)"/>
+    </g>
+  </g>
+</svg>
