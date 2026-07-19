@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "spacefast",
   "display_name": "Spacefast",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Publish files and folders to Spacefast from Claude Desktop. Permanent URLs, immutable versions, anonymous publish with a claim link.",
   "long_description": "Spacefast is the static host where AI-made things are kept. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files, orchestrate signed uploads, import archives, claim anonymous spaces, inspect status and version history, diff versions, roll back, read logs, run approval-resumable workflows, and make bounded workspace edits.",
   "author": {

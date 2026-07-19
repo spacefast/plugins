@@ -1,6 +1,6 @@
 {
   "name": "spacefast",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
   "author": {
     "name": "Automattic",
