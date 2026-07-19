@@ -234,6 +234,29 @@ For private artifacts, fail closed: do not publish until password, invite, or ot
 is configured, unless the user explicitly accepts — after you say so — that the artifact may be
 public. Publish only the intended public output root.
 
+## Pages
+
+Spacefast publishes designed `404`, `password`, `denied`, `login`, `index`, and `preview` pages.
+Theme them with `theme` in `sf.jsonc`. A compatible `theme.json` is only an inference input;
+explicit config wins.
+
+Resolution is nearest literal `404.html` (free, verbatim), then nearest `_pages/<id>.html` (paid,
+complete document), then the default wrapped in nearest `_layout.html` (free). Custom `_pages`
+documents are never wrapped. Login takeover is not available in v1.
+
+The v1 elements are `<sf-content>` (layout), `<sf-password-form>` (password), `<sf-login>`
+(login default), `<sf-files>` (index), `<sf-file>` (preview), `<sf-logo>`, and `<sf-name>`. There
+are no loops, conditions, or element attributes as an API. A hand-written password form must POST
+`_pw` to the current URL; server-side throttling, grant cookies, and redirects stay authoritative.
+
+Use `sf pages pull [404|password|denied|index|preview|layout|all]`, then `sf pages validate`.
+`sf dev` previews sample expansions at `/_spacefast/pages/<id>` using the same expander as publish.
+
+HTML browsers receive the page artifact. Fetch or `Accept: application/json` receives the fixed
+`{"error":{"code":"password_required","status":401,"page":"password",…}}` envelope; other
+clients receive one line of text. Machine representations and platform refusal/fault pages are
+never customizable.
+
 ## Optional CLI
 
 Pick the lane by environment: filesystem plus repeat work means CLI or On-Device MCP; no

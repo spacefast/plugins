@@ -13,7 +13,7 @@
       "mimeType": "image/png"
     }
   ],
-  "version": "0.0.9",
+  "version": "0.0.10",
   "repository": {
     "url": "https://github.com/spacefast/plugins",
     "source": "github"
@@ -24,7 +24,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "spacefast",
-      "version": "0.0.9",
+      "version": "0.0.10",
       "transport": {
         "type": "stdio"
       }

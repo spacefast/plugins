@@ -390,14 +390,14 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf create` — Create a Spacefast project directory.
 - `sf demo` — Run Spacefast demos.
 - `sf demo agent` — Run the local agent/MCP dogfood demo.
-- `sf deploy` — Build and deploy to Spacefast (alias of `sf publish`).
 - `sf deployments` — Manage deployments (alias of `sf versions`).
 - `sf deployments get` — Show a deployment (alias of `sf versions get`).
 - `sf deployments ls` — List deployments (alias of `sf versions ls`).
 - `sf deployments promote` — Promote a deployment (alias of `sf promote`).
 - `sf deployments rollback` — Roll back to a deployment (alias of `sf rollback`).
 - `sf design` — Generate design files from DESIGN.md.
-- `sf design generate` — Generate theme.json/layout.html from DESIGN.md.
+- `sf design generate` — Generate theme and layout files from DESIGN.md.
+- `sf dev` — Start the local Pages preview.
 - `sf docs` — Search the bundled docs (offline).
 - `sf doctor` — Diagnose Spacefast CLI setup.
 - `sf domains` — Manage domains.
@@ -444,6 +444,9 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf mcp install` — Generate MCP client config.
 - `sf open` — Open a space in your browser.
 - `sf operations` (alias: ops) — Inspect async operations.
+- `sf pages` — Manage Pages templates.
+- `sf pages pull` — Own a default page template.
+- `sf pages validate` — Validate local Pages templates.
 - `sf password clear` — Clear space password protection.
 - `sf password set` — Set space password protection.
 - `sf profiles` — List provider profiles.
@@ -451,7 +454,7 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf profiles set` — Create or update a provider profile.
 - `sf profiles use` — Select the active provider profile.
 - `sf promote` — Promote a version to a channel.
-- `sf publish` — Publish files to Spacefast.
+- `sf publish` (alias: deploy) — Publish files or built projects to Spacefast.
 - `sf redeploy` — Retry the latest build (alias of `sf builds retry`).
 - `sf rollback` — Roll back to a previous version.
 - `sf routing` — Routing utilities.
@@ -461,7 +464,7 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf runtime status` — Print runtime status.
 - `sf setup` — Generate setup instructions.
 - `sf setup agent` — Generate agent setup instructions.
-- `sf share` — Manage sharing.
+- `sf share` — Share a Space.
 - `sf share add` — Invite a person by email.
 - `sf share link` — Manage share links.
 - `sf share link copy` — Print a share link's live URL.
@@ -505,9 +508,8 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf teams members ls` (alias: teams members list) — List team members.
 - `sf teams members rm` (alias: teams members remove, teams members delete) — Remove a team member.
 - `sf teams switch` — Set default team.
+- `sf transfers accept` (alias: transfers confirm) — Accept a space transfer.
 - `sf transfers cancel` — Cancel a space transfer.
-- `sf transfers confirm` — Confirm a space transfer.
-- `sf transfers get` — Show a space transfer.
 - `sf versions` — Manage versions.
 - `sf versions download` — Download a version archive.
 - `sf versions get` — Show a version.
@@ -515,8 +517,10 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf versions rm` (alias: versions remove, versions delete) — Delete a version.
 - `sf whoami` — Show the current Spacefast account.
 
-For anything without command sugar, `sf api [METHOD] /v1/...` signs a raw request with the active
-credentials and prints the raw `{data}`/`{error}` envelope.
+For anything in the core public contract without command sugar, `sf api [METHOD] /v1/...` signs
+the request with the active credentials and prints the `{data}`/`{error}` envelope verbatim.
+Use `--paginate` only for declared cursor lists. Non-JSON bodies require `--output FILE` or the
+explicit `--raw-stdout`; platform, app, internal, operator, and delivery audiences are refused.
 
 ## Space Files
 
@@ -567,8 +571,9 @@ When a feature is plan-gated:
 Use Spacefast's user-facing nouns consistently:
 
 - `space` is the main object.
-- `publish` is the canonical action; `deploy` is an alias of `publish`. Pass `--build` to run
-  the detected install and build commands before publishing the output.
+- `publish` is the canonical action; `deploy` is its exact alias. A project directory with a
+  detected build command builds automatically; `--build` forces build mode and fails if no build
+  command can be resolved. Files and directories without a build command publish directly.
 - `version` is an immutable snapshot.
 - `domain` is user-facing; avoid `hostname` except for DNS diagnostics.
 - `access token`, `claim token`, and `claim link` have distinct meanings.
