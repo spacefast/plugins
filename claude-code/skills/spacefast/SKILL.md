@@ -119,8 +119,14 @@ curl -sS -F archive=@site.zip \
 ```
 
 Read `data.space.liveUrl`, `data.version.immutableUrl`, `data.shareBlurb`, `data.claim.url`,
-`data.claim.expiresAt`, `data.links.finalize`, and stable `error.code` / `error.docsUrl`.
-Treat `data.claim.token` as a secret capability.
+`data.claim.expiresAt`, and stable `error.code` / `error.docsUrl`. Treat `data.claim.token` as a
+secret capability.
+
+**Drive the rest from `data.next`** — one normative step per response. Branch on
+`data.next.action`: `done` (report `shareBlurb`, stop), `upload` (PUT `data.upload.targets[]`, then
+POST `data.next.url`), `finalize` (POST `data.next.url`), `poll` (GET `data.next.url` after
+`data.next.retryAfter` seconds). `data.activation.outcome` says whether this version is actually
+serving — never infer liveness from version status. See references for both in full.
 
 ## Save Your State
 
@@ -157,7 +163,7 @@ spaces. Send a folder as `-F archive=@site.zip` exactly like a first publish; th
 shape is identical.
 
 Send the credential as bearer auth, not as `claimToken` in the publish body. Share the same
-receipt fields and follow `data.links.finalize` when the receipt returns upload instructions.
+receipt fields and follow `data.next` exactly as on a first publish.
 
 ## After The User Claims
 
@@ -216,17 +222,13 @@ For HTML sites, publish the root containing `index.html`; static server code is 
 
 ## Device Login
 
-Use device login when the user wants owned publishes and no API key is available. This does not
-require the CLI.
+Use device login when the user wants owned publishes and no API key is available. It does not
+require the CLI: `POST /v1/auth/device`, show `data.verificationUrl` and `data.userCode`, then poll
+`POST /v1/auth/device/poll` no faster than `data.interval`. Capture `data.apiKey.secret` once and
+ask before persisting it durably. Stop on denied, expired, or consumed codes.
 
-Start with `POST /v1/auth/device`; show `data.verificationUrl` and `data.userCode`. Poll
-`POST /v1/auth/device/poll` with `data.deviceCode` no faster than `data.interval`. On approval,
-capture `data.apiKey.secret` once, put it in `SPACEFAST_TOKEN` for the current task, and validate
-with `GET /v1/me`. Before durable persistence, ask whether this machine should stay signed in.
-Stop on denied, expired, or consumed codes.
-
-To bootstrap CI from this flow instead of a personal token, see references.md → "Mint A CI
-Deploy Key" for the full device-login-to-`gh secret set` recipe.
+See references.md → "Device Login" for the exact request/response shapes, and → "Mint A CI Deploy
+Key" to bootstrap CI from this flow instead of a personal token.
 
 ## Space Files
 

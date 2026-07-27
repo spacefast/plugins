@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-19T17:20:44.000Z",
-  "version": "0.1.11",
-  "packageManager": "bun@1.3.11",
+  "generatedAt": "2026-07-27T11:15:07.000Z",
+  "version": "0.1.12",
+  "packageManager": "bun@1.3.14",
   "publicRepoRoot": ".",
   "marketplaces": {
     "claudeCode": ".claude-plugin/marketplace.json",
@@ -12,7 +12,7 @@
   "serverJson": "server.json",
   "mcpb": {
     "path": "spacefast.mcpb",
-    "sha256": "9a1519ee8657c035864c086bee367fd1c47b3d914b4655841391f6dabdf33e19"
+    "sha256": "f71e09793db471b61fef51e1540dff8a60da842cb84e3f568e4f7796de59e0f2"
   },
   "plugins": [
     {
@@ -41,12 +41,12 @@
   ],
   "checksums": {
     ".cursor-plugin/marketplace.json": "e309583f8116f3f5afbc7272f728bf091a22499b41ef2dc739719313c3a8d809",
-    "codex.tgz": "e51027be76132542b9d7004a828547fa5efcf7f1e2e14a01cfa52b20acf90938",
-    "claude-code.tgz": "44bb87cff229db7deb18071e71f88f16a84810b8fa6f60e6941b2e6af6a1867f",
-    "claude-desktop.tgz": "41653b8da629244cd7a66885dc4ea3d6962a407ef82b211a63994d71f7805ee5",
-    "cursor.tgz": "bfaf53cd684f23fc4dfaa6b6afe1def709f1d214d3ff4e436f11446498468e4a",
-    "spacefast.mcpb": "9a1519ee8657c035864c086bee367fd1c47b3d914b4655841391f6dabdf33e19",
-    "spacefast-plugins.tgz": "1ae5277b3699850ebd5d5e6ab89c6ea07b9bfe0b46875dd0955a6ff42a9aa08d"
+    "codex.tgz": "ca8e028111ee1e46f22dfed7405142a74e37b78cb2f4acb050e1823c883c44c5",
+    "claude-code.tgz": "9820e43269f635f7f31480b029d7b81d6be997d5118571fe060307ee26f86c13",
+    "claude-desktop.tgz": "0586e5651f93055812a70e938f7eaafbae708f8f184b96c2546ef836dbae5254",
+    "cursor.tgz": "ae53d3c09027e1dbb6aa4e4e6919b811f702be168422a2e2a657531baa826965",
+    "spacefast.mcpb": "f71e09793db471b61fef51e1540dff8a60da842cb84e3f568e4f7796de59e0f2",
+    "spacefast-plugins.tgz": "39f9dfbc615ec0c53782e8262d0b3aa0d07533ebde57d72376a3993bb7c72a61"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",

@@ -57,6 +57,29 @@ field with `"accessToken"`), then retry the publish with the new bearer. The exc
 exactly once; if it returns `continuation_used` or `continuation_unavailable`, ask the user
 to mint an access token in the dashboard (Account → Access tokens).
 
+## The Publish Receipt
+
+Every publish mutation answers with the same receipt. Two fields drive an agent:
+
+`data.next` is the normative next step — the server's projection of (version status, activation
+outcome, pending bytes, operation state). Branch on `data.next.action`:
+
+| action     | meaning                           | do                                                                 |
+| ---------- | --------------------------------- | ------------------------------------------------------------------ |
+| `done`     | This request's intent is settled. | Report `data.shareBlurb`. Stop.                                    |
+| `upload`   | Bytes are missing.                | PUT each `data.upload.targets[]` entry, then POST `data.next.url`. |
+| `finalize` | All declared bytes are present.   | POST `data.next.url` to commit the version.                        |
+| `poll`     | Server-side work is in flight.    | GET `data.next.url` after `data.next.retryAfter` seconds.          |
+
+`data.activation` reports whether the version is serving. Liveness is a channel pointer, never a
+version status:
+
+- `activated` — the live pointer moved to this version.
+- `unpromoted` — ready without promotion, because the request asked for `channel: null`.
+- `superseded` — ready, but a newer publish holds the pointer. `data.activation.currentLiveVersionId`
+  names the winner; POST the promote link to take it back.
+- `pending` — not settled yet; follow `data.next`.
+
 ## Manifest Flow
 
 For larger or resumable uploads, use the manifest flow:
@@ -64,11 +87,16 @@ For larger or resumable uploads, use the manifest flow:
 1. `POST /v1/publish` with JSON `{ "spaceId": "...", "files": [{ "path", "size", "contentType", "sha256", "sourceUrl" }] }`.
 2. For each `data.upload.targets[]`, send `target.method` to `target.url` with `target.headers`.
 3. If `target.body.kind` is `"url"`, send JSON `{ "url": target.body.url }`; otherwise send the local file bytes for `target.path`.
-4. POST `data.links.finalize`.
-5. Share the final `liveUrl`, `immutableUrl`, and diagnostics.
+4. POST `data.next.url` when `data.next.action` is `finalize`; when it is `upload`, POST the same
+   URL to get a fresh receipt and repeat from step 2 with the targets it returns.
+5. Keep following `data.next` — `poll` means GET `data.next.url` after `data.next.retryAfter`
+   seconds — until `data.next.action` is `done`.
+6. Share the final `liveUrl`, `immutableUrl`, and diagnostics.
 
-If no files changed, the API may omit `upload`; report the receipt and diagnostics rather than
-inventing a separate success signal.
+If no files changed, the API may omit `upload` and answer `data.next.action: "done"` directly;
+report the receipt and diagnostics rather than inventing a separate success signal. `data.activation`
+carries whether the version is serving (`activated`), deliberately unpromoted, `superseded` by a
+newer publish, or still `pending`.
 
 MCP mapping:
 
@@ -220,7 +248,7 @@ https://mcp.spacefast.com
 
 The endpoint is also the OAuth resource identifier (`https://mcp.spacefast.com`). Hosted MCP requires an
 OAuth access token with `mcp:tools`; the actual tool call still needs the matching API scopes, such
-as `teams:read` for team context, `spaces:read` for status/version/log reads, `spaces:write` for
+as `teams:read` for team context, `teams:create` for creating teams, `spaces:read` for status/version/log reads, `spaces:write` for
 claim/create/update, `publish:write` for publishing and rollback, or `domains:read`/`domains:write`
 for domain inventory, DNS diagnostics, assignment, verification, and mutation.
 Hosted tools are cloud-safe: `search_docs`, `publish` with inline files or hosted virtual
@@ -280,11 +308,13 @@ or pass it inline when small, then import it into the next hosted session before
 `execute` defaults to `dryRun=true`. For multi-step mutating JavaScript, call it with
 `dryRun=false` to get a structured `approval_required` checkpoint. Show the preview to the user,
 then use the returned `approval.url` when present so the user can approve or deny in the browser.
+Spacefast exposes approval URLs only after HTTPS or loopback HTTP validation; insecure remote HTTP
+approval URLs are intentionally rejected.
 If the MCP client supports native elicitation, Spacefast may ask for approval inline and resume the
-checkpoint without a separate browser trip. After browser approval, call `resume` with
-the original `resumeToken`; for non-browser flows call `resume` with
-`decision="approve"` or `decision="deny"`. Retried resume calls can replay the settled outcome, but
-the resume token is still a short-lived secret capability and must not be printed or persisted.
+checkpoint without a separate browser trip. After browser approval, call `resume` with `approvalId`
+set to the URL elicitation's public `elicitationId`. For non-browser flows, call `resume` with the
+short-lived secret `resumeToken` and `decision="approve"` or `decision="deny"`. Retried resume calls
+can replay the settled outcome; never print or persist the resume token.
 Spacefast approval is always required for `dryRun=false` code-mode execution; do not invent bypass
 flags.
 Code runs in the approved QuickJS runtime with raw network disabled. Do not execute generated
@@ -347,7 +377,7 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf access connection ls` — List identity connections.
 - `sf access connection rm` — Revoke an identity connection.
 - `sf access effective` — Show effective access policy.
-- `sf access grant` — Grant access to an identity class.
+- `sf access grant` — Gate this space for an identity class.
 - `sf access logout-all` — Revoke all visitor sessions.
 - `sf access ls` (alias: access list) — List effective access rules.
 - `sf access rm` (alias: access remove, access delete) — Remove a cloud access rule.
@@ -360,13 +390,6 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf activity` — Show activity events.
 - `sf agents init` — Write Spacefast AGENTS.md guidance.
 - `sf analytics` — Print runtime analytics.
-- `sf annotations` — Manage annotations.
-- `sf annotations export` — Export annotations.
-- `sf annotations get` — Show an annotation.
-- `sf annotations list` (alias: annotations ls) — List annotations.
-- `sf annotations reopen` — Reopen an annotation.
-- `sf annotations reply` — Reply to an annotation.
-- `sf annotations resolve` — Resolve an annotation.
 - `sf api` — Call the Spacefast API directly.
 - `sf api-keys` — Manage API keys.
 - `sf api-keys create` (alias: api-keys add) — Create an API key.
@@ -386,6 +409,13 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf channels` — Manage channels.
 - `sf channels history` — Show channel history.
 - `sf channels ls` (alias: channels list) — List channels.
+- `sf comments` — Manage comments.
+- `sf comments archive` — Archive a comment.
+- `sf comments export` — Export comments.
+- `sf comments get` — Show a comment.
+- `sf comments list` (alias: comments ls) — List comments.
+- `sf comments reply` — Reply to a comment.
+- `sf comments unarchive` — Unarchive a comment.
 - `sf continue` — Continue publishing after claim.
 - `sf create` — Create a Spacefast project directory.
 - `sf demo` — Run Spacefast demos.
@@ -442,6 +472,10 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf logs` — Print runtime activity.
 - `sf mcp` — Run the Spacefast MCP server.
 - `sf mcp install` — Generate MCP client config.
+- `sf mounts` — Manage static mounts.
+- `sf mounts add` — Add a static mount.
+- `sf mounts ls` (alias: mounts list) — List static mounts.
+- `sf mounts rm` (alias: mounts remove, mounts delete) — Remove a static mount.
 - `sf open` — Open a space in your browser.
 - `sf operations` (alias: ops) — Inspect async operations.
 - `sf pages` — Manage Pages templates.
@@ -476,6 +510,7 @@ $SPACEFAST_TOKEN`) or as the `SPACEFAST_TOKEN` env var for `sf publish --json`, 
 - `sf share requests approve` — Approve an access request.
 - `sf share requests deny` — Deny an access request.
 - `sf share rm` — Revoke an invite.
+- `sf share set` — Set space visibility.
 - `sf skills` (alias: skills install) — Install or update Spacefast agent skills.
 - `sf skills doctor` (alias: skills doctor) — Check Spacefast skill installation.
 - `sf skills install` (alias: skills install) — Install or update Spacefast agent skills.

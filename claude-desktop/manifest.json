@@ -2,9 +2,9 @@
   "manifest_version": "0.2",
   "name": "spacefast",
   "display_name": "Spacefast",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Publish files and folders to Spacefast from Claude Desktop. Permanent URLs, immutable versions, anonymous publish with a claim link.",
-  "long_description": "Spacefast is the static host where AI-made things are kept. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files, orchestrate signed uploads, import archives, claim anonymous spaces, inspect status and version history, diff versions, roll back, read logs, run approval-resumable workflows, and make bounded workspace edits.",
+  "long_description": "Spacefast is the static host where AI-made things are kept. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files, orchestrate signed uploads, claim anonymous spaces, inspect status, diagnose failures, run approval-resumable workflows, and make bounded workspace edits.",
   "author": {
     "name": "Automattic",
     "email": "hello@spacefast.com",
@@ -49,11 +49,11 @@
     },
     {
       "name": "publish",
-      "description": "Publish a local directory, file, or archive (or inline files) to Spacefast and get a live URL in seconds. Without spaceId, On-Device MCP first reuses the space this directory is already linked to (.spacefast/space.json or .spacefast/state.json, walking up from the workspace root) and only creates a brand-new space when no link exists or createNew is true. Anonymous publishes return the claim link, its expiry, and a shown-once claim token: save the token (.spacefast/state.json when you have filesystem access, otherwise conversation memory), never print it, and always give the user the claim URL and expiry. To update the space later, publish with the same spaceId and that token as claimToken (the Authorization bearer). Pass spaceId (from a publish receipt or spaces_list, plus claimToken for unclaimed spaces) to publish a new version of an existing space. Retries are de-duplicated automatically, so a re-run after a network blip will not double-publish. Always paste the returned shareBlurb into your reply"
+      "description": "Publish a local directory, file, or archive (or inline files) to Spacefast and get a live URL in seconds. Without spaceId, On-Device MCP first reuses the space this directory is already linked to (.spacefast/space.json or .spacefast/state.json, walking up from the workspace root) and only creates a brand-new space when no link exists or createNew is true. Anonymous publishes return the claim link, its expiry, and a shown-once claim token: save the token (.spacefast/state.json when you have filesystem access, otherwise conversation memory), never print it, and always give the user the claim URL and expiry. To update the space later, publish with the same spaceId and that token as claimToken (the Authorization bearer). Pass spaceId (from a publish receipt or saved account/workspace state, plus claimToken for unclaimed spaces) to publish a new version of an existing space. Retries are de-duplicated automatically, so a re-run after a network blip will not double-publish. Always paste the returned shareBlurb into your reply"
     },
     {
       "name": "prepare_publish",
-      "description": "Create a manifest-based publish session and return signed upload instructions without sending file bytes through MCP. Use this for large files, cloud agents, or any publish where base64/inline content would be awkward. Pass spaceId (from a publish receipt or spaces_list) to add a version to an existing space. Upload returned paths to the signed upload URLs, then call finalize_publish. For On-Device path-based publishes, prefer the publish tool through On-Device MCP"
+      "description": "Create a manifest-based publish session and return signed upload instructions without sending file bytes through MCP. Use this for large files, cloud agents, or any publish where base64/inline content would be awkward. Pass spaceId from a publish receipt or saved account/workspace state to add a version to an existing space. Upload returned paths to the signed upload URLs, then call finalize_publish. For On-Device path-based publishes, prefer the publish tool through On-Device MCP"
     },
     {
       "name": "resume_publish",
@@ -64,26 +64,6 @@
       "description": "Finalize a manifest/open upload session after all advertised files have been uploaded to the signed upload URLs. This compiles routing headers and optionally promotes the version live. Retries are de-duplicated automatically"
     },
     {
-      "name": "import_from_url",
-      "description": "Import a spacefast_export_v1 archive from a public HTTPS URL into an existing claimed space. Use this for cloud-agent big-file handoff when the archive already lives at a URL; no base64 or local filesystem access is needed"
-    },
-    {
-      "name": "prepare_import_upload",
-      "description": "Create an import handle that returns signed upload instructions for one spacefast_export_v1 archive. PUT the archive to `${archiveUpload.baseUrl}/${archiveUpload.files[0]}` with the upload token, then call finalize_import_upload"
-    },
-    {
-      "name": "resume_import_upload",
-      "description": "Fetch an existing upload-sourced archive import and return fresh archiveUpload instructions. Use this when an archive upload token expired before finalize_import_upload"
-    },
-    {
-      "name": "finalize_import_upload",
-      "description": "Finalize an upload-sourced archive import after the archive has been uploaded with prepare_import_upload instructions"
-    },
-    {
-      "name": "claim",
-      "description": "Attach an anonymously published space to the authenticated account or a team, removing its expiry. Requires authenticated Spacefast credentials. Without them, give the user the claim URL and expiry from the publish receipt so they can claim it themselves in the browser; after they claim, call continue_space to exchange your saved claim token for a durable access token and keep publishing"
-    },
-    {
       "name": "claim_status",
       "description": "Check the honest state of an anonymous publish: whether the space is still unclaimed (plus the claim URL and expiry) or already claimed, and — once claimed — whether agent continuation is available, used, or unavailable. Authenticates with the claim token (from the publish receipt or .spacefast/state.json). Use it to decide between sharing the claim link, calling continue_space, or asking the user for an access token"
     },
@@ -92,72 +72,16 @@
       "description": "Exchange an anonymous claim token, exactly once, for a durable space-scoped access token after the space's owner claimed it with agent continuation enabled. Use this when a publish or status call fails with space_claimed_credential_available. The claim token comes from the input or, On-Device, from .spacefast/state.json; the returned credential.accessToken is shown once — save it (On-Device MCP saves it to .spacefast/state.json automatically) and use it as the Authorization bearer for future publishes to this space. A second exchange fails with continuation_used; if the owner declined continuation or the window expired it fails with continuation_unavailable"
     },
     {
-      "name": "spaces_list",
-      "description": "List the Spacefast spaces your account can access, newest first. Use this for cold start when you have an account but no spaceId yet: each entry returns space.id, slug, and liveUrl to pass to publish, status, versions, and the other space tools"
-    },
-    {
-      "name": "teams_list",
-      "description": "List the Spacefast teams your account can act for, newest first. Use this for cold start to discover a team ref (id or slug) to scope spaces_list or target a new publish"
-    },
-    {
-      "name": "create_team",
-      "description": "Create a new Spacefast team owned by your account and get its team ref (id and slug) back. Use this for cold start when you need a team to publish or claim a space into and teams_list shows none you want. Requires authenticated Spacefast credentials tied to a user account; machine/team-scoped credentials cannot own a team. Retries are de-duplicated automatically, so a re-run after a network blip will not create a second team"
+      "name": "whoami",
+      "description": "Return the authenticated Spacefast subject, safe user identity, tenant grants, team memberships, and a current-team hint. Use this as the first account-oriented call before choosing a team or space. Sensitive browser payloads and tokens from /v1/me are deliberately omitted"
     },
     {
       "name": "status",
       "description": "Get the current state of a space in one call: live URL, claim/expiry state, configuration, and its most recent versions"
     },
     {
-      "name": "versions",
-      "description": "List a space's immutable versions, newest first, with status, immutable URL, source, and description for each. Use the returned ids with the rollback and diff tools"
-    },
-    {
-      "name": "diff",
-      "description": "Show what changed between two versions of a space as per-file added/modified/deleted statuses with unified text patches. Compares against the immediately previous version unless baseVersionId is set"
-    },
-    {
-      "name": "rollback",
-      "description": "Make an earlier ready version live again without rebuilding or re-uploading. Promotes the given version to the live channel; use the versions tool to find version ids. Waits for the live pointer to move by default; if promotion is still in progress it returns an operation handle to poll instead of failing. Pass async to queue and return that handle immediately"
-    },
-    {
-      "name": "operation_status",
-      "description": "Poll a long-running Spacefast operation by its operation id and drive it to completion without blocking. Use the operationId from a long-op job handle (rollback in async mode, import_from_url, finalize_import_upload, or any result carrying job.poll.operationId). Returns the operation status (queued, running, succeeded, failed, or canceled), progress, diagnostics, a done flag, and a poll hint until it settles"
-    },
-    {
-      "name": "logs",
-      "description": "Fetch recent access or runtime log entries for a space, within the plan's retention window. Use access logs for traffic questions and runtime logs for serving diagnostics. For build/publish logs of one version, use the build_logs tool instead"
-    },
-    {
-      "name": "build_logs",
-      "description": "Fetch the publish and finalize log entries for one version — the build log for diagnosing why a publish failed or stalled. Use the versions tool to find the versionId, typically the most recent one from a publish receipt"
-    },
-    {
-      "name": "builds_list",
-      "description": "List a space's builds (remote repository or source archive execution runs), newest first, as compact rows: id, status, input kind, and the version it produced or reused. Use build_get for the full immutable input and settings snapshot of one build"
-    },
-    {
-      "name": "build_get",
-      "description": "Fetch one build by its build id (bld_...): current status, immutable input, settings snapshot, target, diagnostics, and the produced or reused version. Use builds_list to find the buildId"
-    },
-    {
-      "name": "build_logs_by_id",
-      "description": "Fetch runner log lines for one build (bld_...) — the source-fetch/install/build-command output for a repository or source archive build run. Use builds_list or build_get to find the buildId. For a version's publish/finalize log, use the build_logs tool instead"
-    },
-    {
-      "name": "build_retry",
-      "description": "Retry a terminal build (bld_...) with its original immutable input and settings, queuing a fresh build run. Only terminal builds (succeeded, failed, canceled, skipped) can be retried; an active build errors. A source-archive build whose bytes never finished uploading returns fresh upload instructions instead of queuing immediately"
-    },
-    {
-      "name": "build_cancel",
-      "description": "Cancel a queued, uploading, or running build (bld_...). Idempotent: canceling an already-terminal build returns its current state unchanged instead of erroring"
-    },
-    {
-      "name": "repository_status",
-      "description": "Get a space's repository connection summary: git host, repository, sync status, last sync error, and auto-deploy flags. Returns a clean not-connected result (connected: false) when the space has no repository connection of the requested type yet, instead of erroring"
-    },
-    {
       "name": "diagnose",
-      "description": "Aggregate a space's current status, recent versions, build logs, and access logs into one ranked findings list so you can self-correct after a failed or stalled publish or build. Read-only: it calls the same endpoints as status, versions, build_logs, and logs and changes nothing. Each finding has a code, severity, where (location), problem, and a fix hint (plus a docs link when available), most severe first. Pass versionId to focus on one version; otherwise the newest version is diagnosed"
+      "description": "Aggregate a space's current state, recent version and build evidence, and access activity into one ranked findings list so you can self-correct after a failed or stalled publish or build. This is a read-only all-in-one diagnostic and changes nothing. Each finding has a code, severity, where (location), problem, and a fix hint (plus a docs link when available), most severe first. Pass versionId to focus on one version; otherwise the newest version is diagnosed"
     },
     {
       "name": "workspace_list",
@@ -185,7 +109,7 @@
     },
     {
       "name": "resume",
-      "description": "Resume, approve, or deny a pending execute approval checkpoint. If decision is omitted, Spacefast uses the browser decision recorded for the approval"
+      "description": "Resume, approve, or deny a pending execute approval checkpoint. After browser approval, pass approvalId (the URL elicitationId) without a decision. Direct approval uses the secret resumeToken with decision"
     }
   ],
   "compatibility": {

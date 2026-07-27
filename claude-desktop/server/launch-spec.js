@@ -2,12 +2,12 @@ export function resolveMcpLaunchSpec(platform = process.platform, comSpec = proc
   if (platform === "win32") {
     return {
       command: comSpec || "cmd.exe",
-      args: ["/d", "/s", "/c", "npx -y spacefast mcp"],
+      args: ["/d", "/s", "/c", "npx -y spacefast mcp --preset essential"],
     };
   }
 
   return {
     command: "npx",
-    args: ["-y", "spacefast", "mcp"],
+    args: ["-y", "spacefast", "mcp", "--preset", "essential"],
   };
 }

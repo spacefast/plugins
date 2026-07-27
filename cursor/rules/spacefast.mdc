@@ -99,9 +99,10 @@ Without a token every publish is anonymous and returns a one-time claim link.
 
 ## On-Device MCP
 
-The bundled `.mcp.json` runs `npx -y spacefast mcp` on first use, giving structured
-tools for path-based publish, signed-upload orchestration, status, version history,
-rollback, logs, and bounded workspace edits — no preinstalled CLI required.
+The bundled `.mcp.json` runs `npx -y spacefast mcp --preset essential` on first use,
+giving structured tools for path-based publish, signed-upload orchestration, status,
+diagnostics, approval-resumable workflows, and bounded workspace edits — no
+preinstalled CLI required.
 
 ## Links
 
