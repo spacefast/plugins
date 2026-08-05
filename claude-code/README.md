@@ -28,7 +28,7 @@ Anonymous publishes need no account. Claude returns the live URL and the one-tim
 - Handle anonymous claim links and account tokens safely
 - Choose direct publish, hosted MCP, or On-Device MCP for the job
 - Hosted MCP at `https://mcp.spacefast.com` for account and space operations
-- On-Device MCP via `npx -y spacefast mcp --preset essential` for local files and bounded workspace edits
+- On-Device MCP via `npx -y spacefast mcp` for local files and Spacefast code mode
 
 ## Publish to your team
 

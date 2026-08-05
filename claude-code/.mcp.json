@@ -6,7 +6,7 @@
     },
     "spacefast-local": {
       "command": "npx",
-      "args": ["-y", "spacefast", "mcp", "--preset", "essential"],
+      "args": ["-y", "spacefast", "mcp"],
       "env": {}
     }
   }

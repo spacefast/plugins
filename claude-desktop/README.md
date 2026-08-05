@@ -14,8 +14,8 @@ settings → Install Extension** and select the file.
 
 Ask Claude: **Publish this folder with Spacefast.**
 
-The extension runs the lean Spacefast On-Device MCP surface. It can publish local files,
-inspect status, diagnose failures, resume approvals, and make bounded workspace edits.
+The extension runs the lean Spacefast On-Device MCP surface. It can publish local files
+and run OpenAPI-generated operations in Spacefast's resumable code mode.
 
 ## Publish to your team
 

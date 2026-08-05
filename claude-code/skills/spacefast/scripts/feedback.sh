@@ -19,19 +19,20 @@ category="${2:-other}"
 space_id=""
 claim_token=""
 if find_state; then
-  api_url="$(state_api_url)"
   space_id="$(state_value spaceId)"
   claim_token="$(state_value claimToken)"
-else
-  api_url="${SPACEFAST_API_URL:-$SPACEFAST_API_DEFAULT}"
 fi
+[ -z "$space_id" ] || validate_space_id "$space_id"
 
-auth_header=()
 if [ -n "${SPACEFAST_TOKEN:-}" ]; then
-  auth_header=(-H "Authorization: Bearer $SPACEFAST_TOKEN")
+  credential="$SPACEFAST_TOKEN"
 elif [ -n "$claim_token" ]; then
-  auth_header=(-H "Authorization: Bearer $claim_token")
+  credential="$claim_token"
+else
+  credential=""
 fi
+api_url="${credential:+$(api_url_for_credential "$credential")}"
+[ -n "$api_url" ] || api_url="$(trusted_api_url)"
 
 context='"context":{}'
 if [ -n "$space_id" ]; then
@@ -39,8 +40,9 @@ if [ -n "$space_id" ]; then
 fi
 
 payload="$(printf '{"message":"%s","category":"%s",%s}' "$(json_escape "$msg")" "$(json_escape "$category")" "$context")"
-curl -sS -X POST \
-  -H "content-type: application/json" \
-  "${auth_header[@]}" \
-  -d "$payload" \
-  "$api_url/v1/feedback"
+request_args=(-X POST -H "content-type: application/json" -d "$payload" "$api_url/v1/feedback")
+if [ -n "$credential" ]; then
+  curl_auth "$credential" "${request_args[@]}"
+else
+  curl -q -sS "${request_args[@]}"
+fi

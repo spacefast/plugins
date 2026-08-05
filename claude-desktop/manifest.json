@@ -2,9 +2,9 @@
   "manifest_version": "0.2",
   "name": "spacefast",
   "display_name": "Spacefast",
-  "version": "0.1.12",
+  "version": "0.1.17",
   "description": "Publish files and folders to Spacefast from Claude Desktop. Permanent URLs, immutable versions, anonymous publish with a claim link.",
-  "long_description": "Spacefast is the static host where AI-made things are kept. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files, orchestrate signed uploads, claim anonymous spaces, inspect status, diagnose failures, run approval-resumable workflows, and make bounded workspace edits.",
+  "long_description": "Spacefast is the static host where AI-made things are kept. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files and run OpenAPI-generated operations in Spacefast's resumable QuickJS sandbox.",
   "author": {
     "name": "Automattic",
     "email": "hello@spacefast.com",
@@ -40,76 +40,20 @@
   },
   "tools": [
     {
-      "name": "search_docs",
-      "description": "Search Spacefast's bundled product documentation in-session — guides, CLI reference, platform API reference, and recipes — without leaving the loop or fetching a URL. An exact topic slug (e.g. \"publishing\", \"api/spaces\") returns that page's full body; any other query ranks matches. Each result includes the doc body, so this is enough to self-correct. Tier-aware: \"full\" (default) covers the standard set, \"essential\" narrows to the core, \"reference\" widens to advanced docs. Use category \"workflow\" for agent/MCP workflow guidance"
-    },
-    {
-      "name": "feedback",
-      "description": "Send a bug report, docs issue, limit problem, idea, or other feedback to Spacefast support. Use this when an agent is stuck after surfacing an error code, docsUrl, and requestId"
-    },
-    {
-      "name": "publish",
-      "description": "Publish a local directory, file, or archive (or inline files) to Spacefast and get a live URL in seconds. Without spaceId, On-Device MCP first reuses the space this directory is already linked to (.spacefast/space.json or .spacefast/state.json, walking up from the workspace root) and only creates a brand-new space when no link exists or createNew is true. Anonymous publishes return the claim link, its expiry, and a shown-once claim token: save the token (.spacefast/state.json when you have filesystem access, otherwise conversation memory), never print it, and always give the user the claim URL and expiry. To update the space later, publish with the same spaceId and that token as claimToken (the Authorization bearer). Pass spaceId (from a publish receipt or saved account/workspace state, plus claimToken for unclaimed spaces) to publish a new version of an existing space. Retries are de-duplicated automatically, so a re-run after a network blip will not double-publish. Always paste the returned shareBlurb into your reply"
-    },
-    {
-      "name": "prepare_publish",
-      "description": "Create a manifest-based publish session and return signed upload instructions without sending file bytes through MCP. Use this for large files, cloud agents, or any publish where base64/inline content would be awkward. Pass spaceId from a publish receipt or saved account/workspace state to add a version to an existing space. Upload returned paths to the signed upload URLs, then call finalize_publish. For On-Device path-based publishes, prefer the publish tool through On-Device MCP"
-    },
-    {
-      "name": "resume_publish",
-      "description": "Get fresh signed upload instructions for an unfinished manifest-based publish. Use this when an upload token expired, more files are needed, or a large publish is being continued"
-    },
-    {
-      "name": "finalize_publish",
-      "description": "Finalize a manifest/open upload session after all advertised files have been uploaded to the signed upload URLs. This compiles routing headers and optionally promotes the version live. Retries are de-duplicated automatically"
-    },
-    {
-      "name": "claim_status",
-      "description": "Check the honest state of an anonymous publish: whether the space is still unclaimed (plus the claim URL and expiry) or already claimed, and — once claimed — whether agent continuation is available, used, or unavailable. Authenticates with the claim token (from the publish receipt or .spacefast/state.json). Use it to decide between sharing the claim link, calling continue_space, or asking the user for an access token"
-    },
-    {
-      "name": "continue_space",
-      "description": "Exchange an anonymous claim token, exactly once, for a durable space-scoped access token after the space's owner claimed it with agent continuation enabled. Use this when a publish or status call fails with space_claimed_credential_available. The claim token comes from the input or, On-Device, from .spacefast/state.json; the returned credential.accessToken is shown once — save it (On-Device MCP saves it to .spacefast/state.json automatically) and use it as the Authorization bearer for future publishes to this space. A second exchange fails with continuation_used; if the owner declined continuation or the window expired it fails with continuation_unavailable"
-    },
-    {
-      "name": "whoami",
-      "description": "Return the authenticated Spacefast subject, safe user identity, tenant grants, team memberships, and a current-team hint. Use this as the first account-oriented call before choosing a team or space. Sensitive browser payloads and tokens from /v1/me are deliberately omitted"
-    },
-    {
-      "name": "status",
-      "description": "Get the current state of a space in one call: live URL, claim/expiry state, configuration, and its most recent versions"
-    },
-    {
-      "name": "diagnose",
-      "description": "Aggregate a space's current state, recent version and build evidence, and access activity into one ranked findings list so you can self-correct after a failed or stalled publish or build. This is a read-only all-in-one diagnostic and changes nothing. Each finding has a code, severity, where (location), problem, and a fix hint (plus a docs link when available), most severe first. Pass versionId to focus on one version; otherwise the newest version is diagnosed"
-    },
-    {
-      "name": "workspace_list",
-      "description": "Quickly list files without reading contents by default. On-Device MCP lists the bounded local workspace root; hosted MCP lists the durable virtual workspace for this MCP session"
-    },
-    {
-      "name": "workspace_read",
-      "description": "Read a UTF-8 text file. On-Device MCP reads from the bounded local workspace root; hosted MCP reads from the durable virtual workspace. Refuses absolute paths, path traversal, binary files, large files, and secret-like paths"
-    },
-    {
-      "name": "workspace_write",
-      "description": "Create or replace a workspace file. On-Device MCP writes to the bounded local workspace root; hosted MCP writes to the durable virtual workspace. Use utf8 for text and base64 for small generated binary assets. Returns a diff for text content"
-    },
-    {
-      "name": "workspace_apply_patch",
-      "description": "Apply exact string replacements to workspace files. This is safer for agents than whole-file rewrites when the target text is known. Hosted MCP patches the durable virtual workspace; On-Device MCP patches the bounded local workspace root"
-    },
-    {
-      "name": "workspace_diff",
-      "description": "Show diffs for workspace files changed since this MCP server first read or wrote them. Hosted MCP diffs the durable virtual workspace; On-Device MCP diffs local files under the bounded workspace root"
-    },
-    {
       "name": "execute",
-      "description": "Run sandboxed JavaScript code against Spacefast tools through a QuickJS code-mode runtime. Use spacefast.search(\"query\"), spacefast.publish({...}), spacefast.workspace.read({...}), tools.search({...}), and tools.describe({name}). Legacy JSON/JSONL workflows are still accepted with mode=workflow or auto detection. Defaults to dryRun=true so mutating calls are planned rather than executed. With dryRun=false, Spacefast can return an approval_required checkpoint for resume"
+      "description": "Run JavaScript against the OpenAPI-generated Spacefast catalog in a secure sandbox"
+    },
+    {
+      "name": "skills",
+      "description": "Fetch a named how-to skill. Skills hold the long-form guidance that would otherwise bloat another tool's always-loaded description"
     },
     {
       "name": "resume",
-      "description": "Resume, approve, or deny a pending execute approval checkpoint. After browser approval, pass approvalId (the URL elicitationId) without a decision. Direct approval uses the secret resumeToken with decision"
+      "description": "Resume a paused execution using the executionId returned by execute"
+    },
+    {
+      "name": "publish",
+      "description": "Publish one local path or an inline file set to Spacefast. On-Device MCP keeps anonymous credentials in workspace state and never asks the model to carry them"
     }
   ],
   "compatibility": {

@@ -20,34 +20,32 @@ fi
 
 space_id="$(state_value spaceId)"
 [ -n "$space_id" ] || space_id="$(link_value space)"
-api_url="$(state_api_url)"
-link_api_url="$(link_value apiBaseUrl)"
-[ -n "$link_api_url" ] && api_url="$link_api_url"
-cred="$(state_value accessToken)"
-[ -n "$cred" ] || cred="$(state_value claimToken)"
-[ -n "$cred" ] || cred="${SPACEFAST_TOKEN:-}"
+credential_source=state
+if [ -n "${SPACEFAST_TOKEN:-}" ]; then
+  cred="$SPACEFAST_TOKEN"
+  credential_source=ambient
+  api_url="$(trusted_api_url)"
+elif [ -n "${SPACEFAST_API_URL:-}" ]; then
+  printf 'error: unbound_credential\nhint: SPACEFAST_API_URL requires SPACEFAST_TOKEN; refusing to send a saved project credential to an ambient origin.\n' >&2
+  exit 2
+else
+  cred="$(state_value accessToken)"
+  [ -n "$cred" ] || cred="$(state_value claimToken)"
+  api_url=""
+  [ -z "$cred" ] || api_url="$(api_url_for_credential "$cred")"
+fi
 if [ -z "$space_id" ] || [ -z "$cred" ]; then
   printf 'error: invalid_state\nhint: this checkout is linked to space %s but you have no credential — set SPACEFAST_TOKEN or run sf login.\n' "${space_id:-unknown}" >&2
   exit 2
 fi
-case "$space_id" in
-  spc_*) ;;
-  *)
-    resolved="$(curl_auth "$cred" "$api_url/v1/spaces/resolve?ref=$space_id")"
-    check_envelope "$resolved" || exit 1
-    space_id="$(json_field id "$resolved")"
-    if [ -z "$space_id" ]; then
-      printf 'error: unresolved_space_link\nhint: could not resolve the linked space from %s.\n' "$STATE_LINK" >&2
-      exit 1
-    fi
-    ;;
-esac
+validate_space_id "$space_id"
 
 build_upload "$target"
 trap cleanup_upload EXIT INT TERM
 attempt() {
-  curl_auth "$cred" "${UPLOAD_ARGS[@]}" -F "spaceId=$space_id" \
-    -H "x-spacefast-client: agent/skill-script" "$api_url/v1/publish"
+  stream_upload |
+    curl_auth "$cred" "${UPLOAD_ARGS[@]}" --form-string "spaceId=$space_id" \
+      -H "x-spacefast-client: agent/skill-script" "$api_url/v1/publish"
 }
 
 body="$(attempt)"
@@ -72,27 +70,27 @@ trap - EXIT INT TERM
 
 parse_receipt "$body"
 
-# Refresh state (and migrate a legacy .stattic/ dir to .spacefast/).
+# Refresh the canonical .spacefast state captured during safe discovery.
 new_state_dir="$PROJECT_ROOT/.spacefast"
 access_token="$(state_value accessToken)"
 claim_token="$(state_value claimToken)"
 version_id="${RECEIPT_VERSION_ID:-$(state_value lastVersionId)}"
-if [ -n "$access_token" ]; then
+if [ "$credential_source" = ambient ]; then
+  cred_field="$(printf '"accessToken":"%s"' "$cred")"
+  delete_key=claimToken
+elif [ -n "$access_token" ]; then
   cred_field="$(printf '"accessToken":"%s"' "$access_token")"
+  delete_key=claimToken
 elif [ -n "${SPACEFAST_TOKEN:-}" ] && [ -z "$claim_token" ]; then
   cred_field="$(printf '"accessToken":"%s"' "$SPACEFAST_TOKEN")"
+  delete_key=claimToken
 else
   cred_field="$(printf '"claimToken":"%s"' "$claim_token")"
+  delete_key=""
 fi
-merge_write_state_file "$new_state_dir" \
-  "$(printf '{"spaceId":"%s",%s,"apiUrl":"%s","lastVersionId":"%s"}' "$space_id" "$cred_field" "$api_url" "$version_id")"
-printf '{"space":"%s"}' "$space_id" > "$new_state_dir/space.json"
-ensure_gitignore "$PROJECT_ROOT"
-if [ "$STATE_DIR" != "$new_state_dir" ]; then
-  echo "Migrated legacy state from $STATE_DIR to $new_state_dir." >&2
-  case "$STATE_DIR" in
-    */.stattic) rm -f "$STATE_DIR/state.json" ;;
-  esac
-fi
+persist_project_state merge \
+  "$(printf '{"spaceId":"%s",%s,"apiUrl":"%s","lastVersionId":"%s"}' "$space_id" "$cred_field" "$api_url" "$version_id")" \
+  "$delete_key" "$space_id"
 
+await_publish_receipt "$body" "$cred" "$api_url" || exit 1
 report_receipt

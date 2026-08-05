@@ -19,32 +19,46 @@ if find_state; then
   exec "$here/update.sh" "$target"
 fi
 
-api_url="${SPACEFAST_API_URL:-$SPACEFAST_API_DEFAULT}"
+capture_project_root .
+api_url="$(trusted_api_url)"
 
 build_upload "$target"
 trap cleanup_upload EXIT INT TERM
+attempt() {
+  if [ -n "${SPACEFAST_TOKEN:-}" ]; then
+    stream_upload |
+      curl_auth "$SPACEFAST_TOKEN" "${UPLOAD_ARGS[@]}" \
+        -H "x-spacefast-client: agent/skill-script" "$api_url/v1/publish"
+  else
+    stream_upload |
+      curl -q -sS "${UPLOAD_ARGS[@]}" \
+        -H "x-spacefast-client: agent/skill-script" "$api_url/v1/publish"
+  fi
+}
 if [ -n "${SPACEFAST_TOKEN:-}" ]; then
   echo "SPACEFAST_TOKEN is set — publishing authenticated instead of anonymous." >&2
-  body="$(curl_auth "$SPACEFAST_TOKEN" "${UPLOAD_ARGS[@]}" -H "x-spacefast-client: agent/skill-script" "$api_url/v1/publish")"
-else
-  body="$(curl -sS "${UPLOAD_ARGS[@]}" -H "x-spacefast-client: agent/skill-script" "$api_url/v1/publish")"
 fi
+body="$(attempt)"
 cleanup_upload
 trap - EXIT INT TERM
 check_envelope "$body" || exit 1
 parse_receipt "$body"
 
 if [ -n "$RECEIPT_SPACE_ID" ]; then
-  mkdir -p .spacefast
-  printf '{"space":"%s"}' "$RECEIPT_SPACE_ID" > .spacefast/space.json
+  validate_space_id "$RECEIPT_SPACE_ID"
   if [ -n "$RECEIPT_CLAIM_TOKEN" ]; then
-    write_state_file .spacefast "$(
+    persist_project_state replace "$(
       printf '{"spaceId":"%s","claimToken":"%s","apiUrl":"%s","lastVersionId":"%s"}' \
         "$RECEIPT_SPACE_ID" "$RECEIPT_CLAIM_TOKEN" "$api_url" "$RECEIPT_VERSION_ID"
-    )"
+    )" "" "$RECEIPT_SPACE_ID"
+    # Reload the just-persisted issuer binding before the continuation poll;
+    # curl_auth never sends even a fresh claim credential to an unbound origin.
+    find_state
+  else
+    persist_project_state link "" "" "$RECEIPT_SPACE_ID"
   fi
-  ensure_gitignore .
 fi
 
+await_publish_receipt "$body" "${SPACEFAST_TOKEN:-}" "$api_url" || exit 1
 report_receipt
 echo "Saved state to .spacefast/ — use update.sh for the next version of this space."

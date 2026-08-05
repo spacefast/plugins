@@ -23,10 +23,13 @@ fi
 
 claim_token="$(state_value claimToken)"
 if [ -z "$claim_token" ]; then
-  printf 'error: invalid_state\nhint: %s holds no claimToken; ask the user to mint an access token in the dashboard (Account -> Access tokens).\n' "$STATE_FILE" >&2
+  printf 'error: invalid_state\nhint: %s holds no claimToken; ask the user to create an API key in the dashboard (Account -> API keys).\n' "$STATE_FILE" >&2
   exit 2
 fi
 
+new_state_dir="$PROJECT_ROOT/.spacefast"
+# Refuse unsafe persistence before spending the one-time claim token.
+persist_project_state verify "" "" ""
 api_url="$(state_api_url)"
 idempotency_key="$(continuation_idempotency_key "$claim_token")"
 body="$(curl_auth_idempotent "$claim_token" "$idempotency_key" -X POST "$api_url/v1/anonymous-claim/exchange")"
@@ -37,12 +40,12 @@ if ! check_envelope "$body"; then
       if check_envelope "$body"; then
         :
       else
-        echo "The one-time exchange is not available. Ask the user to mint an access token in the dashboard (Account -> Access tokens) and save it as \"accessToken\" in $STATE_FILE." >&2
+        echo "The one-time exchange is not available. Ask the user to create an API key in the dashboard (Account -> API keys) and save it as \"accessToken\" in $STATE_FILE." >&2
         exit 1
       fi
       ;;
     continuation_unavailable)
-      echo "The one-time exchange is not available. Ask the user to mint an access token in the dashboard (Account -> Access tokens) and save it as \"accessToken\" in $STATE_FILE." >&2
+      echo "The one-time exchange is not available. Ask the user to create an API key in the dashboard (Account -> API keys) and save it as \"accessToken\" in $STATE_FILE." >&2
       exit 1
       ;;
     *)
@@ -61,13 +64,13 @@ else
   space_id="$(printf '%s' "$body" | grep -o '"spc_[A-Za-z0-9]*"' | head -n 1 | tr -d '"')"
 fi
 [ -n "$space_id" ] || space_id="$(state_value spaceId)"
+validate_space_id "$space_id"
 if [ -z "$access_token" ]; then
   printf 'error: unexpected_response\nhint: the exchange succeeded but no data.credential.accessToken was found in the response.\n' >&2
   exit 1
 fi
 
 version_id="$(state_value lastVersionId)"
-new_state_dir="$PROJECT_ROOT/.spacefast"
 if [ -n "$version_id" ]; then
   state_json="$(printf '{"spaceId":"%s","accessToken":"%s","apiUrl":"%s","lastVersionId":"%s"}' \
     "$space_id" "$access_token" "$api_url" "$version_id")"
@@ -75,19 +78,7 @@ else
   state_json="$(printf '{"spaceId":"%s","accessToken":"%s","apiUrl":"%s"}' \
     "$space_id" "$access_token" "$api_url")"
 fi
-merge_write_state_file "$new_state_dir" "$state_json"
-# The exchange spends the claim token; scrub it so state holds no dead secret.
-# (The non-jq merge fallback rewrites only the keys above, so nothing to scrub.)
-if have_jq && [ -f "$new_state_dir/state.json" ]; then
-  (
-    umask 077
-    jq 'del(.claimToken)' "$new_state_dir/state.json" > "$new_state_dir/state.json.tmp"
-    mv "$new_state_dir/state.json.tmp" "$new_state_dir/state.json"
-  )
-  chmod 600 "$new_state_dir/state.json" 2>/dev/null || true
-fi
-printf '{"space":"%s"}' "$space_id" > "$new_state_dir/space.json"
-ensure_gitignore "$PROJECT_ROOT"
+persist_project_state merge "$state_json" claimToken "$space_id"
 
 if [ -n "$label" ]; then
   echo "Exchanged the claim token for a durable credential (\"$label\") and saved it to $new_state_dir/state.json. Retry the publish."

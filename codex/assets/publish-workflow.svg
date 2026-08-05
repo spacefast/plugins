@@ -13,7 +13,7 @@
   <text x="522" y="431" fill="#166534" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">2. Publish</text>
   <text x="522" y="470" fill="#14532d" font-family="Inter, Arial, sans-serif" font-size="18">Use curl, CLI, or MCP</text>
   <rect x="836" y="384" width="300" height="132" rx="16" fill="#fff7ed" stroke="#fed7aa"/>
-  <text x="868" y="431" fill="#9a3412" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">3. Share</text>
-  <text x="868" y="470" fill="#7c2d12" font-family="Inter, Arial, sans-serif" font-size="18">Live URL + version URL</text>
-  <text x="144" y="590" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="20">Structured MCP adds approvals, logs, rollback, CI, and workspace edits.</text>
+  <text x="868" y="431" fill="#9a3412" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">3. Report</text>
+  <text x="868" y="470" fill="#7c2d12" font-family="Inter, Arial, sans-serif" font-size="18">Live + Version + Access</text>
+  <text x="144" y="590" fill="#475569" font-family="Inter, Arial, sans-serif" font-size="20">Spacefast adds generated API operations, browser approvals, and resumable code mode.</text>
 </svg>
