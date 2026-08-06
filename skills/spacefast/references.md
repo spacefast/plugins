@@ -18,7 +18,7 @@ full recipe (instructions + verification). Recipes include `publish-and-verify`,
 `create-and-publish-site`, `claim-flow`, `rollback-safely`, `ci-github-actions`, and others.
 
 Use `execute` to search the OpenAPI catalog for capability, limits, domains, access control, and error recovery.
-Website mirrors: https://spacefast.com/docs/getting-started/agents · https://spacefast.com/docs/llms.txt
+Website mirrors: https://spacefast.com/docs/agents · https://spacefast.com/docs/llms.txt
 
 ## Hosted Vs On-Device
 
@@ -62,7 +62,7 @@ through `execute` → `tools.search`. Treat upload tokens as secrets.
 
 ## References
 
-- Agent guide: https://spacefast.com/docs/getting-started/agents
+- Agent guide: https://spacefast.com/docs/agents
 - API docs and OpenAPI: https://spacefast.com/docs/api
 - CLI docs: https://spacefast.com/docs/cli
 - Publish contract: https://spacefast.com/publish-spec.json

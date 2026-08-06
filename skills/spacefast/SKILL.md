@@ -30,7 +30,7 @@ claim link from the publish receipt.
 Prefer the `skills` and `execute` MCP tools. Website docs remain available when you need a
 stable link:
 
-- https://spacefast.com/docs/getting-started/agents
+- https://spacefast.com/docs/agents
 - https://spacefast.com/docs/api
 - https://spacefast.com/docs/llms.txt
 
@@ -128,8 +128,8 @@ After publishing, present the stable **Live URL** as the site's identity and the
 access link a preview. Never print management access tokens, claim tokens, auth files, upload tokens, or
 `.spacefast/state.json`.
 
-Present Open and Claim as the only actions. State anonymous expiry in user terms: the Space
-exists until `data.claim.expiresAt` unless claimed; claiming preserves Open and removes its expiry.
+Present Access and Claim as the only actions. State anonymous expiry in user terms: the Space
+exists until `data.claim.expiresAt` unless claimed; claiming preserves Access and removes its expiry.
 Keep live and immutable Version addresses as receipt metadata. After claim, the agent key is named
 and revocable in the dashboard.
 
