@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Status: read (or poll) the anonymous publish/claim status for a version,
-# authenticated with the saved claim token. Prints the status JSON; it may
+# authenticated with the saved space key. Prints the status JSON; it may
 # include a claim URL that embeds a pre-claim credential, so treat output as
 # sensitive. Never prints the token itself.
 #
@@ -41,7 +41,7 @@ if [ -z "$cred" ]; then
 fi
 
 fetch_status() {
-  curl_auth "$cred" "$api_url/v1/anonymous-claim/status?versionId=$version_id"
+  curl_auth "$cred" "$api_url/v1/claim/status?versionId=$version_id"
 }
 
 attempts=0

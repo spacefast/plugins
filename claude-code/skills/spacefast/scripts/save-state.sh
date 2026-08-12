@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Persist a direct-publish JSON receipt through the same hardened state writer
-# used by publish.sh. The complete receipt is read from stdin so claim tokens
+# used by publish.sh. The complete receipt is read from stdin so space keys
 # never appear on argv.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
@@ -24,7 +24,7 @@ then
   exit 2
 fi
 if [ -z "$RECEIPT_CLAIM_TOKEN" ]; then
-  printf 'error: unexpected_response\nhint: the publish receipt did not contain data.claim.token; use authenticated CLI state instead.\n' >&2
+  printf 'error: unexpected_response\nhint: the publish receipt did not contain data.claim.key; use authenticated CLI state instead.\n' >&2
   exit 2
 fi
 

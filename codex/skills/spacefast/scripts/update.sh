@@ -2,7 +2,7 @@
 # Update: publish a new version to the space saved in .spacefast/state.json
 # (never creates a new space). If the user has claimed the space since the last
 # publish, the publish fails once with space_claimed_credential_available; this
-# script then runs continue.sh to exchange the claim token for a durable key
+# script then runs continue.sh to exchange the space key for a durable key
 # and retries automatically.
 #
 # Usage: update.sh [file-or-dir]   (defaults to the current directory)
@@ -51,7 +51,7 @@ attempt() {
 body="$(attempt)"
 if ! check_envelope "$body"; then
   if [ "$LAST_ERROR_CODE" = "space_claimed_credential_available" ]; then
-    echo "The user claimed this space — exchanging the claim token for a durable key, then retrying." >&2
+    echo "The user claimed this space — exchanging the space key for a durable key, then retrying." >&2
     "$here/continue.sh"
     find_state
     cred="$(state_value accessToken)"

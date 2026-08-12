@@ -5,7 +5,7 @@
 # Dependencies: bash, curl, and standard unix tools. jq is used when available;
 # a sed/grep fallback covers the JSON these scripts read and write.
 #
-# Secrets discipline: claim tokens and access tokens are never printed, never
+# Secrets discipline: space keys and access tokens are never printed, never
 # put on a curl argv (bearer headers ride a stdin config), and state files are
 # written with mode 0600.
 
@@ -876,7 +876,7 @@ cleanup_upload() {
 }
 
 # Pull the interesting fields out of a publish receipt. Sets RECEIPT_* vars.
-# The claim token is extracted but must never be printed.
+# The space key is extracted but must never be printed.
 parse_receipt() { # <body>
   local body="$1" claim_section open_section
   if have_jq; then
@@ -886,8 +886,9 @@ parse_receipt() { # <body>
     RECEIPT_VERSION_URL="$(printf '%s' "$body" | jq -r '.data.version.immutableUrl // empty')"
     RECEIPT_OPEN_URL="$(printf '%s' "$body" | jq -r '.data.open.url // empty')"
     RECEIPT_OPEN_EXPIRES="$(printf '%s' "$body" | jq -r '.data.open.expiresAt // empty')"
-    RECEIPT_CLAIM_TOKEN="$(printf '%s' "$body" | jq -r '.data.claim.token // empty')"
-    RECEIPT_CLAIM_URL="$(printf '%s' "$body" | jq -r '.data.claim.url // empty')"
+    RECEIPT_CLAIM_TOKEN="$(printf '%s' "$body" | jq -r '.data.claim.key // empty')"
+    RECEIPT_CLAIM_URL="$(printf '%s' "$body" | jq -r '.data.claim.claimUrl // empty')"
+    RECEIPT_SITE_URL="$(printf '%s' "$body" | jq -r '.data.claim.url // empty')"
     RECEIPT_CLAIM_EXPIRES="$(printf '%s' "$body" | jq -r '.data.claim.expiresAt // empty')"
     RECEIPT_NEXT_ACTION="$(printf '%s' "$body" | jq -r '.data.next.action // empty')"
     RECEIPT_OPERATION_ID="$(printf '%s' "$body" | jq -r '.data.operation.id // empty')"
@@ -902,8 +903,9 @@ parse_receipt() { # <body>
     RECEIPT_OPEN_URL="$(json_field url "$open_section")"
     RECEIPT_OPEN_EXPIRES="$(json_field expiresAt "$open_section")"
     claim_section="${body#*\"claim\"}"
-    RECEIPT_CLAIM_TOKEN="$(json_field token "$claim_section")"
-    RECEIPT_CLAIM_URL="$(json_field url "$claim_section")"
+    RECEIPT_CLAIM_TOKEN="$(json_field key "$claim_section")"
+    RECEIPT_CLAIM_URL="$(json_field claimUrl "$claim_section")"
+    RECEIPT_SITE_URL="$(json_field url "$claim_section")"
     RECEIPT_CLAIM_EXPIRES="$(json_field expiresAt "$claim_section")"
   fi
 }
@@ -961,6 +963,9 @@ report_receipt() {
   if [ -n "${RECEIPT_OPEN_URL:-}" ]; then
     printf 'Open privately (repeatable until %s): %s\n' \
       "${RECEIPT_OPEN_EXPIRES:-soon}" "$RECEIPT_OPEN_URL"
+  elif [ -n "${RECEIPT_SITE_URL:-}" ]; then
+    printf 'Open privately (until %s): %s\n' \
+      "${RECEIPT_CLAIM_EXPIRES:-soon}" "$RECEIPT_SITE_URL"
   fi
   if [ -n "${RECEIPT_CLAIM_URL:-}" ]; then
     printf 'Claim link (show the user; expires %s): %s\n' \

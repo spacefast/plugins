@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # First publish: create an anonymous Spacefast space from a file or directory,
 # save .spacefast/space.json + .spacefast/state.json so the next publish
-# updates the same space, and print the live + claim URLs (never the token).
+# updates the same space, and print the live + claim URLs (never the key).
 #
 # Usage: publish.sh [file-or-dir]   (defaults to the current directory)
 #

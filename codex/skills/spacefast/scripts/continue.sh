@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Continue after claim: exchange the saved claim token — exactly once — for a
+# Continue after claim: exchange the saved space key — exactly once — for a
 # durable, space-scoped access token, and rewrite .spacefast/state.json with it
 # (the claimToken field is replaced by accessToken). Run this when a publish
 # fails with error code space_claimed_credential_available; update.sh runs it
@@ -28,15 +28,15 @@ if [ -z "$claim_token" ]; then
 fi
 
 new_state_dir="$PROJECT_ROOT/.spacefast"
-# Refuse unsafe persistence before spending the one-time claim token.
+# Refuse unsafe persistence before spending the one-time space key.
 persist_project_state verify "" "" ""
 api_url="$(state_api_url)"
 idempotency_key="$(continuation_idempotency_key "$claim_token")"
-body="$(curl_auth_idempotent "$claim_token" "$idempotency_key" -X POST "$api_url/v1/anonymous-claim/exchange")"
+body="$(curl_auth_idempotent "$claim_token" "$idempotency_key" -X POST "$api_url/v1/claim/exchange")"
 if ! check_envelope "$body"; then
   case "$LAST_ERROR_CODE" in
     continuation_used)
-      body="$(curl_auth_idempotent "$claim_token" "$idempotency_key" -X POST "$api_url/v1/anonymous-claim/exchange")"
+      body="$(curl_auth_idempotent "$claim_token" "$idempotency_key" -X POST "$api_url/v1/claim/exchange")"
       if check_envelope "$body"; then
         :
       else
@@ -81,7 +81,7 @@ fi
 persist_project_state merge "$state_json" claimToken "$space_id"
 
 if [ -n "$label" ]; then
-  echo "Exchanged the claim token for a durable credential (\"$label\") and saved it to $new_state_dir/state.json. Retry the publish."
+  echo "Exchanged the space key for a durable credential (\"$label\") and saved it to $new_state_dir/state.json. Retry the publish."
 else
-  echo "Exchanged the claim token for a durable credential and saved it to $new_state_dir/state.json. Retry the publish."
+  echo "Exchanged the space key for a durable credential and saved it to $new_state_dir/state.json. Retry the publish."
 fi
