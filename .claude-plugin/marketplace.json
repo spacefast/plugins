@@ -20,7 +20,7 @@
       "keywords": [
         "spacefast",
         "publish",
-        "static-hosting",
+        "artifact-sharing",
         "deploy"
       ],
       "source": "./claude-code"

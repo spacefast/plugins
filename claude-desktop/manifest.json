@@ -2,9 +2,9 @@
   "manifest_version": "0.2",
   "name": "spacefast",
   "display_name": "Spacefast",
-  "version": "0.1.24",
+  "version": "0.1.26",
   "description": "Publish files and folders to Spacefast from Claude Desktop. Permanent URLs, immutable versions, anonymous publish with a claim link.",
-  "long_description": "Spacefast is the static host where AI-made things are kept. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files and run OpenAPI-generated operations in Spacefast's resumable QuickJS sandbox.",
+  "long_description": "Spacefast is the best place to share AI artifacts. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files and run OpenAPI-generated operations in Spacefast's resumable QuickJS sandbox.",
   "author": {
     "name": "Automattic",
     "email": "hello@spacefast.com",
@@ -17,7 +17,7 @@
   },
   "icon": "assets/logo.png",
   "license": "MIT",
-  "keywords": ["spacefast", "publish", "static-hosting", "deploy", "immutable-url"],
+  "keywords": ["spacefast", "publish", "artifact-sharing", "deploy", "immutable-url"],
   "server": {
     "type": "node",
     "entry_point": "server/index.js",
@@ -54,6 +54,14 @@
     {
       "name": "publish",
       "description": "Publish one local path or an inline file set to Spacefast. On-Device MCP keeps anonymous credentials in workspace state and never asks the model to carry them"
+    },
+    {
+      "name": "search_docs",
+      "description": "Search the published Spacefast documentation. This tool is read-only. The tool returns ranked pages and short excerpts. It does not return full page bodies. An exact slug or path matches one page. Omit query to list pages. If hasMore is true, call search_docs again with nextOffset as offset. Use get_page to read a full page"
+    },
+    {
+      "name": "get_page",
+      "description": "Read one published Spacefast documentation page in full, including its Markdown body. Address it by docs path (`/publishing`) or slug (`api/spaces`) — pass exactly one. Find pages with search_docs"
     }
   ],
   "compatibility": {

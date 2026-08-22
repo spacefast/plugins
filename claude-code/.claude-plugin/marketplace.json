@@ -17,7 +17,7 @@
       },
       "category": "deployment",
       "homepage": "https://spacefast.com/docs/agents",
-      "keywords": ["spacefast", "publish", "static-hosting", "deploy"],
+      "keywords": ["spacefast", "publish", "artifact-sharing", "deploy"],
       "source": "."
     }
   ]
