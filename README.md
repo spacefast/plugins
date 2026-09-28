@@ -46,8 +46,12 @@ npx -y skills add spacefast/plugins --skill spacefast -g -y
 
 Ask your agent: **Publish this project with Spacefast.**
 
-Anonymous publishes need no account and return a live URL plus a one-time claim link. Run
-`npx -y spacefast login` first when you want to publish into your team.
+Use `sf publish` for local files. Anonymous publishes need no account and return a live URL
+plus a one-time claim link. Run `sf login` to publish into your team. The hosted MCP connection
+requires a separate browser OAuth sign-in before its tools can run.
+
+The skill files in this repository follow the current MCP tools. Downloadable plugin archives
+and release metadata describe the last packaged release; this skill refresh does not replace them.
 
 ## Guides
 
