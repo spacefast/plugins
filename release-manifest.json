@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T10:59:01.000Z",
+  "generatedAt": "2026-10-01T11:16:17.000Z",
   "version": "0.5.1",
   "packageManager": "pnpm@11.22.0",
   "publicRepoRoot": ".",
@@ -38,13 +38,13 @@
   ],
   "checksums": {
     ".cursor-plugin/marketplace.json": "98f2bff8b9aae6209353669c977a9047ccf5c77b7c79ea238755ec7d58ac9725",
-    "claude-code.tgz": "632b7367b946e4ea6350f6d4c65a16389f6dd3a615e469d5cc379a585d512cb0",
-    "claude-desktop.tgz": "6fa4ba818c8c373f3e7c80797c9f8508fa43bc40b4b963c041b6b2f0ee4039d4",
-    "codex.tgz": "5fd1bde5fc1aa25c2cdc93f20ac02827f96471714934a428c68d63f11de692b5",
-    "cursor.tgz": "f67aedae4a584a3db399876a75fe6bf6ee8c38eae109e715931df485b656641c",
-    "spacefast-plugins.tgz": "12dd7f53788ed8d8867e6c5f664e1cb1e11f3a03a9b8e6f89f14f8ce5fe0858d",
-    "spacefast-plugins.zip": "3fde4b915727fc7445c54688136af547216e3633679b3d9f05ca3184180baa85",
-    "spacefast.mcpb": "7d638df92fc20fbb4d31dee9787a0a5c9eb26ac7c4c227efeeea7ae14796cc61"
+    "claude-code.tgz": "3a7a169da42691135dcacd8baa1f4627cb77f9baf736b6f24f011d9e0eaf183e",
+    "claude-desktop.tgz": "7670e7e2095147a607721898b664b4d63d1aebf6673f2f292f628a90b928b58b",
+    "codex.tgz": "6bb4c461f5406e83895c78674c11b446fbfe0f5a2928f3f7939eef656547ae2b",
+    "cursor.tgz": "0a54b2b5e9ef8d7c42b5c37716fd730f9dfeaefde76fc9238b45e8d968181a8e",
+    "spacefast-plugins.tgz": "29c4673677bbd59bfe9b6f190b4a229dc019ce4ffea7337d967f5e73d8fe144e",
+    "spacefast-plugins.zip": "970a35a4780d56c2444a812fadd88f0d98da9ed9282f82dd735a65d3eb6f97af",
+    "spacefast.mcpb": "efd297a49859293b629490db39e7e7a2508cfd8c6d0fba657dc21fc42a486a69"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",
@@ -52,15 +52,16 @@
   ],
   "mcpb": {
     "path": "spacefast.mcpb",
-    "sha256": "7d638df92fc20fbb4d31dee9787a0a5c9eb26ac7c4c227efeeea7ae14796cc61"
+    "sha256": "efd297a49859293b629490db39e7e7a2508cfd8c6d0fba657dc21fc42a486a69"
   },
   "provenance": {
-    "sourceSha": "309185424b5cc4bfc2b8367d0bd6b6f222ed75f2",
+    "sourceSha": "bbb3507cd7c0c7e1039e151c18084aec311fbcfe",
     "pluginsSha": "{{PLUGINS_SHA}}"
   },
   "marketplace": {
     "submissionIndex": "marketplace/submission-index.json",
     "artifacts": [
+      ".agents/plugins/marketplace.json",
       ".claude-plugin/plugin.json",
       ".codex-plugin/plugin.json",
       ".cursor-plugin/plugin.json",
