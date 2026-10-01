@@ -10,18 +10,18 @@
     {
       "name": "spacefast",
       "displayName": "Spacefast",
-      "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
+      "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
       "author": {
         "name": "Automattic",
         "url": "https://spacefast.com"
       },
       "category": "deployment",
-      "homepage": "https://spacefast.com/docs/agents",
+      "homepage": "https://spacefast.com",
       "keywords": [
         "spacefast",
-        "publish",
+        "publish-to-spacefast",
         "artifact-sharing",
-        "deploy"
+        "hosting"
       ],
       "source": "./claude-code"
     }

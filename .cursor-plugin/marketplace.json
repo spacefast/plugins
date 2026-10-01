@@ -10,7 +10,7 @@
     {
       "name": "spacefast",
       "source": "cursor",
-      "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link."
+      "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows."
     }
   ]
 }

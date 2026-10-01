@@ -1,7 +1,7 @@
 # Spacefast for Claude Code
 
 Publish local files and manage Spacefast spaces without leaving Claude Code. The plugin adds a
-`/spacefast` skill plus hosted and local MCP connections.
+`/spacefast` skill, a SessionStart hook that announces a linked Space, and one hosted HTTP MCP connection.
 
 ## Install
 
@@ -15,26 +15,31 @@ Run `/reload-plugins` or start a new Claude Code session after installation.
 ## Use
 
 Ask Claude: **Publish this project with Spacefast.** The skill runs automatically for
-publish, deploy, host, and share requests.
+publish, deploy, host, share, and existing Space file-edit requests.
 
-Anonymous publishes need no account. Claude returns the live URL and the one-time claim link.
+Anonymous publishes go through the CLI: `sf publish` needs no account and returns a Live URL plus a claim link. The hosted MCP connection needs browser OAuth before any tool runs.
 
 ## Included
 
 - Publish files and folders, then update the same space
-- Inspect versions and logs, diagnose failures, and roll back
-- Handle anonymous claim links and account tokens safely
-- Choose direct publish, hosted MCP, or On-Device MCP for the job
-- Hosted MCP at `https://mcp.spacefast.com` for account and space operations
-- On-Device MCP via `npx -y spacefast mcp` for local files and Spacefast code mode
+- Edit Space source files through MCP without a local checkout
+- Inspect deployments, domains, and analytics
+- Handle anonymous claim actions and account tokens safely
+- Choose direct publish or hosted MCP for the job
+- Hosted HTTP MCP at `https://mcp.spacefast.com` with browser OAuth
 
 ## Publish to your team
 
-Sign in once before asking Claude to publish:
+Complete the browser OAuth flow when Claude prompts you.
 
-```bash
-npx -y spacefast login
-```
+## Telemetry
+
+Plugin hooks send no telemetry. The CLI records only install and setup outcomes: agent, method,
+outcome, reason code, CLI version, OS, and timestamp. It never sends a machine, user, team, path,
+file-content, or credential identifier. Set `SPACEFAST_TELEMETRY_DISABLED=1` or `DO_NOT_TRACK=1`
+to disable disclosure and delivery before any event is sent.
+
+Raw events are retained for 30 days and aggregate counts for 90 days. See the [privacy policy](https://automattic.com/privacy/).
 
 ## Guides
 

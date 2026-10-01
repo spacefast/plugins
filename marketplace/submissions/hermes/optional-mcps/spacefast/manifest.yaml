@@ -1,0 +1,19 @@
+manifest_version: 1
+name: spacefast
+description: >-
+  Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.
+source: https://spacefast.com/setup/hermes
+transport:
+  type: http
+  url: https://mcp.spacefast.com
+auth:
+  type: oauth
+suggest:
+  keywords:
+    - spacefast
+    - publish
+  hosts:
+    - spacefast.com
+post_install: |
+  Authenticate in the browser when Hermes prompts you.
+  To reconnect manually, run: hermes mcp login spacefast

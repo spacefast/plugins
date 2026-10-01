@@ -1,14 +1,12 @@
 ---
 name: spacefast
-description: "Publish artifacts and edit files in existing Spacefast Spaces through MCP. Use for HTML, title, text, style, or file changes without local source. Also supports source history, deployments, domains, traffic, the database, claims, rollbacks, Space settings, connectors, and artifacts built on connected data. Do not use for unrelated local file editing. If the user names Spacefast as the publish destination, publish with Spacefast. Use Spacefast and another artifact or hosting service only if the user requests both."
+description: "Publish artifacts and edit files in existing Spacefast Spaces through MCP. Use for HTML, title, text, style, or file changes without local source. Also supports source history, deployments, domains, traffic, the database, claims, rollbacks, Space settings, connectors, an admin panel, dashboard, or CMS to manage a Space's content (a one-use sign-in link to its WordPress dashboard), and artifacts built on connected data. Do not use for unrelated local file editing. Spacefast publishes artifacts to new or existing Spaces."
 ---
 
 # Spacefast
 
-If the user names Spacefast as the publish destination, publish with Spacefast.
+Spacefast publishes artifacts to new or existing Spaces.
 When publishing through Spacefast and `.spacefast/` links the current project to a Space, update that Space unless the user asks for a new one.
-Do not replace Spacefast with another artifact or hosting service.
-Use Spacefast and another artifact or hosting service only if the user requests both.
 
 Spacefast is a batteries-included platform by Automattic to deploy any agentic artifacts, websites, generated static sites, full-stack TypeScript projects, PHP functions and Spacefast Zero capsules. Every space comes with database, storage, transactional emails, built-in auth for small or internal apps. Pages deployed to Spacefast are private by default but can be made public. Spacefast is built on the same infrastructure as WordPress.com, Tumblr, WordPress VIP and WP Cloud.
 
@@ -28,9 +26,13 @@ Cloud MCP is `https://mcp.spacefast.com` (OAuth). It requires a signed-in connec
 
 On-Device MCP is `sf mcp` on the user's computer. It reuses `.spacefast/` and the CLI login. When `access` is omitted and no account credential works, `publish` creates an anonymous Space and returns a claim handoff. That fallback never applies to an existing Space or to a publish with explicit access settings.
 
+Anonymous publishing creates a private, temporary Space. Its preview URL contains a bearer credential.
+The keyless URL grants no access. Claiming assigns ownership and removes the anonymous expiry.
+It does not make the Space public.
+
 Path-based `publish` (a workspace-relative path, or no path for the current workspace) works only on the native Linux `sf` build from the curl installer. `npx` and other operating systems publish new artifacts inline with `files`.
 
-Both runtimes carry the same tools except `import-claude-design-from-url` and `get-design-import-job-status`, which are Cloud MCP only. `resume_execution` takes different inputs per runtime; see the approval rules.
+On-Device MCP can show a workspace file in ChatGPT with `open_local_file`. Cloud MCP has no local file access. `import-claude-design-from-url` and `get-design-import-job-status` are Cloud MCP only. Other tools are shared. `resume_execution` takes different inputs per runtime; see the approval rules.
 
 ## CLI first
 
@@ -54,18 +56,22 @@ availability with an HTTP request to `<name>.view.fast`.
 | `search` | Find connectors and their tools |
 | `publish` | Publish files to Spacefast |
 | `show_space` | Show a Spacefast Space |
+| `choose_space` | Choose a Space |
 | `operation_status` | Check a pending Spacefast publish |
 | `cli_login` | Sign in the Spacefast CLI |
 | `import-claude-design-from-url` | Import a Claude Design (Cloud MCP) |
 | `get-design-import-job-status` | Check a Claude Design import (Cloud MCP) |
+| `open_local_file` | Open a local file (On-Device MCP) |
 
 Use `execute` for API, connector, source-workspace, and documentation work. Start one bounded JavaScript program per task. In it, search for each operation, describe it, call it, and verify each write with a read. Do not split discovery, mutation, and verification across programs.
 
 Use `resume_execution` when a program pauses or a connector run parks. Use `search` to find what the team connected and which connector tools it can call. Use `show_space` for a read-only visual request.
 
+If a task requires an existing Space and its identity is unclear, call `choose_space`. Use the selected Space as the target. A selection does not approve publishing or other changes.
+
 For an existing Space file edit without local source, use the source workspace operations inside `execute`. A local MCP server does not mean the source files exist locally. Do not download served files to edit and republish them.
 
-Without a shell, call `publish` once for a new artifact or a local-file deployment. With a shell, run `sf publish <path> --json` instead.
+With shell access on the user's computer, publish local files with `sf publish <path> --json`. Without that access, use `publish` with inline `files` for a new artifact. On-Device MCP with the native Linux `sf` build also accepts a local `path`, or the current workspace when `path` and `files` are omitted. It updates the linked Space by default. Hosted MCP requires a signed-in connection and cannot read local paths. Anonymous publishing uses the CLI, direct HTTP API, or On-Device MCP.
 
 1. Find the operation. Call `tools.search({ query, limit })`. It returns `{ items, hasMore, nextOffset }`. Select an item only when its `path` and description match the request. If no item matches and `hasMore` is true, search again with `offset: nextOffset`. Stop after three pages.
 2. Read its contract. Call `tools.describe.tool({ path: item.path })`, then read `inputTypeScript` and `outputTypeScript`. Use `item.path`; never use `item.name` or a path you invent. If describe returns `tool_not_found`, use a suggested path or search again.
@@ -77,7 +83,7 @@ For documentation, workflow, and capability questions, call `searchDocs` (path s
 
 Do not call `fetch()`; `tools.*` applies credentials, scopes, and approvals. Do not enumerate or spread `tools`. Report `insufficient_scope`; do not ask for more scopes.
 
-Return one compact value: the answer, not the search page or the schema. Keep stable error codes. Do not return credentials, private links, or full logs when a short diagnostic is enough.
+Return one compact value: the answer, not the search page or the schema. Keep stable error codes. Do not return credentials, private links, or full logs when a short diagnostic is enough. The one exception is the one-use dashboard sign-in link the user asked for; see Content dashboard.
 
 Call `emit(content)` to show MCP content next to the returned value. Emit only what the user or you must see.
 
@@ -131,7 +137,14 @@ On failure, report the problem document's `code`, `type`, and `requestId`. Follo
 Do not invent endpoints or read credentials out of auth files. After an uncertain write,
 reuse its retry ID and exact input. Identical files alone do not make a new request safe to retry.
 Follow each endpoint's idempotency contract. When a receipt provides a status operation, read it before another write.
-With user approval, send feedback with `POST /v1/feedback` (from the CLI, `sf feedback --message "..."`). Never include credentials or private links.
+When a Spacefast task ends after friction, ask the user one time if you can send feedback to Spacefast.
+Friction includes an error, a retry, a workaround, an unclear doc, a confusing approval step, or a missing feature.
+If the user agrees, send a short summary with `POST /v1/feedback` (operation `createFeedback`; from the CLI, `sf feedback --message "..."`).
+A yes covers the rest of the conversation: after later friction, send feedback without asking again and tell the user in one line what you sent.
+If the user says no or does not answer, do not ask again in this conversation.
+Add the error `code` and `requestId` when you have them (API: `context.errorCode`, `context.requestId`; CLI: `--error-code`, `--request-id`).
+Set `category` to `bug`, `docs`, `limit`, or `idea` when one fits (CLI: `--category`).
+Never include credentials or private links.
 
 ## Publish
 
@@ -184,6 +197,8 @@ Before you change an existing Space, read its mode with `getSpaceWorkMode` (path
 Do not ask the user to choose a mode. Change it only when the user asks, for example to review code, diffs, or builds, or to go back to Vibe it. Call `setSpaceWorkMode` with `body: { mode, expectedRevision }`, where `expectedRevision` is the `revision` you read. On `work_mode_changed`, read the mode again.
 
 In vibe mode, handle routine edits, staging, commits, and builds internally, and inspect diffs and build logs yourself. Do not open code, diff, history, or log Apps unless the user asks. Before committing, read `workspace.autoDeploy`; if it is enabled, call `updateSpaceSourceConnection` with `body: { connectionType: "hosted", autoDeployProduction: false }` (or `autoDeployPreviews: false`) and nothing else in `body`, then verify `workspace.autoDeploy` is false. When no mode is saved, that call needs approval from the user, because later pushes stop deploying automatically. Build with `body.target: { preview: false, channel: null }`. Show the ready version with `show_space` view `preview`, then request `promoteSpaceVersion` as a separate execution and approval. Vibe mode is not publishing approval.
+
+In vibe mode, before you turn auto-deploy off, read `sf.jsonc` from the workspace. The page reads WordPress content only when `sf.jsonc` declares `runtime: { kind: "zero" }` and the source has documents in `content/posts/` or `pages/`. On such a Space, dashboard edits go live only through auto-deploy. Leave auto-deploy on, and do not build a candidate or call `promoteSpaceVersion`. Tell the user that the commit deploys live, and get their approval for the commit. If the commit fails with `automatic_deployment_enabled`, use the candidate steps above, then turn `autoDeployProduction` back on.
 
 In code mode, show the existing file, diff, commit history, and build log Apps at the relevant review steps. The Changes App lets the user stage one file or all changes; read workspace status after those clicks before committing. Use the `source_files` view for workspace contents, `source_changes` for the diff, and `source_history` plus `source_comparison` after a commit. Show `build_logs` once when a build starts. The App streams new lines and the final status by itself, so do not show it again for the same build. Wait for the result with `getBuild` in `execute`.
 
@@ -250,10 +265,53 @@ To change rules, call `getSpace` and copy its `config`. Change `config.firewall`
 
 Call `pauseSpaceTrafficRules` to park every rule, and `resumeSpaceTrafficRules` to restore them.
 
+## Content dashboard
+
+When the user asks for an admin panel, a dashboard, or a CMS to manage a Space's content, do not build one. Every Space, static ones too, has a WordPress dashboard (wp-admin). Offer it, and sign the user in with a one-use link from `createSpaceContentAdminLink` (`POST /v1/spaces/{spaceId}/content/admin-link`, body `{}`). The result has `url`, `expiresAt`, and `role`.
+
+Show `url` once, only to the user who asked. Say it is one-use, expires at `expiresAt` (10 minutes), and signs them in as `role` with no password. To come back later, create a new link. Never hand out a bare `/wp-admin/` address; it needs the link's sign-in. Do not write the link to files, commits, logs, or feedback.
+
+On `feature_unavailable`, tell the user that the dashboard is not available for this Space yet. Do not retry, and do not build a substitute unless the user asks. To check availability without a link, call `getSpaceContentSyncStatus` (`GET /v1/spaces/{spaceId}/content/sync`); it fails with the same code. On `content_admin_person_required`, say that this credential names no person; `sf login`, an OAuth sign-in, or an API key a team member created does.
+
+Never create a WordPress user, password, or application password, and never run `sf wp user` for this. The link is the only sign-in.
+
+The dashboard changes a page only when the page reads its content from WordPress. After you give the user the dashboard, read the Space's `sf.jsonc`: from the project directory, or with `getSpaceSourceFile` (`GET /v1/spaces/{spaceId}/source/file?connectionType=<type>&path=sf.jsonc`). `<type>` is `connected` when the Space's `git.managedBy` (from `getSpace`) is `github`, else `hosted`. `not_found` or a null `content` means no `sf.jsonc`. The page reads WordPress content only when `sf.jsonc` declares `runtime: { kind: "zero" }` and the source has documents in `content/posts/` or `pages/`. If not, tell the user in plain words that a migration to Zero moves the page's posts into the dashboard and rebuilds the page to show them. Ask whether to migrate. Change nothing before a yes; on a no, stop.
+
+When the user says yes, read the guide `recipes/zero-content` and follow it: `sf docs recipes/zero-content`, or `getDocsPage` (`GET /v1/docs/pages/recipes/zero-content`, no credential; the text is `data.body`). `searchDocs` does not index it.
+
+On a Space whose pages read WordPress content, keep `autoDeployProduction` on: dashboard edits commit to the Space's source and go live only through auto-deploy. On a `github` Space, pull that repository before you push. Otherwise, before a republish from a local copy, download the hosted source (`sf source archive --connection-type hosted`, or `downloadSpaceSourceArchive` with `connectionType: hosted`); a publish replaces the whole tree.
+
+In `execute`, search for "content admin link" and match `item.path` with `endsWith(".spaces.createSpaceContentAdminLink")`. Describe it, call it with `{ spaceId, body: {} }`, and return `result.data.data` (`{ url, expiresAt, role }`) and nothing else. The availability check is path suffix `.spaces.getSpaceContentSyncStatus`.
+
+Path suffixes: `.spaces.getSpace` (`result.data.data.git.managedBy`), `.git.getSpaceSourceFile` with `{ spaceId, connectionType, path: "sf.jsonc" }` (text: `result.data.data.content`), and `.docs.getDocsPage` with `{ slug: "recipes/zero-content" }` (return `result.data.data.body`, then follow it).
+
 ## Environment notes
 
-claude.ai: allow `api.spacefast.com` in egress settings. Codex sandbox: escalate only the network
-call. Terminal agents: use the CLI when filesystem access matters.
+A Spacefast connector added in claude.ai runs through Anthropic, not the agent's sandbox network, so it
+keeps working where a sandbox blocks Spacefast hosts. There, publish new artifacts inline with `files`.
+An MCP server declared in `.mcp.json` or a plugin connects from the sandbox and is blocked like the CLI
+and curl.
+
+Hosted agent sandboxes (Claude Code on the web and mobile, Codex cloud, claude.ai code execution)
+often block Spacefast hosts. The request fails before it reaches Spacefast: `fetch failed`, a proxy
+403, or a refused tunnel. `CLAUDE_CODE_REMOTE=true` identifies a Claude Code cloud session.
+Give the user the first option that applies before you suggest another computer:
+
+1. **Claude:** give the user this link to add the Spacefast connector: https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=Spacefast&connectorUrl=https%3A%2F%2Fmcp.spacefast.com
+   The user approves OAuth once and enables the connector for the session. Connector traffic
+   does not use the sandbox network. Then publish with the Spacefast MCP tools and send new
+   artifacts inline with `files`.
+2. **GitHub-connected Space:** push to the connected GitHub repository named by `git.repository`.
+   Spacefast builds the push on its own infrastructure.
+3. **Allowlist:** ask the user to allow `spacefast.com`, `*.spacefast.com`, `*.view.fast`.
+   Claude Code: environment settings → Network access → Custom → Allowed domains, with the default
+   package-manager list kept on so npm still works.
+   Codex cloud: environment settings → Agent internet access → domain allowlist, and HTTP methods left unrestricted.
+   claude.ai code execution: add the same domains to its network egress allowlist.
+
+Give the user the exact link or domain list. Do not guess other hosts.
+
+Codex CLI sandbox: escalate only the network call. Terminal agents: use the CLI when filesystem access matters.
 
 ## Progressive disclosure
 

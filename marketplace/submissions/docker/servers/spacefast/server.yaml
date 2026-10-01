@@ -1,0 +1,22 @@
+name: spacefast
+type: remote
+dynamic:
+  tools: true
+meta:
+  category: devops
+  tags:
+    - deployment
+    - hosting
+    - publishing
+    - remote
+about:
+  title: Spacefast
+  description: Publish files and folders to the web instantly.
+  icon: https://spacefast.com/favicon.svg
+remote:
+  transport_type: streamable-http
+  url: https://mcp.spacefast.com
+oauth:
+  - provider: spacefast
+    secret: spacefast.personal_access_token
+    env: SPACEFAST_PERSONAL_ACCESS_TOKEN

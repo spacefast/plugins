@@ -1,0 +1,21 @@
+{
+  "name": "spacefast",
+  "displayName": "Spacefast",
+  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
+  "shortDescription": "Publish files and folders to the web instantly.",
+  "homepage": "https://spacefast.com",
+  "repository": "https://github.com/spacefast/plugins",
+  "sourceSha": "309185424b5cc4bfc2b8367d0bd6b6f222ed75f2",
+  "pluginsSha": "{{PLUGINS_SHA}}",
+  "privacyPolicyUrl": "https://automattic.com/privacy/",
+  "termsOfServiceUrl": "https://wordpress.com/tos/",
+  "keywords": [
+    "spacefast",
+    "publish-to-spacefast",
+    "artifact-sharing",
+    "hosting"
+  ],
+  "logo": "plugins/assets/logo-400.png",
+  "skill": "skills/spacefast/SKILL.md",
+  "publishMode": "api"
+}

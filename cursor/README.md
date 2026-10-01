@@ -1,42 +1,47 @@
 # Spacefast for Cursor
 
-Publish local files and manage Spacefast spaces from Cursor. The plugin adds a project rule plus hosted
-and local MCP connections.
+Publish local files and manage Spacefast spaces from Cursor. The plugin adds a project rule plus one
+hosted HTTP MCP connection.
 
 ## Install
 
-Install the latest released plugin in Cursor's local plugin directory:
-
 ```bash
-mkdir -p ~/.cursor/plugins/local/spacefast
-curl -fsSL https://github.com/spacefast/plugins/releases/latest/download/cursor.tgz \
-  | tar -xz --strip-components=1 -C ~/.cursor/plugins/local/spacefast
+npx -y plugins add spacefast/plugins -t cursor -y
 ```
 
 Restart Cursor or run **Developer: Reload Window**.
 
 ## Use
 
-Ask Cursor: **Publish this project with Spacefast.** The rule applies automatically to
-publish, deploy, host, and share requests.
+Ask Cursor: **Publish this project with Spacefast.** Cursor loads the rule when a request matches its
+description: publish, deploy, host, share, or edit an existing Space.
 
-Anonymous publishes need no account. Cursor returns the live URL and the one-time claim link.
+Anonymous publishes go through the CLI: `sf publish` needs no account and returns a Live URL plus a claim link. The hosted MCP connection needs browser OAuth before any tool runs.
 
 ## Included
 
 - Publish files and folders, then update the same space
-- Inspect versions and logs, diagnose failures, and roll back
-- Handle anonymous claim links and account tokens safely
-- Choose direct publish, hosted MCP, or On-Device MCP for the job
-- Hosted MCP at `https://mcp.spacefast.com` for account and space operations
-- On-Device MCP via `npx -y spacefast mcp` for local files and Spacefast code mode
+- Edit Space source files through MCP without a local checkout
+- Inspect deployments, domains, and analytics
+- Handle anonymous claim actions and account tokens safely
+- Choose direct publish or hosted MCP for the job
+- Hosted HTTP MCP at `https://mcp.spacefast.com` with browser OAuth
 
 ## Publish to your team
 
-Run `npx -y spacefast login` once before asking Cursor to publish.
+Complete the browser OAuth flow when Cursor prompts you.
+
+## Telemetry
+
+Plugin hooks send no telemetry. The CLI records only install and setup outcomes: agent, method,
+outcome, reason code, CLI version, OS, and timestamp. It never sends a machine, user, team, path,
+file-content, or credential identifier. Set `SPACEFAST_TELEMETRY_DISABLED=1` or `DO_NOT_TRACK=1`
+to disable disclosure and delivery before any event is sent.
+
+Raw events are retained for 30 days and aggregate counts for 90 days. See the [privacy policy](https://automattic.com/privacy/).
 
 ## Guides
 
 - [Spacefast agent guide](https://spacefast.com/docs/agents)
-- [Cursor local plugin installation](https://cursor.com/docs/plugins#test-plugins-locally)
+- [Cursor plugins](https://cursor.com/docs/plugins)
 - [Spacefast CLI reference](https://spacefast.com/docs/cli)

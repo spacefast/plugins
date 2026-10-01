@@ -1,0 +1,3 @@
+{
+  "install": "npx -y skills@1.5.23 add https://github.com/spacefast/plugins --skill spacefast -g -y"
+}

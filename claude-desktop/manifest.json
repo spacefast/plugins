@@ -2,22 +2,22 @@
   "manifest_version": "0.2",
   "name": "spacefast",
   "display_name": "Spacefast",
-  "version": "0.1.26",
-  "description": "Publish files and folders to Spacefast from Claude Desktop. Permanent URLs, immutable versions, anonymous publish with a claim link.",
-  "long_description": "Spacefast is the best place to share AI artifacts. This extension connects Claude Desktop via the official Spacefast CLI MCP server, giving Claude tools to publish local files and run OpenAPI-generated operations in Spacefast's resumable QuickJS sandbox.",
+  "version": "0.5.1",
+  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
+  "long_description": "Spacefast is the best place to share AI artifacts. Publish any file or folder and get a permanent URL, an immutable version URL, and — for anonymous publishes — a one-time claim flow. Supports custom domains, scoped access, version history, rollback, logs, signed uploads, and browser OAuth for team publishing.",
   "author": {
     "name": "Automattic",
-    "email": "hello@spacefast.com",
-    "url": "https://spacefast.com"
+    "url": "https://spacefast.com",
+    "email": "hello@spacefast.com"
   },
-  "homepage": "https://spacefast.com/docs/agents",
+  "homepage": "https://spacefast.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/spacefast/plugins"
   },
   "icon": "assets/logo.png",
   "license": "MIT",
-  "keywords": ["spacefast", "publish", "artifact-sharing", "deploy", "immutable-url"],
+  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "hosting"],
   "server": {
     "type": "node",
     "entry_point": "server/index.js",
@@ -32,8 +32,8 @@
   "user_config": {
     "api_token": {
       "type": "string",
-      "title": "Spacefast API token",
-      "description": "Your Spacefast account token (from spacefast.com/account/tokens). Leave blank to publish anonymously.",
+      "title": "Spacefast API key",
+      "description": "Your Spacefast API key (from https://my.spacefast.com/account/api-keys). Leave blank to publish anonymously.",
       "sensitive": true,
       "required": false
     }
@@ -41,27 +41,39 @@
   "tools": [
     {
       "name": "execute",
-      "description": "Run JavaScript against the OpenAPI-generated Spacefast catalog in a secure sandbox"
+      "description": "Use this tool for every Spacefast API task: mutations, multi-step tasks, tools.<connector> calls, docs, login information, team context, work mode, visual review feedback, screenshots, traffic rules, and reads with no show_space view"
     },
     {
-      "name": "skills",
-      "description": "Fetch a named how-to skill. Skills hold the long-form guidance that would otherwise bloat another tool's always-loaded description"
+      "name": "resume_execution",
+      "description": "Continue the exact program saved by a paused execute call"
     },
     {
-      "name": "resume",
-      "description": "Resume a paused execution using the executionId returned by execute"
+      "name": "search",
+      "description": "Find what this team connected and which connector tools it can call"
     },
     {
       "name": "publish",
-      "description": "Publish one local path or an inline file set to Spacefast. On-Device MCP keeps anonymous credentials in workspace state and never asks the model to carry them"
+      "description": "Publish local files or new inline artifacts to Spacefast"
     },
     {
-      "name": "search_docs",
-      "description": "Search the published Spacefast documentation. This tool is read-only. The tool returns ranked pages and short excerpts. It does not return full page bodies. An exact slug or path matches one page. Omit query to list pages. If hasMore is true, call search_docs again with nextOffset as offset. Use get_page to read a full page"
+      "name": "show_space",
+      "description": "Open one Spacefast view"
     },
     {
-      "name": "get_page",
-      "description": "Read one published Spacefast documentation page in full, including its Markdown body. Address it by docs path (`/publishing`) or slug (`api/spaces`) — pass exactly one. Find pages with search_docs"
+      "name": "open_local_file",
+      "description": "Show a local workspace file in ChatGPT. The user opens the file from the returned panel. Use a workspace-relative path. This tool does not upload or publish the file"
+    },
+    {
+      "name": "choose_space",
+      "description": "Ask the user to choose a Space when the destination is unclear. Returns the selected Space. This tool does not change Spacefast data"
+    },
+    {
+      "name": "operation_status",
+      "description": "Use this tool when publish returns status publishing"
+    },
+    {
+      "name": "cli_login",
+      "description": "Sign in the `sf` CLI on the user's computer with this MCP session's access. The user does not sign in again"
     }
   ],
   "compatibility": {

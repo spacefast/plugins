@@ -1,31 +1,40 @@
 {
   "name": "spacefast",
-  "version": "0.1.26",
-  "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
+  "version": "0.5.1",
+  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
   "author": {
     "name": "Automattic",
     "url": "https://spacefast.com"
   },
-  "homepage": "https://spacefast.com/docs/agents",
+  "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
   "license": "MIT",
-  "keywords": ["spacefast", "publish", "artifact-sharing", "deploy", "share", "immutable-url"],
+  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "hosting"],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
+  "extensions": {
+    "com.openai": {
+      "onboardingSkill": "./skills/setup/SKILL.md"
+    }
+  },
   "interface": {
     "displayName": "Spacefast",
     "shortDescription": "Publish files and folders to the web instantly.",
-    "longDescription": "Spacefast is the best place to share AI artifacts. Publish any file or folder and get a permanent URL, an immutable version URL, and — for anonymous publishes — a one-time claim link. Supports custom domains, scoped access, version history, rollback, logs, signed uploads, and bounded On-Device path publishing.",
+    "longDescription": "Spacefast is the best place to share AI artifacts. Publish any file or folder and get a permanent URL, an immutable version URL, and — for anonymous publishes — a one-time claim flow. Supports custom domains, scoped access, version history, rollback, logs, signed uploads, and browser OAuth for team publishing.",
     "developerName": "Automattic",
-    "category": "Coding",
+    "category": "Developer Tools",
     "capabilities": ["Interactive", "Read", "Write"],
     "websiteURL": "https://spacefast.com",
     "privacyPolicyURL": "https://automattic.com/privacy/",
     "termsOfServiceURL": "https://wordpress.com/tos/",
-    "defaultPrompt": "Use Spacefast to publish this project, report the Live URL, Version URL, and access link separately, and include the anonymous Claim link if the publish is unclaimed.",
+    "defaultPrompt": [
+      "Publish this project with Spacefast and return its live and immutable URLs.",
+      "Show the latest deployments for my Spacefast Space.",
+      "Show the DNS and SSL status for my Spacefast Space."
+    ],
     "brandColor": "#FF603D",
     "composerIcon": "./assets/logo.svg",
     "logo": "./assets/logo.svg",
-    "screenshots": ["./assets/publish-workflow.svg"]
+    "screenshots": ["./assets/publish-workflow.png"]
   }
 }

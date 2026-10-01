@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "spacefast",
+  "version": "0.5.1",
+  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
+  "author": {
+    "name": "Automattic",
+    "url": "https://spacefast.com"
+  },
+  "repository": "https://github.com/spacefast/plugins",
+  "license": "MIT",
+  "keywords": [
+    "spacefast",
+    "publish-to-spacefast",
+    "artifact-sharing",
+    "hosting"
+  ],
+  "displayName": "Spacefast",
+  "homepage": "https://spacefast.com/setup/claude-code"
+}
