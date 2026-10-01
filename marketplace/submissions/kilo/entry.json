@@ -5,7 +5,7 @@
   "shortDescription": "Publish files and folders to the web instantly.",
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
-  "sourceSha": "309185424b5cc4bfc2b8367d0bd6b6f222ed75f2",
+  "sourceSha": "bbb3507cd7c0c7e1039e151c18084aec311fbcfe",
   "pluginsSha": "{{PLUGINS_SHA}}",
   "privacyPolicyUrl": "https://automattic.com/privacy/",
   "termsOfServiceUrl": "https://wordpress.com/tos/",

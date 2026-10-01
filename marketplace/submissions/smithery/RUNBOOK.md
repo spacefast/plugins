@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://smithery.ai/servers/new
 - Mechanism: url_submission
 - Source: https://smithery.ai/docs/concepts/cli
-- Source commit: `309185424b5cc4bfc2b8367d0bd6b6f222ed75f2`
+- Source commit: `bbb3507cd7c0c7e1039e151c18084aec311fbcfe`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
