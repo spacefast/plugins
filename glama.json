@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "spacefast": {
+      "url": "https://mcp.spacefast.com",
+      "type": "streamable-http"
+    }
+  }
+}

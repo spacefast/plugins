@@ -1,0 +1,15 @@
+id: spacefast
+name: Spacefast
+description: Publish files and folders to the web instantly.
+author: Automattic
+url: https://spacefast.com/setup/kilo
+category: development
+prerequisites:
+  - You must sign in with OAuth in a browser before you run any MCP method or tool
+content:
+  - name: Spacefast hosted OAuth MCP
+    content: |
+      {
+        "type": "streamable-http",
+        "url": "https://mcp.spacefast.com"
+      }

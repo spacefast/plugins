@@ -1,16 +1,16 @@
 {
   "name": "spacefast",
   "displayName": "Spacefast",
-  "version": "0.1.26",
-  "description": "Spacefast publishes files and folders to the web instantly. Permanent URLs, immutable versions, anonymous publish with a claim link.",
+  "version": "0.5.1",
+  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
   "author": {
     "name": "Automattic"
   },
-  "homepage": "https://spacefast.com/docs/agents",
+  "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
   "license": "MIT",
   "logo": "./assets/logo.svg",
-  "keywords": ["spacefast", "publish", "artifact-sharing", "deploy", "share", "immutable-url"],
+  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "hosting"],
   "mcpServers": "./.mcp.json",
   "rules": "./rules/"
 }

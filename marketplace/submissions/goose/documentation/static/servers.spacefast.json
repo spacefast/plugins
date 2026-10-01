@@ -1,0 +1,13 @@
+[
+  {
+    "id": "spacefast",
+    "name": "Spacefast",
+    "description": "Publish files and folders to the web instantly.",
+    "url": "https://mcp.spacefast.com",
+    "link": "https://github.com/spacefast/plugins",
+    "is_builtin": false,
+    "endorsed": false,
+    "environmentVariables": [],
+    "type": "streamable-http"
+  }
+]

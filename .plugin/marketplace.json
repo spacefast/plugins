@@ -1,0 +1,14 @@
+{
+  "name": "spacefast",
+  "owner": {
+    "name": "Automattic",
+    "url": "https://spacefast.com"
+  },
+  "plugins": [
+    {
+      "name": "spacefast",
+      "source": ".",
+      "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows."
+    }
+  ]
+}

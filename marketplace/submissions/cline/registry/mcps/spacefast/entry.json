@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../schemas/mcp.schema.json",
+  "id": "spacefast",
+  "type": "mcp",
+  "name": "Spacefast",
+  "tagline": "Publish files and folders to permanent Spacefast URLs.",
+  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
+  "author": {
+    "name": "Automattic",
+    "url": "https://spacefast.com"
+  },
+  "tags": [
+    "software"
+  ],
+  "install": {
+    "args": [
+      "spacefast",
+      "--transport",
+      "http",
+      "https://mcp.spacefast.com"
+    ]
+  },
+  "homepage": "https://spacefast.com/setup/cline",
+  "repo": "https://github.com/spacefast/plugins",
+  "license": "MIT"
+}

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-21T23:52:45.000Z",
-  "version": "0.1.26",
-  "packageManager": "bun@1.3.14",
+  "generatedAt": "2026-10-01T10:59:01.000Z",
+  "version": "0.5.1",
+  "packageManager": "pnpm@11.22.0",
   "publicRepoRoot": ".",
   "marketplaces": {
     "claudeCode": ".claude-plugin/marketplace.json",
@@ -10,10 +10,6 @@
     "skills": "skills/spacefast/SKILL.md"
   },
   "serverJson": "server.json",
-  "mcpb": {
-    "path": "spacefast.mcpb",
-    "sha256": "89c3eaba94e9ec0006a6d0dcacfe439e69c95537c97591eb9c863a2ab849a762"
-  },
   "plugins": [
     {
       "name": "codex",
@@ -37,19 +33,103 @@
     }
   ],
   "archives": [
-    "spacefast-plugins.tgz"
+    "spacefast-plugins.tgz",
+    "spacefast-plugins.zip"
   ],
   "checksums": {
-    ".cursor-plugin/marketplace.json": "e309583f8116f3f5afbc7272f728bf091a22499b41ef2dc739719313c3a8d809",
-    "codex.tgz": "d007075f11ac8e16270e498fcf52d4fe9bc79bcf8946001b992278aa8cc4c611",
-    "claude-code.tgz": "8f5722ac0b5f9eac7b757f401d3f85b888ae45256e1a11f381109675c42c6c4a",
-    "claude-desktop.tgz": "1740d0729ec2b609b376c802f2290c82d0622974bcb4a5162fd320a7b17fdf99",
-    "cursor.tgz": "7447fa1b0ab8cbdc69c2e9dacc6d7d91c1f439fb6ae14fe7867228d34c4190e3",
-    "spacefast.mcpb": "89c3eaba94e9ec0006a6d0dcacfe439e69c95537c97591eb9c863a2ab849a762",
-    "spacefast-plugins.tgz": "97d08cbe8150409ff070f7f41b4e65ad6e18bd5a07ed005150b0a2c96b5a8dd7"
+    ".cursor-plugin/marketplace.json": "98f2bff8b9aae6209353669c977a9047ccf5c77b7c79ea238755ec7d58ac9725",
+    "claude-code.tgz": "632b7367b946e4ea6350f6d4c65a16389f6dd3a615e469d5cc379a585d512cb0",
+    "claude-desktop.tgz": "6fa4ba818c8c373f3e7c80797c9f8508fa43bc40b4b963c041b6b2f0ee4039d4",
+    "codex.tgz": "5fd1bde5fc1aa25c2cdc93f20ac02827f96471714934a428c68d63f11de692b5",
+    "cursor.tgz": "f67aedae4a584a3db399876a75fe6bf6ee8c38eae109e715931df485b656641c",
+    "spacefast-plugins.tgz": "12dd7f53788ed8d8867e6c5f664e1cb1e11f3a03a9b8e6f89f14f8ce5fe0858d",
+    "spacefast-plugins.zip": "3fde4b915727fc7445c54688136af547216e3633679b3d9f05ca3184180baa85",
+    "spacefast.mcpb": "7d638df92fc20fbb4d31dee9787a0a5c9eb26ac7c4c227efeeea7ae14796cc61"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",
     "bun run plugins:package"
-  ]
+  ],
+  "mcpb": {
+    "path": "spacefast.mcpb",
+    "sha256": "7d638df92fc20fbb4d31dee9787a0a5c9eb26ac7c4c227efeeea7ae14796cc61"
+  },
+  "provenance": {
+    "sourceSha": "309185424b5cc4bfc2b8367d0bd6b6f222ed75f2",
+    "pluginsSha": "{{PLUGINS_SHA}}"
+  },
+  "marketplace": {
+    "submissionIndex": "marketplace/submission-index.json",
+    "artifacts": [
+      ".claude-plugin/plugin.json",
+      ".codex-plugin/plugin.json",
+      ".cursor-plugin/plugin.json",
+      ".factory-plugin/plugin.json",
+      ".grok-plugin/plugin.json",
+      ".kimi-plugin/plugin.json",
+      ".mcp.json",
+      ".plugin/marketplace.json",
+      ".plugin/plugin.json",
+      "GEMINI.md",
+      "PROVENANCE.json",
+      "assets/logo-400.png",
+      "assets/logo.svg",
+      "assets/publish-workflow.png",
+      "gemini-extension.json",
+      "glama.json",
+      "marketplace/submission-index.json",
+      "marketplace/submissions/anthropic/RUNBOOK.md",
+      "marketplace/submissions/anthropic/entry.json",
+      "marketplace/submissions/awesome-copilot/RUNBOOK.md",
+      "marketplace/submissions/awesome-copilot/entry.json",
+      "marketplace/submissions/cline/RUNBOOK.md",
+      "marketplace/submissions/cline/entry.json",
+      "marketplace/submissions/cline/registry/mcps/spacefast/entry.json",
+      "marketplace/submissions/codebuddy/RUNBOOK.md",
+      "marketplace/submissions/codebuddy/entry.json",
+      "marketplace/submissions/cursor/RUNBOOK.md",
+      "marketplace/submissions/cursor/entry.json",
+      "marketplace/submissions/docker/RUNBOOK.md",
+      "marketplace/submissions/docker/entry.json",
+      "marketplace/submissions/docker/servers/spacefast/readme.md",
+      "marketplace/submissions/docker/servers/spacefast/server.yaml",
+      "marketplace/submissions/docker/servers/spacefast/tools.json",
+      "marketplace/submissions/gemini/RUNBOOK.md",
+      "marketplace/submissions/gemini/entry.json",
+      "marketplace/submissions/glama/RUNBOOK.md",
+      "marketplace/submissions/glama/entry.json",
+      "marketplace/submissions/goose/RUNBOOK.md",
+      "marketplace/submissions/goose/documentation/static/servers.spacefast.json",
+      "marketplace/submissions/goose/entry.json",
+      "marketplace/submissions/grok/.grok-plugin/spacefast-entry.json",
+      "marketplace/submissions/grok/RUNBOOK.md",
+      "marketplace/submissions/grok/entry.json",
+      "marketplace/submissions/hermes/RUNBOOK.md",
+      "marketplace/submissions/hermes/entry.json",
+      "marketplace/submissions/hermes/optional-mcps/spacefast/manifest.yaml",
+      "marketplace/submissions/kilo/RUNBOOK.md",
+      "marketplace/submissions/kilo/entry.json",
+      "marketplace/submissions/kilo/mcps/spacefast/MCP.yaml",
+      "marketplace/submissions/kilo/skills/spacefast/SKILL.md",
+      "marketplace/submissions/kimi/RUNBOOK.md",
+      "marketplace/submissions/kimi/entry.json",
+      "marketplace/submissions/kimi/plugins/marketplace.spacefast.json",
+      "marketplace/submissions/official-mcp-registry/RUNBOOK.md",
+      "marketplace/submissions/official-mcp-registry/entry.json",
+      "marketplace/submissions/openai/RUNBOOK.md",
+      "marketplace/submissions/openai/entry.json",
+      "marketplace/submissions/opencode/RUNBOOK.md",
+      "marketplace/submissions/opencode/entry.json",
+      "marketplace/submissions/qoder/RUNBOOK.md",
+      "marketplace/submissions/qoder/entry.json",
+      "marketplace/submissions/skillhub/RUNBOOK.md",
+      "marketplace/submissions/skillhub/entry.json",
+      "marketplace/submissions/skills-sh/RUNBOOK.md",
+      "marketplace/submissions/skills-sh/entry.json",
+      "marketplace/submissions/smithery/RUNBOOK.md",
+      "marketplace/submissions/smithery/entry.json",
+      "mcp.json",
+      "plugin.json"
+    ]
+  }
 }

@@ -1,0 +1,19 @@
+{
+  "name": "spacefast",
+  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
+  "category": "deployment",
+  "source": {
+    "source": "url",
+    "url": "https://github.com/spacefast/plugins.git",
+    "sha": "{{PLUGINS_SHA}}"
+  },
+  "homepage": "https://spacefast.com",
+  "domains": [
+    "spacefast.com"
+  ],
+  "keywords": [
+    "spacefast",
+    "spacefast publish",
+    "publish to spacefast"
+  ]
+}

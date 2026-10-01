@@ -1,0 +1,347 @@
+{
+  "hardGate": {
+    "blockers": [
+      "published_setup_ui",
+      "downstream_setup_ui_pins",
+      "openai_app_registration",
+      "live_openai_challenge",
+      "reviewer_account",
+      "submission_day_reverification"
+    ],
+    "status": "blocked"
+  },
+  "provenance": {
+    "generatedFrom": "spacefast/monorepo",
+    "sourceSha": "309185424b5cc4bfc2b8367d0bd6b6f222ed75f2",
+    "pluginsSha": "{{PLUGINS_SHA}}",
+    "version": "0.5.1"
+  },
+  "stores": [
+    {
+      "id": "anthropic",
+      "name": "Anthropic plugin directory",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/anthropic/RUNBOOK.md"
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI plugin directory",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "submitted",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/openai/RUNBOOK.md"
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor Marketplace",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/cursor/RUNBOOK.md"
+    },
+    {
+      "id": "awesome-copilot",
+      "name": "GitHub awesome-copilot",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/awesome-copilot/RUNBOOK.md"
+    },
+    {
+      "id": "grok",
+      "name": "Grok Build plugin marketplace",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/grok/RUNBOOK.md"
+    },
+    {
+      "id": "kimi",
+      "name": "Kimi Code plugin marketplace",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/kimi/RUNBOOK.md"
+    },
+    {
+      "id": "cline",
+      "name": "Cline Marketplace",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/cline/RUNBOOK.md"
+    },
+    {
+      "id": "qoder",
+      "name": "Qoder plugin marketplace",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/qoder/RUNBOOK.md"
+    },
+    {
+      "id": "codebuddy",
+      "name": "CodeBuddy marketplace",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/codebuddy/RUNBOOK.md"
+    },
+    {
+      "id": "skillhub",
+      "name": "SkillHub",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/skillhub/RUNBOOK.md"
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode ecosystem",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/opencode/RUNBOOK.md"
+    },
+    {
+      "id": "goose",
+      "name": "Goose MCP directory",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/goose/RUNBOOK.md"
+    },
+    {
+      "id": "kilo",
+      "name": "Kilo marketplace",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/kilo/RUNBOOK.md"
+    },
+    {
+      "id": "docker",
+      "name": "Docker MCP Catalog",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/docker/RUNBOOK.md"
+    },
+    {
+      "id": "glama",
+      "name": "Glama MCP directory",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/glama/RUNBOOK.md"
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini CLI extensions",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/gemini/RUNBOOK.md"
+    },
+    {
+      "id": "hermes",
+      "name": "Hermes MCP catalog",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/hermes/RUNBOOK.md"
+    },
+    {
+      "id": "smithery",
+      "name": "Smithery MCP directory",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Soon",
+      "registryStatus": "planned",
+      "submissionState": "blocked",
+      "blockedBy": [
+        "published_setup_ui",
+        "downstream_setup_ui_pins",
+        "openai_app_registration",
+        "live_openai_challenge",
+        "reviewer_account",
+        "submission_day_reverification"
+      ],
+      "runbook": "marketplace/submissions/smithery/RUNBOOK.md"
+    },
+    {
+      "id": "official-mcp-registry",
+      "name": "Official MCP registry",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Available",
+      "registryStatus": "live",
+      "submissionState": "live",
+      "blockedBy": [],
+      "runbook": "marketplace/submissions/official-mcp-registry/RUNBOOK.md"
+    },
+    {
+      "id": "skills-sh",
+      "name": "skills.sh",
+      "checkedAt": "2026-08-27",
+      "availabilityLabel": "Available",
+      "registryStatus": "live",
+      "submissionState": "live",
+      "blockedBy": [],
+      "runbook": "marketplace/submissions/skills-sh/RUNBOOK.md"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 interface:
   display_name: "Spacefast"
-  short_description: "Publish files and folders to Spacefast."
+  short_description: "Publish files and folders to the web instantly."
   icon_small: "./assets/logo.svg"
   icon_large: "./assets/logo.svg"
   brand_color: "#FF603D"
@@ -12,6 +12,6 @@ dependencies:
   tools:
     - type: "mcp"
       value: "spacefast"
-      description: "Spacefast MCP server for managing your spaces, domains and more."
+      description: "Spacefast MCP server for publishing, source file edits without a local checkout, source history, deployments, domains, and analytics."
       transport: "streamable_http"
       url: "https://mcp.spacefast.com"

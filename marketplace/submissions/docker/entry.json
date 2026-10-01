@@ -1,0 +1,5 @@
+{
+  "serverDirectory": "servers/spacefast",
+  "type": "remote",
+  "oauth": true
+}

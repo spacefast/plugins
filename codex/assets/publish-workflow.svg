@@ -5,7 +5,7 @@
   <text x="144" y="150" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Codex + Spacefast</text>
   <text x="144" y="220" fill="#0f172a" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="700">Publish this project</text>
   <rect x="144" y="256" width="992" height="84" rx="14" fill="#eff6ff" stroke="#bfdbfe"/>
-  <text x="176" y="307" fill="#1e3a8a" font-family="Inter, Arial, sans-serif" font-size="24">Agent builds, publishes, and returns the live URL plus claim link.</text>
+  <text x="176" y="307" fill="#1e3a8a" font-family="Inter, Arial, sans-serif" font-size="24">Agent builds, publishes, and returns the Live URL plus claim action.</text>
   <rect x="144" y="384" width="300" height="132" rx="16" fill="#ecfeff" stroke="#67e8f9"/>
   <text x="176" y="431" fill="#155e75" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700">1. Build</text>
   <text x="176" y="470" fill="#164e63" font-family="Inter, Arial, sans-serif" font-size="18">Detect output root</text>

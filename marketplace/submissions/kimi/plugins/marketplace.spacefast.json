@@ -1,0 +1,15 @@
+{
+  "id": "spacefast",
+  "tier": "curated",
+  "displayName": "Spacefast",
+  "version": "0.5.1",
+  "description": "Publish files and folders to the web instantly.",
+  "homepage": "https://spacefast.com",
+  "keywords": [
+    "spacefast",
+    "publish-to-spacefast",
+    "artifact-sharing",
+    "hosting"
+  ],
+  "source": "https://github.com/spacefast/plugins/releases/download/plugins-v0.5.1/spacefast-plugins.zip"
+}

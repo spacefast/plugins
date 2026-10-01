@@ -1,0 +1,12 @@
+{
+  "name": "spacefast",
+  "version": "0.5.1",
+  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "spacefast": {
+      "httpUrl": "https://mcp.spacefast.com",
+      "oauth": true
+    }
+  }
+}
