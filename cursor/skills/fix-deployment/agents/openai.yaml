@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fix or restore a deployment"
+  short_description: "Find the failure, fix it, or restore a version."
+  default_prompt: "Use $fix-deployment to find why my Space is broken and fix it."

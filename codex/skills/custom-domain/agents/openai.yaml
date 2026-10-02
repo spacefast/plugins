@@ -1,0 +1,4 @@
+interface:
+  display_name: "Use your own domain"
+  short_description: "Put your Space on a domain you own."
+  default_prompt: "Use $custom-domain to connect my domain to this Space."

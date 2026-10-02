@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "spacefast",
   "version": "0.5.1",
-  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
+  "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.",
   "author": {
     "name": "Automattic",
     "url": "https://spacefast.com"

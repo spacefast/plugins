@@ -1,7 +1,7 @@
 # Spacefast for Codex
 
-Publish local files and manage Spacefast spaces from Codex. The plugin adds a `$spacefast`
-skill plus one hosted Streamable HTTP MCP connection.
+Publish local files and manage Spacefast spaces from Codex. The plugin adds six task skills and setup,
+plus one hosted Streamable HTTP MCP connection.
 
 ## Install
 
@@ -17,8 +17,8 @@ installation.
 
 ## Use
 
-Ask Codex: **Publish this project with Spacefast.** The skill can run automatically for
-publish, deploy, host, share, and existing Space file-edit requests.
+Ask Codex: **Publish this project with Spacefast.** The matching skill handles building,
+publishing, editing, sharing, domains, or deployment recovery.
 
 Anonymous publishes go through the CLI: `sf publish` needs no account and returns a Live URL plus a claim link. The hosted MCP connection needs browser OAuth before any tool runs.
 

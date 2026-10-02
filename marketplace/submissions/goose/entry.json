@@ -2,7 +2,7 @@
   {
     "id": "spacefast",
     "name": "Spacefast",
-    "description": "Publish files and folders to the web instantly.",
+    "description": "Build and share your AI work",
     "url": "https://mcp.spacefast.com",
     "link": "https://github.com/spacefast/plugins",
     "is_builtin": false,

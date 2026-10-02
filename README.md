@@ -1,7 +1,13 @@
 # Spacefast plugins
 
-Publish files and folders with Spacefast from Claude Code, Codex, or
-Cursor. Each plugin includes the instructions and MCP configuration its client needs.
+Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.
+
+Keep improving it through chat. Change the content or design, share a preview, choose who can open it, connect your own domain, or restore an earlier version.
+
+Connect your Spacefast account to publish and manage your team’s Spaces.
+
+Use Spacefast from Claude Code, Codex, or Cursor. Each plugin includes focused skills and the
+MCP configuration its client needs.
 
 ## Install
 

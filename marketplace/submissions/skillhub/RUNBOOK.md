@@ -18,11 +18,12 @@ Verified: **2026-08-27**
 - Door: https://skillhub.cn
 - Mechanism: api
 - Source: https://skillhub.cn
-- Source commit: `309185424b5cc4bfc2b8367d0bd6b6f222ed75f2`
+- Source commit: `66f4fcf69cf7197c0c0a7487ea5e80ae8fa2cca3`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
 - Terms: https://wordpress.com/tos/
+- Support: https://automattic.com/contact/
 - Reviewer account pointer: GitHub marketplace-reviewers environment: SPACEFAST_REVIEWER_ACCOUNT
 
 ## Upload or paste

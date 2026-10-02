@@ -1,7 +1,7 @@
 {
   "name": "spacefast",
   "version": "0.5.1",
-  "description": "Spacefast publishes files and folders to permanent web URLs with immutable versions, scoped access, and resumable MCP workflows.",
+  "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.",
   "author": {
     "name": "Automattic",
     "url": "https://spacefast.com"
@@ -19,18 +19,19 @@
   },
   "interface": {
     "displayName": "Spacefast",
-    "shortDescription": "Publish files and folders to the web instantly.",
-    "longDescription": "Spacefast is the best place to share AI artifacts. Publish any file or folder and get a permanent URL, an immutable version URL, and — for anonymous publishes — a one-time claim flow. Supports custom domains, scoped access, version history, rollback, logs, signed uploads, and browser OAuth for team publishing.",
-    "developerName": "Automattic",
+    "shortDescription": "Build and share your AI work",
+    "longDescription": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.\n\nKeep improving it through chat. Change the content or design, share a preview, choose who can open it, connect your own domain, or restore an earlier version.\n\nConnect your Spacefast account to publish and manage your team’s Spaces.",
+    "developerName": "Automattic Inc.",
     "category": "Developer Tools",
     "capabilities": ["Interactive", "Read", "Write"],
     "websiteURL": "https://spacefast.com",
+    "supportURL": "https://automattic.com/contact/",
     "privacyPolicyURL": "https://automattic.com/privacy/",
     "termsOfServiceURL": "https://wordpress.com/tos/",
     "defaultPrompt": [
-      "Publish this project with Spacefast and return its live and immutable URLs.",
-      "Show the latest deployments for my Spacefast Space.",
-      "Show the DNS and SSL status for my Spacefast Space."
+      "Build a website for my project and publish it on Spacefast.",
+      "Publish this dashboard and give me a link to share.",
+      "Update the content and design of my existing Spacefast site."
     ],
     "brandColor": "#FF603D",
     "composerIcon": "./assets/logo.svg",

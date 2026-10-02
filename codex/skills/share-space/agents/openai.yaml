@@ -1,0 +1,4 @@
+interface:
+  display_name: "Share with the right people"
+  short_description: "Choose who can open your Space or share link."
+  default_prompt: "Use $share-space to change who can open this Space."

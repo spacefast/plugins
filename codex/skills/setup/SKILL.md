@@ -1,54 +1,48 @@
 ---
 name: setup
-description: "Set up the Spacefast plugin after installation or when the user asks to check its connection and available features."
+description: "Check the Spacefast connection after installation or when the user asks to get started. Explain the features available in this host."
 ---
 
-# Set up Spacefast
+# Get started
 
-Check the connection, then give the user a short introduction based on what this host supports.
+Check the connection. Then explain the features that help with the user's task.
 Setup does not authorize publishing, changing settings, or creating a monitor.
 
 ## Check the connection
 
-Cloud MCP at `https://mcp.spacefast.com` requires browser OAuth before any tool runs. If its tools are
-unavailable or authentication fails, direct the user to connect Spacefast in the host's plugin
-settings. Do not ask for a token in chat. Do not claim the connection works until a read succeeds.
+Spacefast's hosted MCP server at `https://mcp.spacefast.com` requires OAuth.
+If tools are unavailable or authentication fails, direct the user to connect Spacefast in the host's plugin settings.
+Do not ask for a token in chat. Do not report a working connection until a read succeeds.
 
-Use one bounded `execute` program to read the account and teams:
+Use one bounded `execute` program:
 
-1. Call `tools.search({ query: "Get account identity and teams", limit: 10 })`. Select the item
-   whose `path` ends with `.account.getBootstrap`. If needed, follow `nextOffset` for at most
-   three pages. Do not use the separate connector `search` tool for this API operation.
+1. Call `tools.search({ query: "Get account identity and teams", limit: 10 })`.
+   Select the path ending in `.account.getBootstrap`.
+   If needed, follow `nextOffset` for at most three pages. Do not invent a path.
 2. Call `tools.describe.tool({ path: item.path })`. Read `inputTypeScript` and `outputTypeScript`.
-3. Call `tools[item.path]({})`, or include an existing user-provided team or Space reference as
-   the described input allows. On `ok: false`, return its error and stop. Do not guess another path.
-4. Read `result.data.data` as the bootstrap payload. Return only its subject, user display name,
-   and team names needed for setup. Read optional reference values only when `status` is
-   `resolved`. Do not dump the account payload or any credential.
+3. Call `tools[item.path]` with the input that contract requires.
+   Reuse a team or Space reference supplied by the user when the contract accepts it.
+   On `ok: false`, return the error and stop.
+4. Read the bootstrap payload from `result.data.data`.
+   Read the identity fields from the described output contract.
+   Return only the identity and team names needed for setup.
+   Read optional reference values only when their `status` is `resolved`.
+   Do not return the complete account payload or credentials.
 
-Report the connected account or service identity. A service connection is not its creator's
-personal account. Reuse the current task's known Space; do not require a chooser for an ordinary
-publish. If choosing a Space helps the user, call `choose_space`; honor cancel or decline.
+Report the connected account or service identity. A service connection is not its creator's personal account.
+Reuse the Space already established in the conversation. An ordinary publish does not need a Space chooser.
 
-## Introduce the available entrypoints
+## Introduce available features
 
-- **Your Spaces** opens the Space Library from the sidebar or a conversation tab. The library
-  supports search, pagination, detail links, deep links, and host-supported display modes.
-- The composer mention picker and the library's **Add to chat** button attach a chosen Space.
-  Removing an attachment must leave it removed. The mounted library tools let the agent inspect
-  the view, search, and select a Space without automatically attaching it.
-- Native plugin settings offer `pageSize` (10–50, default 20) and `showStatus` (default true).
-  Leave these unchanged unless the user asks. For requested changes through `execute`, discover
-  and describe `getPluginSettings` and `updatePluginSettings`, update only the requested fields,
-  then verify with a read. Team and service connections cannot write personal settings.
-- Desktop **HTML Preview** opens host-provided HTML or HTM files. **Save** writes only the opened
-  file, subject to host write support and conflict checks. It does not publish anything. Use the
-  regular Spacefast publishing skill only when publishing is part of the user's request.
-- `choose_space` uses rich forms when supported, standard forms otherwise, or returns choices
-  for chat. A selected Space is context, not permission for a later write.
-- Cloud MCP exposes durable Space events to hosts that support MCP Events. For a requested
-  monitor, use the host's event subscription flow and advertised event list. Do not invent a
-  callback URL or secret, and do not claim a subscription exists without a successful result.
+Explain that Spacefast can build and publish websites, update existing Spaces, manage sharing, connect domains, and restore deployments.
+Mention only features relevant to the user's task.
 
-Mention only the features useful for the current task. The packaged [plugin guide](../../README.md)
-has the full overview. Continue the user's existing task once setup is verified.
+Describe optional host features only when the host or connected server advertises them:
+
+- The Space Library and mention picker can help the user select a Space.
+- If `choose_space` is available, use it when a choice is needed. Honor cancellation.
+- Plugin settings, HTML previews, and event subscriptions depend on host support.
+  Do not promise these features merely because this skill describes them.
+
+A selected Space supplies context. It does not authorize a write.
+Continue the user's existing task after setup succeeds.

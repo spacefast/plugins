@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build a website"
+  short_description: "Turn a brief into a website you can share."
+  default_prompt: "Use $build-website to build a website from my brief and publish it on Spacefast."

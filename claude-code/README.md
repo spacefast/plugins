@@ -1,7 +1,6 @@
 # Spacefast for Claude Code
 
-Publish local files and manage Spacefast spaces without leaving Claude Code. The plugin adds a
-`/spacefast` skill, a SessionStart hook that announces a linked Space, and one hosted HTTP MCP connection.
+Publish local files and manage Spacefast spaces without leaving Claude Code. The plugin adds six task skills and setup, a SessionStart hook that announces a linked Space, and one hosted HTTP MCP connection.
 
 ## Install
 
@@ -14,8 +13,8 @@ Run `/reload-plugins` or start a new Claude Code session after installation.
 
 ## Use
 
-Ask Claude: **Publish this project with Spacefast.** The skill runs automatically for
-publish, deploy, host, share, and existing Space file-edit requests.
+Ask Claude: **Publish this project with Spacefast.** The matching skill handles building,
+publishing, editing, sharing, domains, or deployment recovery.
 
 Anonymous publishes go through the CLI: `sf publish` needs no account and returns a Live URL plus a claim link. The hosted MCP connection needs browser OAuth before any tool runs.
 

@@ -11,7 +11,7 @@ meta:
     - remote
 about:
   title: Spacefast
-  description: Publish files and folders to the web instantly.
+  description: Build and share your AI work
   icon: https://spacefast.com/favicon.svg
 remote:
   transport_type: streamable-http
