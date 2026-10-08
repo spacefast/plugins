@@ -6,7 +6,7 @@
   "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.",
   "long_description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.\n\nKeep improving it through chat. Change the content or design, share a preview, choose who can open it, connect your own domain, or restore an earlier version.\n\nConnect your Spacefast account to publish and manage your team’s Spaces.",
   "author": {
-    "name": "Automattic",
+    "name": "Automattic Inc.",
     "url": "https://spacefast.com",
     "email": "hello@spacefast.com"
   },

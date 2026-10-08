@@ -6,7 +6,7 @@ Keep improving it through chat. Change the content or design, share a preview, c
 
 Connect your Spacefast account to publish and manage your team’s Spaces.
 
-Use Spacefast from Claude Code, Codex, or Cursor. Each plugin includes focused skills and the
+Use Spacefast from Claude Code, Codex, Cursor, or GitHub Copilot. Each plugin includes focused skills and the
 MCP configuration its client needs.
 
 ## Install
@@ -37,6 +37,17 @@ npx -y plugins add spacefast/plugins -t cursor -y
 ```
 
 [Cursor setup](./cursor/)
+
+### GitHub Copilot CLI
+
+Install the plugin directly from this repository:
+
+```bash
+copilot plugin install spacefast/plugins
+```
+
+The plugin includes Spacefast's task skills and hosted MCP connection. Connect your Spacefast
+account through Copilot's MCP controls before using the hosted tools.
 
 ### Skill only
 

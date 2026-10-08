@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://github.com/github/awesome-copilot/issues/new/choose
 - Mechanism: issue
 - Source: https://github.com/github/awesome-copilot
-- Source commit: `66f4fcf69cf7197c0c0a7487ea5e80ae8fa2cca3`
+- Source commit: `e95051b237c4c1523d19157afab501f85bd0da28`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/

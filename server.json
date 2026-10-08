@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.spacefast/mcp",
   "title": "Spacefast",
-  "description": "Publish files and folders to the web instantly: permanent URLs, immutable versions, claim links.",
+  "description": "Build, publish, and manage websites, dashboards, reports, and web tools with Spacefast.",
   "icons": [
     {
       "src": "https://spacefast.com/app-icon-192x192.png",
@@ -15,21 +15,10 @@
   ],
   "version": "0.5.1",
   "repository": {
-    "url": "https://github.com/spacefast/plugins",
+    "url": "https://github.com/spacefast/mcp",
     "source": "github"
   },
   "websiteUrl": "https://spacefast.com",
-  "packages": [
-    {
-      "registryType": "npm",
-      "registryBaseUrl": "https://registry.npmjs.org",
-      "identifier": "spacefast",
-      "version": "0.5.1",
-      "transport": {
-        "type": "stdio"
-      }
-    }
-  ],
   "remotes": [
     {
       "type": "streamable-http",

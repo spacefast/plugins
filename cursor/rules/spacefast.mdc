@@ -181,7 +181,7 @@ or database status.
 
 ## What to share
 
-Report the stable Live URL and the immutable Version URL. For a claimed Space, also report the reusable Access URL when the receipt includes it, and open the URL you hand the user before claiming success.
+Report the stable Live URL and the immutable Version URL. For a claimed Space, report the reusable Access URL only when the receipt discloses it. For private verification without that URL, follow `workflow/publish-receipt` to mint a bounded version preview session with `versions:download` permission. Keep its proof URL and cookie private.
 
 For an unclaimed Space, point the user to the claim action in the publish card and state `publish.result.receipt.claim.expiresAt`. Do not put the key-bearing claim URL or any claim credential in model text. Never ask the user to paste a credential into chat.
 
@@ -201,7 +201,7 @@ In vibe mode, edits, staging, commits, builds, and promotions run without asking
 
 In code mode, each source step, build, and promotion waits for the user's approval. Show the existing file, diff, commit history, and build log Apps at the relevant review steps. The Changes App lets the user stage one file or all changes; read workspace status after those clicks before committing. Use the `source_files` view for workspace contents, `source_changes` for the diff, and `source_history` plus `source_comparison` after a commit. Show `build_logs` once when a build starts. The App streams new lines and the final status by itself, so do not show it again for the same build. Wait for the result with `getBuild` in `execute`.
 
-In either mode, keep the workspace's revision guards, scoped edits, and verification. Destructive actions, such as deleting or archiving, and changes that switch off review, such as a connector `approve` rule or a new work mode, always ask the user.
+In either mode, keep the workspace's revision guards, scoped edits, and verification. Deleting or archiving, changing domain redirects or webhook destinations, replacing identity or sign-in providers, changing protected or outbound `updateSpace` settings, and switching off review with a connector `approve` rule or a new work mode always ask the user. In Manage the code, signed push, ephemeral, and import git remotes also ask before granting source writes.
 
 Without local source, use a durable CodeStorage workspace inside one `execute` program. Search with
 each exact operation phrase below, not the user's edit wording. Describe every operation before you

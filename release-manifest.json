@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T19:59:58.000Z",
+  "generatedAt": "2026-10-08T00:33:53.000Z",
   "version": "0.5.1",
   "packageManager": "pnpm@11.22.0",
   "publicRepoRoot": ".",
@@ -37,14 +37,14 @@
     "spacefast-plugins.zip"
   ],
   "checksums": {
-    ".cursor-plugin/marketplace.json": "6359deb175e31f37a56c76dbbe778a4b23283aee3606ad1c6acd6a4731a90aa7",
-    "claude-code.tgz": "814fcf42c61f0366fca4eaafb63bede0f235caf63ff2e7f7f5738431c20d235b",
-    "claude-desktop.tgz": "dc67c4701e60bd708bb2fe499313e25536018711043ac8ae54d55c10a70acf17",
-    "codex.tgz": "d96c1e82c3a315c45b9c8dd54c42eecc0407ae0df5a6fdf37a5ddc23148576dc",
-    "cursor.tgz": "1d42596eea341b99c6d2633636f9a775c55b8b07f45e3047ce8404f35f4ebe69",
-    "spacefast-plugins.tgz": "db0232120b554109bb234259a90e1d657f594751c0e38c3d4825984a4ba7e1f3",
-    "spacefast-plugins.zip": "fd79d5b15ee6a7d7c29bf35a53c622713abd8a08eeaf926c2ed21da066c46e5c",
-    "spacefast.mcpb": "9620b7f380ab896369bfc15951c0a4782480e769ee30ed669a24219ff6336899"
+    ".cursor-plugin/marketplace.json": "b72b2117031b0bb736ed1bcec9aa7b73a8c5f56162adfd5efbe3cdea51f40efd",
+    "claude-code.tgz": "52a17704533b3e10b2fcac9861c76bda98643252d3ab7c1eafdf0c58dfb8181a",
+    "claude-desktop.tgz": "7347a457aed976aa4a41f9b1931fa7003ccbd52b9d3cb4f623b22face41e19a6",
+    "codex.tgz": "537fe16f426a72eb546203d3799e7fbe0e25b97454dcfc609c9cb0fe14e0cc89",
+    "cursor.tgz": "c3fa048036d8e4c29d0a20db804169aa2e6aa8cc46db01bfaabcda4e3c06baf8",
+    "spacefast-plugins.tgz": "088294fa82dc9327ba0ee194dbbb95feea013de1cd3446a179a602b416c1351d",
+    "spacefast-plugins.zip": "be944ca2bd0ad4fb500d652037d615008becccd3a35a48cad7e32b33a844d0f1",
+    "spacefast.mcpb": "a0493f31d17c743b957b1768fa19bfe16d360851d91cbb81aeb125563c63689d"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",
@@ -52,10 +52,10 @@
   ],
   "mcpb": {
     "path": "spacefast.mcpb",
-    "sha256": "9620b7f380ab896369bfc15951c0a4782480e769ee30ed669a24219ff6336899"
+    "sha256": "a0493f31d17c743b957b1768fa19bfe16d360851d91cbb81aeb125563c63689d"
   },
   "provenance": {
-    "sourceSha": "66f4fcf69cf7197c0c0a7487ea5e80ae8fa2cca3",
+    "sourceSha": "e95051b237c4c1523d19157afab501f85bd0da28",
     "pluginsSha": "{{PLUGINS_SHA}}"
   },
   "marketplace": {
@@ -72,6 +72,7 @@
       ".plugin/marketplace.json",
       ".plugin/plugin.json",
       "GEMINI.md",
+      "LICENSE",
       "PROVENANCE.json",
       "assets/logo-400.png",
       "assets/logo.svg",
@@ -112,6 +113,8 @@
       "marketplace/submissions/kilo/entry.json",
       "marketplace/submissions/kilo/mcps/spacefast/MCP.yaml",
       "marketplace/submissions/kilo/skills/spacefast/SKILL.md",
+      "marketplace/submissions/kilo/skills/spacefast/agents/openai.yaml",
+      "marketplace/submissions/kilo/skills/spacefast/references.md",
       "marketplace/submissions/kimi/RUNBOOK.md",
       "marketplace/submissions/kimi/entry.json",
       "marketplace/submissions/kimi/plugins/marketplace.spacefast.json",

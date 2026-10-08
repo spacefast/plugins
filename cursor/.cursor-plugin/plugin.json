@@ -4,7 +4,7 @@
   "version": "0.5.1",
   "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.",
   "author": {
-    "name": "Automattic"
+    "name": "Automattic Inc."
   },
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",

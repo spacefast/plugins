@@ -44,7 +44,7 @@ In vibe mode, edits, staging, commits, builds, and promotions run without asking
 
 In code mode, each source step, build, and promotion waits for the user's approval. Show the existing file, diff, commit history, and build log Apps at the relevant review steps. The Changes App lets the user stage one file or all changes; read workspace status after those clicks before committing. Use the `source_files` view for workspace contents, `source_changes` for the diff, and `source_history` plus `source_comparison` after a commit. Show `build_logs` once when a build starts. The App streams new lines and the final status by itself, so do not show it again for the same build. Wait for the result with `getBuild` in `execute`.
 
-In either mode, keep the workspace's revision guards, scoped edits, and verification. Destructive actions, such as deleting or archiving, and changes that switch off review, such as a connector `approve` rule or a new work mode, always ask the user.
+In either mode, keep the workspace's revision guards, scoped edits, and verification. Deleting or archiving, changing domain redirects or webhook destinations, replacing identity or sign-in providers, changing protected or outbound `updateSpace` settings, and switching off review with a connector `approve` rule or a new work mode always ask the user. In Manage the code, signed push, ephemeral, and import git remotes also ask before granting source writes.
 
 ## Errors and private data
 
