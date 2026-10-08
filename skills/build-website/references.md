@@ -72,7 +72,7 @@ Use `listTeamSkills` to inspect the catalog, enabled state, instructions, and re
 
 Describe `createTeamMemory` and `updateTeamMemory` before saving lasting user knowledge or correcting a memory. Use `listTeamMemories` for full records or truncated context. Archive stale memories; permanent deletion belongs to owners and admins.
 
-Outside the Memory & skills beta, `getTeamAgentContext` returns empty context; management operations return `feature_unavailable`. Continue unrelated work without these features. If the user requested a memory or skill operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
+Outside the Memory & skills beta, `getTeamAgentContext` returns empty context; management operations return `feature_unavailable`. On `feature_unavailable`, continue unrelated work. If the user requested a memory, skill, or design-system operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
 
 Discover the named operations through `tools.search` in `execute`. Describe each selected path before calling it. Team context and memory/skill lists require `spaces:read`; memory changes require `spaces:write`. These permissions do not grant team administration.
 
@@ -202,7 +202,9 @@ Assets provide a Media Library attachmentId, URL, category, usage, and alt text,
 
 The compiled Markdown omits unavailable assets; use the asset map or `getTeamDesignSystem` to identify them before judging a required asset absent. Read complete applicable active memories when context reports truncation. Put visitor-facing assets into the project's normal source asset location; authenticated Media Library URLs are private. The designSystem.revision fingerprint is separate from the numeric write revision.
 
-On feature_unavailable, continue the requested task without design context. On team_knowledge_setup_required or team_knowledge_storage_unavailable, explain the required team-context setup or repair; preserve the work already prepared. Do not invent a saved design system.
+On `feature_unavailable`, continue unrelated work. If the user requested a memory, skill, or design-system operation, report that it is unavailable. Do not change feature flags.
+
+On team_knowledge_setup_required or team_knowledge_storage_unavailable, explain the required team-context setup or repair; preserve the work already prepared. Do not invent a saved design system.
 
 To verify, list the components and pages affected by the task and inspect the built result at representative desktop and mobile sizes. Check tokens, type, spacing, component rules, editorial conventions, and each required asset against the current saved standards and any design.md handoff. When the task includes corrections, fix actionable deviations, run the project's real build again, and repeat affected checks; for review-only work, report findings without editing. Stop when none remain in scope, or identify the exact missing asset, conflicting standard, or user decision that prevents progress. Report verified areas and unresolved deviations; a successful build alone is not design verification. Publishing follows the user's original deployment intent and the Space's current review mode.
 

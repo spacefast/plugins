@@ -72,7 +72,7 @@ Use `listTeamSkills` to inspect the catalog, enabled state, instructions, and re
 
 Describe `createTeamMemory` and `updateTeamMemory` before saving lasting user knowledge or correcting a memory. Use `listTeamMemories` for full records or truncated context. Archive stale memories; permanent deletion belongs to owners and admins.
 
-Outside the Memory & skills beta, `getTeamAgentContext` returns empty context; management operations return `feature_unavailable`. Continue unrelated work without these features. If the user requested a memory or skill operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
+Outside the Memory & skills beta, `getTeamAgentContext` returns empty context; management operations return `feature_unavailable`. On `feature_unavailable`, continue unrelated work. If the user requested a memory, skill, or design-system operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
 
 Discover the named operations through `tools.search` in `execute`. Describe each selected path before calling it. Team context and memory/skill lists require `spaces:read`; memory changes require `spaces:write`. These permissions do not grant team administration.
 
