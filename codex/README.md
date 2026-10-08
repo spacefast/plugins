@@ -1,6 +1,6 @@
 # Spacefast for Codex
 
-Publish local files and manage Spacefast spaces from Codex. The plugin adds six task skills and setup,
+Publish local files and manage Spacefast spaces from Codex. The plugin adds 10 task skills and setup,
 plus one hosted Streamable HTTP MCP connection.
 
 ## Install
@@ -57,6 +57,23 @@ file. External changes keep your unsaved draft; reload explicitly before replaci
 Cloud MCP also supports durable event subscriptions for Space build, deployment, channel, and
 domain changes when the host supports MCP Events. Subscriptions start only when requested;
 installation does not create a monitor. Features appear only on hosts that support them.
+
+## Design verification reminders
+
+Linked-project session context and publishing skills remind the agent to run
+`verify-design-system` before deploying changed work. A PreToolUse hook reinforces
+the reminder for Spacefast MCP publishing, deployment-related execute programs,
+and CLI publishing/build/promotion commands. Git pushes are not matched.
+
+These hooks are advisory. They do not run the skill, block the pending call, or
+change its arguments or approvals. The agent can read a tool-call reminder after
+the call runs. Dynamic execute programs and shell wrappers may not be recognized.
+
+Manually installed Codex plugins include the hooks. Review and trust new or changed
+definitions with `/hooks` before relying on them; installation does not grant trust.
+The OpenAI public-directory package includes the skill guidance but no lifecycle hooks.
+See [Codex hooks](https://learn.chatgpt.com/docs/hooks) and
+[plugin packaging](https://developers.openai.com/plugins/build/plugins#bundled-mcp-servers-and-lifecycle-hooks).
 
 ## Skill only
 

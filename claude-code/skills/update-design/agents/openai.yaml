@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update an existing design"
+  short_description: "Bring an existing Space onto current standards."
+  default_prompt: "Use $update-design to align this Space with our current design system."

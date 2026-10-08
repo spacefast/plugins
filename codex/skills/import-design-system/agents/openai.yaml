@@ -1,0 +1,4 @@
+interface:
+  display_name: "Import a design system"
+  short_description: "Save reusable brand and design standards."
+  default_prompt: "Use $import-design-system to save these design standards in Spacefast."

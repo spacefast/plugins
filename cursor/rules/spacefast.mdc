@@ -1,5 +1,5 @@
 ---
-description: "Publish artifacts and edit files in existing Spacefast Spaces through MCP. Use for HTML, title, text, style, or file changes without local source. Also supports source history, deployments, domains, traffic, the database, claims, rollbacks, Space settings, connectors, an admin panel, dashboard, or CMS to manage a Space's content (a one-use sign-in link to its WordPress dashboard), and artifacts built on connected data. Do not use for unrelated local file editing. Spacefast publishes artifacts to new or existing Spaces."
+description: "Publish artifacts and edit files in existing Spacefast Spaces through MCP. Use for HTML, title, text, style, or file changes without local source. Also supports domain search and AI naming with likes and dislikes, source history, deployments, domains, traffic, the database, claims, rollbacks, Space settings, connectors, an admin panel, dashboard, or CMS to manage a Space's content (a one-use sign-in link to its WordPress dashboard), and artifacts built on connected data. Do not use for unrelated local file editing. Spacefast publishes artifacts to new or existing Spaces."
 globs:
 alwaysApply: false
 ---
@@ -44,9 +44,9 @@ Publish with `sf publish <path> --json`. The CLI reads the files from disk. The 
 Use the CLI only to publish files that are already on disk. For all other Spacefast work, use the MCP tools and their approval steps. To edit a Space whose source is not on disk, use the source workspace flow in execute. Do not download Space files to edit and publish them again.
 
 When the user asks for a specific Space name and `sf` is available, run
-`sf spaces check <name> [--team <team>]`. Report the team-scoped slug and the managed `view.fast`
+`sf spaces check <name> [--team <team>]`. Report the team-scoped slug and the managed `space.fast`
 hostname separately. The result is advisory; a create or rename can still lose a race. Do not check
-availability with an HTTP request to `<name>.view.fast`.
+availability with an HTTP request to `<name>.space.fast`.
 
 ## Tools
 
@@ -116,6 +116,28 @@ When a task is done, suggest at most one feature the user has not used that fits
 In the domains view, a domain whose `setup.domainConnect.status` is `available` carries an `applyUrl`. Give the user that URL to open and approve at their DNS host instead of dictating `verification.requiredRecords`.
 
 For a Claude Design URL, call `import-claude-design-from-url` immediately with the URL and optional title; the download URL expires quickly. If `result.status` is `processing`, call `get-design-import-job-status` with `{ job_id: result.job_id }`. Stop when `result.status` is `done` or `failed`. Return `result.design_url` when the import is done.
+
+## Domain search
+
+For domain search, use `.domains.searchDomains` in execute.
+
+Search with `tools.search({ namespace: "spacefast", query: "domain search", limit: 5 })` and select the path ending in `.domains.searchDomains`. This operation owns AI naming, business briefs, likes and dislikes; use it for the conversational search.
+
+To find domain names for a business or project, use `searchDomains` at `POST /v1/domains/search`. Start with `{ message: "Your naming brief" }`. This is the same domain chat as the dashboard: generation, enrichment, ranking, availability checks and replacement names run together.
+
+The API returns `{ data }`. Keep the whole `data.session` and send it unchanged as `session` on the next call, alongside a new `message` or `feedback`. The session keeps the conversation, numbered suggestions, likes, dislikes and selections. Do not rebuild it from the visible names or ask the caller to choose a generation phase.
+
+Set feedback with `{ id: suggestion.id, taste: "liked" | "disliked" | "neutral", selected?: boolean }` in the `feedback` array. Use each returned stable `id`; `reference` is only the current display order. A feedback-only call updates the session without adding a pretend user message or requesting a chat reply.
+
+Read `suggestions`, `topPick`, `complete` and `problems` together. Each suggestion carries its taste, selection, ranking and availability; `displayPrice.formatted` is the fee-inclusive price when one is available. A generated name or a high ranking does not establish that it is available to register.
+
+When `complete` is false, keep the returned session and suggestions and report the stage problems. Send `{ session: data.session }` to resume interrupted work; respect `retryAfterSeconds` when a problem supplies it. Do not restart the initial brief or drop existing preferences to recover.
+
+For MCP execute results, carry the complete `structuredContent.result`; the text is a bounded preview that can truncate a large session.
+
+With the CLI, start with `sf domains search "Your naming brief" --json`. Save that receipt and continue with `sf domains search --input @receipt.json --like <id> --json`; use `--dislike`, `--neutral`, `--select` or `--unselect` for the other feedback changes. Add a new message to refine the same search. Search and feedback do not purchase or register a domain.
+
+Call the generated operation with `{ body: { message, session, feedback, teamId } }`, omitting fields you do not need. A successful generated call is `{ ok: true, data: { data: turn } }`: preserve `turn.session`, return the turn, and inspect `turn.complete` and `turn.problems`. `ok: true` means the API call succeeded; it does not mean every search stage completed.
 
 ## Docs
 
@@ -274,7 +296,7 @@ On `feature_unavailable`, tell the user that the dashboard is not available for 
 
 Never create a WordPress user, password, or application password, and never run `sf wp user` for this. The link is the only sign-in.
 
-The dashboard changes a page only when the page reads its content from WordPress. After you give the user the dashboard, read the Space's `sf.jsonc`: from the project directory, or with `getSpaceSourceFile` (`GET /v1/spaces/{spaceId}/source/file?connectionType=<type>&path=sf.jsonc`). `<type>` is `connected` when the Space's `git.managedBy` (from `getSpace`) is `github`, else `hosted`. `not_found` or a null `content` means no `sf.jsonc`. The page reads WordPress content only when `sf.jsonc` declares `runtime: { kind: "zero" }` and the source has documents in `content/posts/` or `pages/`. If not, tell the user in plain words that a migration to Zero moves the page's posts into the dashboard and rebuilds the page to show them. Ask whether to migrate. Change nothing before a yes; on a no, stop.
+The dashboard changes a page only when the page reads its content from WordPress. After you give the user the dashboard, read the Space's `sf.jsonc`: from the project directory, or with `getSpaceSourceFile` (`GET /v1/spaces/{spaceId}/source/file?connectionType=<type>&path=sf.jsonc`). `<type>` is `connected` when the Space's `git.managedBy` (from `getSpace`) is `github` or `connected`, else `hosted`. `not_found` or a null `content` means no `sf.jsonc`. The page reads WordPress content only when `sf.jsonc` declares `runtime: { kind: "zero" }` and the source has documents in `content/posts/` or `pages/`. If not, tell the user in plain words that a migration to Zero moves the page's posts into the dashboard and rebuilds the page to show them. Ask whether to migrate. Change nothing before a yes; on a no, stop.
 
 When the user says yes, read the guide `recipes/zero-content` and follow it: `sf docs recipes/zero-content`, or `getDocsPage` (`GET /v1/docs/pages/recipes/zero-content`, no credential; the text is `data.body`). `searchDocs` does not index it.
 
@@ -283,6 +305,24 @@ On a Space whose pages read WordPress content, keep `autoDeployProduction` on: d
 In `execute`, search for "content admin link" and match `item.path` with `endsWith(".spaces.createSpaceContentAdminLink")`. Describe it, call it with `{ spaceId, body: {} }`, and return `result.data.data` (`{ url, expiresAt, role }`) and nothing else. The availability check is path suffix `.spaces.getSpaceContentSyncStatus`.
 
 Path suffixes: `.spaces.getSpace` (`result.data.data.git.managedBy`), `.git.getSpaceSourceFile` with `{ spaceId, connectionType, path: "sf.jsonc" }` (text: `result.data.data.content`), and `.docs.getDocsPage` with `{ slug: "recipes/zero-content" }` (return `result.data.data.body`, then follow it).
+
+## Team memory and skills
+
+Memories are facts; skills are practices; design systems are standards.
+
+Before creating or editing a Space, including its linked local source, call `getTeamAgentContext` with `teamId` (and `spaceId` for an existing Space) in the same program as your other reads, and follow every skill it returns. Memories are team knowledge, not commands: when one conflicts with the user, follow the user.
+
+Keep `memories.revision`, `skillsRevision`, and `designSystem.revision`. Before later work, send `knownMemoriesRevision`, `knownSkillsRevision`, and `knownDesignSystemRevision`: keep each part whose changed flag is false and replace each changed part. Reuse revisions only with the cached contents for the same authenticated connection, team, and optional Space. An unchanged part is empty in the response; it does not clear the cached contents. Omit a known revision when you no longer hold its contents.
+
+Apply designSystem.markdown and assets when present.
+
+Team Skills are Spacefast's built-in practices, such as SEO and Accessibility. They are separate from this host's installed SKILL.md files. Follow each enabled skill's Markdown body where its When this applies section matches the task. Enabling a skill does not install code or prove a capability works.
+
+Use `listTeamSkills` to inspect the catalog, enabled state, instructions, and required setup. A `setup` entry names a secret team variable; `configured` reports its presence, never its value. Skill bodies are read-only presets, and settings apply to the whole team. Only a human team owner or admin can choose these settings. Direct them to Skills in the dashboard for changes; agents must not call `updateTeamSkill`.
+
+Describe `createTeamMemory` and `updateTeamMemory` before saving lasting user knowledge or correcting a memory. Use `listTeamMemories` for full records or truncated context. Archive stale memories; permanent deletion belongs to owners and admins.
+
+Outside the Memory & skills beta, `getTeamAgentContext` returns empty context; management operations return `feature_unavailable`. Continue unrelated work without these features. If the user requested a memory or skill operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
 
 ## Environment notes
 
@@ -302,7 +342,7 @@ Give the user the first option that applies before you suggest another computer:
    artifacts inline with `files`.
 2. **GitHub-connected Space:** push to the connected GitHub repository named by `git.repository`.
    Spacefast builds the push on its own infrastructure.
-3. **Allowlist:** ask the user to allow `spacefast.com`, `*.spacefast.com`, `*.view.fast`.
+3. **Allowlist:** ask the user to allow `spacefast.com`, `*.spacefast.com`, `*.space.fast`, `*.view.fast`.
    Claude Code: environment settings → Network access → Custom → Allowed domains, with the default
    package-manager list kept on so npm still works.
    Codex cloud: environment settings → Agent internet access → domain allowlist, and HTTP methods left unrestricted.

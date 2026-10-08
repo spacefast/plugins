@@ -51,7 +51,7 @@ account through Copilot's MCP controls before using the hosted tools.
 
 ### goose
 
-Run this from your project directory to install all seven Spacefast skills:
+Run this from your project directory to install all Spacefast skills:
 
 ```bash
 DISABLE_TELEMETRY=1 npx -y skills@1.5.23 add https://github.com/spacefast/plugins/tree/main/skills --agent goose --skill '*' --yes

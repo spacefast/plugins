@@ -1,0 +1,4 @@
+interface:
+  display_name: "Apply a design system"
+  short_description: "Apply saved standards to your local source."
+  default_prompt: "Use $apply-design-system to build this project with our saved design system."

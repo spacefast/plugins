@@ -10,6 +10,18 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^(Bash|PowerShell|exec_command|shell_command|mcp__(?:plugin_spacefast(?:[-_]local)?_)?spacefast(?:[-_]local)?__(?:publish|execute))$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${GROK_PLUGIN_ROOT:-${CLAUDE_PLUGIN_ROOT}}/hooks/design-reminder.mjs\"",
+            "timeout": 5
+          }
+        ]
+      }
     ]
   }
 }

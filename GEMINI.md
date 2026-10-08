@@ -6,7 +6,7 @@ use https://spacefast.com/docs/agents and the bundled Spacefast skill as the sou
 ## Setup
 
 - Use the Spacefast CLI: `npm install -g spacefast && sf setup agent --agent gemini-cli` — Sets up this agent and signs you in. You also get the `sf` command to publish from the terminal yourself.
-- Set it up without installing the CLI: `npx -y spacefast@0.5.1 setup agent --agent gemini-cli -y` — The same setup as the CLI, without keeping the CLI installed afterwards.
+- Set it up without installing the CLI: `npx -y spacefast@0.5.0 setup agent --agent gemini-cli -y` — The same setup as the CLI, without keeping the CLI installed afterwards.
 - Configure ~/.gemini/settings.json: `{
   "mcpServers": {
     "spacefast": {
