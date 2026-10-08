@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T00:33:53.000Z",
+  "generatedAt": "2026-10-08T21:21:20.000Z",
   "version": "0.5.1",
   "packageManager": "pnpm@11.22.0",
   "publicRepoRoot": ".",
@@ -38,13 +38,13 @@
   ],
   "checksums": {
     ".cursor-plugin/marketplace.json": "b72b2117031b0bb736ed1bcec9aa7b73a8c5f56162adfd5efbe3cdea51f40efd",
-    "claude-code.tgz": "52a17704533b3e10b2fcac9861c76bda98643252d3ab7c1eafdf0c58dfb8181a",
-    "claude-desktop.tgz": "7347a457aed976aa4a41f9b1931fa7003ccbd52b9d3cb4f623b22face41e19a6",
-    "codex.tgz": "537fe16f426a72eb546203d3799e7fbe0e25b97454dcfc609c9cb0fe14e0cc89",
-    "cursor.tgz": "c3fa048036d8e4c29d0a20db804169aa2e6aa8cc46db01bfaabcda4e3c06baf8",
-    "spacefast-plugins.tgz": "088294fa82dc9327ba0ee194dbbb95feea013de1cd3446a179a602b416c1351d",
-    "spacefast-plugins.zip": "be944ca2bd0ad4fb500d652037d615008becccd3a35a48cad7e32b33a844d0f1",
-    "spacefast.mcpb": "a0493f31d17c743b957b1768fa19bfe16d360851d91cbb81aeb125563c63689d"
+    "claude-code.tgz": "e0e8b872343824a2dd13757a916ded4cf57504d4e0f0d43391b72b0c957d33c7",
+    "claude-desktop.tgz": "38c6864bece6efd3525036e02eca27d83b92a84464e3f5b1b96b3d52343ed328",
+    "codex.tgz": "faeac81b0900e2c9a0f92db67ec3e76b22911bd2b085fe75b8e1ee5606c792af",
+    "cursor.tgz": "f0ed95bfcc5eb08f91028813bac4df63fb512af5370b34f53ec5f0c52afbd0bd",
+    "spacefast-plugins.tgz": "10052f255c280afbb5ab773d5dc9a1f2ee7cd5169f8aeef52c7894b17008e18b",
+    "spacefast-plugins.zip": "9d7c9a8c25ab69753369d68e061bfe04cc665e0f7930d0fcedc93198feeb8fcd",
+    "spacefast.mcpb": "20ce759626087de75321e7f5515ae2d40f1e1f6d6d79d9ac02221849fadc7d34"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",
@@ -52,10 +52,10 @@
   ],
   "mcpb": {
     "path": "spacefast.mcpb",
-    "sha256": "a0493f31d17c743b957b1768fa19bfe16d360851d91cbb81aeb125563c63689d"
+    "sha256": "20ce759626087de75321e7f5515ae2d40f1e1f6d6d79d9ac02221849fadc7d34"
   },
   "provenance": {
-    "sourceSha": "e95051b237c4c1523d19157afab501f85bd0da28",
+    "sourceSha": "3219e10707dc3ac5d3c9992aaf1c945c74335b1c",
     "pluginsSha": "{{PLUGINS_SHA}}"
   },
   "marketplace": {
@@ -101,7 +101,6 @@
       "marketplace/submissions/glama/RUNBOOK.md",
       "marketplace/submissions/glama/entry.json",
       "marketplace/submissions/goose/RUNBOOK.md",
-      "marketplace/submissions/goose/documentation/static/servers.spacefast.json",
       "marketplace/submissions/goose/entry.json",
       "marketplace/submissions/grok/.grok-plugin/spacefast-entry.json",
       "marketplace/submissions/grok/RUNBOOK.md",

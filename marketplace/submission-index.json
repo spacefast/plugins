@@ -12,7 +12,7 @@
   },
   "provenance": {
     "generatedFrom": "spacefast/monorepo",
-    "sourceSha": "e95051b237c4c1523d19157afab501f85bd0da28",
+    "sourceSha": "3219e10707dc3ac5d3c9992aaf1c945c74335b1c",
     "pluginsSha": "{{PLUGINS_SHA}}",
     "version": "0.5.1"
   },
@@ -199,19 +199,12 @@
     },
     {
       "id": "goose",
-      "name": "Goose MCP directory",
-      "checkedAt": "2026-08-27",
+      "name": "Goose via the official MCP Registry",
+      "checkedAt": "2026-10-09",
       "availabilityLabel": "Soon",
       "registryStatus": "planned",
-      "submissionState": "blocked",
-      "blockedBy": [
-        "published_setup_ui",
-        "downstream_setup_ui_pins",
-        "openai_app_registration",
-        "live_openai_challenge",
-        "reviewer_account",
-        "submission_day_reverification"
-      ],
+      "submissionState": "published",
+      "blockedBy": [],
       "runbook": "marketplace/submissions/goose/RUNBOOK.md"
     },
     {

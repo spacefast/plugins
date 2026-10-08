@@ -1,13 +1,4 @@
-[
-  {
-    "id": "spacefast",
-    "name": "Spacefast",
-    "description": "Build and share your AI work",
-    "url": "https://mcp.spacefast.com",
-    "link": "https://github.com/spacefast/plugins",
-    "is_builtin": false,
-    "endorsed": false,
-    "environmentVariables": [],
-    "type": "streamable-http"
-  }
-]
+{
+  "serverJson": "server.json",
+  "sourceSha": "3219e10707dc3ac5d3c9992aaf1c945c74335b1c"
+}

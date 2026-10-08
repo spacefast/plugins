@@ -49,6 +49,22 @@ copilot plugin install spacefast/plugins
 The plugin includes Spacefast's task skills and hosted MCP connection. Connect your Spacefast
 account through Copilot's MCP controls before using the hosted tools.
 
+### goose
+
+Run this from your project directory to install all seven Spacefast skills:
+
+```bash
+DISABLE_TELEMETRY=1 npx -y skills@1.5.23 add https://github.com/spacefast/plugins/tree/main/skills --agent goose --skill '*' --yes
+goose skills list
+```
+
+For the hosted MCP connection, run `goose configure`, choose **Add Extension → Remote Extension
+(Streamable HTTP)**, and enter `https://mcp.spacefast.com`. Complete the Spacefast sign-in flow in your browser.
+
+goose 1.54.0's plugin importer does not accept remote MCP declarations; install the skills and MCP
+connection separately using the steps above. See the [goose setup guide](https://github.com/spacefast/mcp#goose)
+for desktop instructions and a configuration example.
+
 ### Skill only
 
 Use the standalone skill when your agent supports skills but not plugins:

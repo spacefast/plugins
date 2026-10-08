@@ -5,7 +5,7 @@
   "shortDescription": "Build and share your AI work",
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
-  "sourceSha": "e95051b237c4c1523d19157afab501f85bd0da28",
+  "sourceSha": "3219e10707dc3ac5d3c9992aaf1c945c74335b1c",
   "pluginsSha": "{{PLUGINS_SHA}}",
   "privacyPolicyUrl": "https://automattic.com/privacy/",
   "termsOfServiceUrl": "https://wordpress.com/tos/",
