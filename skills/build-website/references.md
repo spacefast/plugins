@@ -2,7 +2,7 @@
 
 ## MCP calls
 
-Use one bounded `execute` program per review stage. Discover operations, read their contracts, call them, and verify each write.
+For API work without an App flow, use one bounded `execute` program per review stage. Discover operations, read their contracts, call them, and verify each write.
 
 1. Find the operation. Call `tools.search({ query, limit })`. It returns `{ items, hasMore, nextOffset }`. Select an item only when its `path` and description match the request. If no item matches and `hasMore` is true, search again with `offset: nextOffset`. Stop after three pages.
 2. Read its contract. Call `tools.describe.tool({ path: item.path })`, then read `inputTypeScript` and `outputTypeScript`. Use `item.path`; never use `item.name` or a path you invent. If describe returns `tool_not_found`, use a suggested path or search again.

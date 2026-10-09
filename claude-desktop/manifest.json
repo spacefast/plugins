@@ -38,44 +38,7 @@
       "required": false
     }
   },
-  "tools": [
-    {
-      "name": "execute",
-      "description": "Use this tool for every Spacefast API task: mutations, multi-step tasks, tools.<connector> calls, docs, login information, team context, work mode, visual review feedback, comments, screenshots, traffic rules, and reads with no show_space view"
-    },
-    {
-      "name": "resume_execution",
-      "description": "Continue the exact program saved by a paused execute call"
-    },
-    {
-      "name": "search",
-      "description": "Find what this team connected and which connector tools it can call"
-    },
-    {
-      "name": "publish",
-      "description": "Publish local files or new inline artifacts to Spacefast"
-    },
-    {
-      "name": "show_space",
-      "description": "Open one Spacefast view"
-    },
-    {
-      "name": "open_local_file",
-      "description": "Show a local workspace file in ChatGPT. The user opens the file from the returned panel. Use a workspace-relative path. This tool does not upload or publish the file"
-    },
-    {
-      "name": "choose_space",
-      "description": "Ask the user to choose a Space when the destination is unclear. Returns the selected Space. This tool does not change Spacefast data"
-    },
-    {
-      "name": "operation_status",
-      "description": "Use this tool when publish returns status publishing"
-    },
-    {
-      "name": "cli_login",
-      "description": "Sign in the `sf` CLI on the user's computer with this MCP session's access. The user does not sign in again"
-    }
-  ],
+  "tools_generated": true,
   "compatibility": {
     "platforms": ["darwin", "win32", "linux"],
     "runtimes": {

@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://github.com/xai-org/plugin-marketplace/compare
 - Mechanism: pull_request
 - Source: https://github.com/xai-org/plugin-marketplace
-- Source commit: `658d930e2af663bb348948450e3f07661bd1e67c`
+- Source commit: `c4b2022e04388796cb22d42245255b14f8bdb30f`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
