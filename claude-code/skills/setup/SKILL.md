@@ -14,18 +14,16 @@ Spacefast's hosted MCP server at `https://mcp.spacefast.com` requires OAuth.
 If tools are unavailable or authentication fails, direct the user to connect Spacefast in the host's plugin settings.
 Do not ask for a token in chat. Do not report a working connection until a read succeeds.
 
-Use one bounded `execute` program:
+Run this known read in one bounded `execute` program:
 
-1. Call `tools.search({ query: "Get account identity and teams", limit: 10 })`.
-   Select the path ending in `.account.getBootstrap`.
+1. Call `tools.search({ query: "getBootstrap", limit: 10 })`.
+   Select the path ending in `.getBootstrap`.
    If needed, follow `nextOffset` for at most three pages. Do not invent a path.
-2. Call `tools.describe.tool({ path: item.path })`. Read `inputTypeScript` and `outputTypeScript`.
-3. Call `tools[item.path]` with the input that contract requires.
-   Reuse a team or Space reference supplied by the user when the contract accepts it.
-   On `ok: false`, return the error and stop.
-4. Read the bootstrap payload from `result.data.data`.
-   Read the identity fields from the described output contract.
-   Return only the identity and team names needed for setup.
+2. Call `tools[item.path]({})`.
+   For a user-supplied reference, add the optional `teamRef` or `spaceRef` field at the top level.
+3. On `ok: false`, return the whole result unchanged and stop.
+4. Set `data = result.data.data`.
+   Return `data.me?.subject`, `data.me?.user?.name`, and each team's `id` and `name` from `data.teams`.
    Read optional reference values only when their `status` is `resolved`.
    Do not return the complete account payload or credentials.
 

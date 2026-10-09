@@ -15,7 +15,7 @@ For a future update, validate the canonical `server.json` and authenticate owner
 - Door: https://registry.modelcontextprotocol.io
 - Mechanism: oidc_publish
 - Source: https://github.com/aaif-goose/goose/discussions/10830
-- Source commit: `c4b2022e04388796cb22d42245255b14f8bdb30f`
+- Source commit: `f24510f8fe4c0a7ce6c91f481e75537e45355428`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `io.github.spacefast/mcp` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
