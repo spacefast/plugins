@@ -2,7 +2,7 @@
   "id": "spacefast",
   "tier": "curated",
   "displayName": "Spacefast",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Build and share your AI work",
   "homepage": "https://spacefast.com",
   "keywords": [
@@ -11,5 +11,5 @@
     "artifact-sharing",
     "hosting"
   ],
-  "source": "https://github.com/spacefast/plugins/releases/download/plugins-v0.5.1/spacefast-plugins.zip"
+  "source": "https://github.com/spacefast/plugins/releases/download/plugins-v0.5.2/spacefast-plugins.zip"
 }

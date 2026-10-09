@@ -18,5 +18,6 @@ Read the MCP calls, approval, and work mode rules in [references.md](references.
 5. Read complete source files. Preserve unrelated changes. Do not use served deployment files as editable source.
 6. When design standards are present, read **Design system** in [references.md](references.md) and verify affected components before deployment.
 7. For visual notes, read **Visual review** in [references.md](references.md). Keep each note tied to its reviewed version.
-8. For a requested CMS or admin panel, read **Content dashboard** in [references.md](references.md) before building anything.
-9. Save the intended source changes, then follow the Space's build and promotion flow. Report saved source and live deployment separately.
+8. For saved comment threads and screenshots, read **Comments** in [references.md](references.md).
+9. For a requested CMS or admin panel, read **Content dashboard** in [references.md](references.md) before building anything.
+10. Save the intended source changes, then follow the Space's build and promotion flow. Report saved source and live deployment separately.

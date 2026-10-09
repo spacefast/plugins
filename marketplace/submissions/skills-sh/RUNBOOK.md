@@ -13,7 +13,7 @@ Verified: **2026-08-27**
 - Door: https://skills.sh
 - Mechanism: install_telemetry
 - Source: https://skills.sh
-- Source commit: `56ee46c0c771c59fc31724ec024ae48cb8270bc1`
+- Source commit: `658d930e2af663bb348948450e3f07661bd1e67c`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/

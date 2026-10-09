@@ -2,7 +2,7 @@
   "manifest_version": "0.2",
   "name": "spacefast",
   "display_name": "Spacefast",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.",
   "long_description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.\n\nKeep improving it through chat. Change the content or design, share a preview, choose who can open it, connect your own domain, or restore an earlier version.\n\nConnect your Spacefast account to publish and manage your team’s Spaces.",
   "author": {
@@ -41,7 +41,7 @@
   "tools": [
     {
       "name": "execute",
-      "description": "Use this tool for every Spacefast API task: mutations, multi-step tasks, tools.<connector> calls, docs, login information, team context, work mode, visual review feedback, screenshots, traffic rules, and reads with no show_space view"
+      "description": "Use this tool for every Spacefast API task: mutations, multi-step tasks, tools.<connector> calls, docs, login information, team context, work mode, visual review feedback, comments, screenshots, traffic rules, and reads with no show_space view"
     },
     {
       "name": "resume_execution",
