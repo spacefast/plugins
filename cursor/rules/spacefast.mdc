@@ -57,7 +57,7 @@ availability with an HTTP request to `<name>.space.fast`.
 | --- | --- |
 | `execute` | Run a Spacefast task |
 | `resume_execution` | Continue a paused Spacefast task |
-| `search` | Find connectors and their tools |
+| `search_and_execute_tools_connected_in_spacefast` | Search and use tools connected in Spacefast |
 | `publish` | Publish files to Spacefast |
 | `show_space` | Show a Spacefast Space |
 | `show_domains` | Find and register domains |
@@ -68,13 +68,13 @@ availability with an HTTP request to `<name>.space.fast`.
 | `get-design-import-job-status` | Check a Claude Design import (Cloud MCP) |
 | `open_local_file` | Open a local file (On-Device MCP) |
 
-Use `resume_execution` for a paused `execute` program or legacy connector run before selecting another task tool. Continue a named connector call through that same named tool.
+Use `resume_execution` for a paused Spacefast `execute` program. Continue a connector call with `search_and_execute_tools_connected_in_spacefast` and `action: "resume"` before selecting another task tool.
 
 To find, check, or register a domain, call `show_domains` directly when the connected server advertises it. Use it to reopen registration status.
 
 Use `execute` for other Spacefast API, source-workspace, and documentation work. Use one bounded JavaScript program per stage. Return unknown contracts from read-only preparation so you can read them before generating calls. Once inputs and outputs are known, keep each write and its read-back verification together.
 
-Prefer advertised named connector tools for connected-service work. Use `search` for the legacy connector interface only when the server advertises it. Use `show_space` for a read-only visual request.
+Use `search_and_execute_tools_connected_in_spacefast` for connected-service discovery, calls, and continuation. Use `show_space` for a read-only visual request.
 
 If a task requires an existing Space and its identity is unclear, call `choose_space`. Use the selected Space as the target. A selection does not approve publishing or other changes.
 
@@ -92,6 +92,8 @@ For documentation, workflow, and capability questions, call `searchDocs` (path s
 
 Do not call `fetch()`; `tools.*` applies credentials, scopes, and approvals. Do not enumerate or spread `tools`. Report `insufficient_scope`; do not ask for more scopes.
 
+Do not use an unbounded loop.
+
 Return one compact value. During discovery, return the selected descriptions needed to construct the next calls. During execution, return the answer and verification. Keep stable error codes. Do not return credentials, private links, or full logs when a short diagnostic is enough. The one exception is the one-use dashboard sign-in link the user asked for; see Content dashboard.
 
 Call `emit(content)` to show MCP content next to the returned value. Emit only what the user or you must see.
@@ -102,11 +104,11 @@ To deliver a Space file, emit its minted link as `{ type: "resource_link", uri, 
 
 A program has a 30-second timeout between tool calls and a 64 MiB memory limit. Waits for tool calls do not count toward the timeout.
 
-If `execute` pauses, follow its `resumePrompt` and reuse the exact `executionId`. Do not start another program for the same task. A parked connector run resumes the same way: pass its `runId` (`cxr_…`) as `executionId`.
+If `execute` pauses, follow its `resumePrompt` and reuse the exact `executionId`. Do not start another program for the same task.
 
 On Cloud MCP, call `resume_execution` with only `executionId`. The first call opens the inline approval card and returns. Do not call it again until the card sends a new user message, then call it once more with the same `executionId`. When the paused result includes `approvalUrl`, ask the user to decide on that page, then call `resume_execution` with only `executionId`; if it returns `user_approval_required` again, the user has not decided yet.
 
-On On-Device MCP, `resume_execution` also takes `action` and `content`. Send `accept` only after the user explicitly approves the shown action, `decline` when they refuse, and `cancel` when they stop the task. Send `content: "{}"` when the paused request has no form fields. For a parked connector run in human-approval mode, omit `action`; the control plane reads the decision a person made in the dashboard.
+On On-Device MCP, `resume_execution` also takes `action` and `content`. Send `accept` only after the user explicitly approves the shown action, `decline` when they refuse, and `cancel` when they stop the task. Send `content: "{}"` when the paused request has no form fields.
 
 Finish or resume the current execution before starting the next review stage. Do not request concurrent approvals.
 

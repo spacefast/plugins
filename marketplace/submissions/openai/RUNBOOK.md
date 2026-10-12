@@ -13,7 +13,7 @@ Verified: **2026-10-12**
 - Door: https://platform.openai.com/plugins
 - Mechanism: portal
 - Source: https://developers.openai.com/plugins/deploy/submission
-- Source commit: `ec261f072b7f1c80a6b778f151ba17b7dcd377f0`
+- Source commit: `648ded23830972c7717b7ffc129c5ab88fdea385`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `app-6aa80fbfddb0819188f1304e303c856d` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -32,6 +32,6 @@ Verified: **2026-10-12**
 
 Build the public upload with `bun scripts/marketplaces/openai-package.mjs`. Upload `dist/openai-plugin/spacefast-openai-1.0.2.zip` as a new draft of the existing `app-6aa80fbfddb0819188f1304e303c856d` plugin. Connect the declared MCP server through OAuth in the portal. Check the imported listing, skills, review cases, and release notes on the saved version. The portal creates its app binding; author uploads must not include `.app.json` or the manifest's `apps` field. Preserve bindings in native or private plugin distributions. Draft upload does not submit the version for review or publish it.
 
-The tools array contains the static Spacefast catalog for this source version. Authenticated tools/list also advertises individually named connected-service tools for the caller's available accounts and grants. Their exact names, descriptions, annotations, and provider schemas come from those connections, so this file is not an exhaustive authenticated catalog. Capture tools/list from the deployed review connection before submission. Initial connector inputs use { arguments: providerArgs }; a paused call continues through the same named tool with { continuation: { executionId } } after the human decides at its approval URL.
+The tools array describes this source version's MCP catalog. Third-party services connected in Spacefast use one tool, search_and_execute_tools_connected_in_spacefast. Its search action returns available accounts, exact operation addresses, provider input schemas, safety, and policy under the caller's grants. Its execute action takes a discovered address and provider arguments; its resume action polls the saved executionId after a human decides at the approval URL. Connected operations are returned by discovery rather than added to tools/list. Verify the deployed authenticated catalog and gateway behavior before submission; source metadata does not establish directory approval.
 
 The store copy, commands, URLs, keywords, and asset paths in these files are generated. Do not edit them by hand. The plugin sends no hook telemetry. CLI setup telemetry is disclosed before use and can be disabled with `SPACEFAST_TELEMETRY_DISABLED=1 or DO_NOT_TRACK=1`.
