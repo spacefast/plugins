@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://github.com/Kilo-Org/kilo-marketplace/compare
 - Mechanism: pull_request
 - Source: https://github.com/Kilo-Org/kilo-marketplace
-- Source commit: `c2e0977beb17e02e97ea4a8b54fb792f5ba5f50f`
+- Source commit: `7a3937a5ba47e6c1924da358c866cd106451af86`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/

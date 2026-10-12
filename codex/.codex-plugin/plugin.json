@@ -33,7 +33,7 @@
       "Publish this dashboard and give me a link to share.",
       "Update the content and design of my existing Spacefast site."
     ],
-    "brandColor": "#FF603D",
+    "brandColor": "#0c0c0c",
     "composerIcon": "./assets/logo.svg",
     "logo": "./assets/logo.svg",
     "screenshots": ["./assets/publish-workflow.png"]

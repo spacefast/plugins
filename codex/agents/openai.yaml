@@ -3,7 +3,7 @@ interface:
   short_description: "Build and share your AI work"
   icon_small: "./assets/logo.svg"
   icon_large: "./assets/logo.svg"
-  brand_color: "#FF603D"
+  brand_color: "#0c0c0c"
 
 policy:
   allow_implicit_invocation: true

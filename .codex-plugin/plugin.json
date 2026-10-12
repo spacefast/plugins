@@ -42,7 +42,7 @@
     "privacyPolicyURL": "https://automattic.com/privacy/",
     "termsOfServiceURL": "https://wordpress.com/tos/",
     "supportURL": "https://automattic.com/contact/",
-    "brandColor": "#FF603D",
+    "brandColor": "#0c0c0c",
     "composerIcon": "./assets/logo.svg",
     "logo": "./assets/logo.svg",
     "screenshots": [
