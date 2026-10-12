@@ -26,11 +26,11 @@ A program has a 30-second timeout between tool calls and a 64 MiB memory limit. 
 
 ## Continue a paused task
 
-If `execute` pauses, follow its `resumePrompt` and reuse the exact `executionId`. Do not start another program for the same task. A parked connector run resumes the same way: pass its `runId` (`cxr_…`) as `executionId`.
+If `execute` pauses, follow its `resumePrompt` and reuse the exact `executionId`. Do not start another program for the same task.
 
 On Cloud MCP, call `resume_execution` with only `executionId`. The first call opens the inline approval card and returns. Do not call it again until the card sends a new user message, then call it once more with the same `executionId`. When the paused result includes `approvalUrl`, ask the user to decide on that page, then call `resume_execution` with only `executionId`; if it returns `user_approval_required` again, the user has not decided yet.
 
-On On-Device MCP, `resume_execution` also takes `action` and `content`. Send `accept` only after the user explicitly approves the shown action, `decline` when they refuse, and `cancel` when they stop the task. Send `content: "{}"` when the paused request has no form fields. For a parked connector run in human-approval mode, omit `action`; the control plane reads the decision a person made in the dashboard.
+On On-Device MCP, `resume_execution` also takes `action` and `content`. Send `accept` only after the user explicitly approves the shown action, `decline` when they refuse, and `cancel` when they stop the task. Send `content: "{}"` when the paused request has no form fields.
 
 Finish or resume the current execution before starting the next review stage. Do not request concurrent approvals.
 
@@ -98,11 +98,15 @@ On `team_knowledge_storage_unavailable`, preserve prepared work and ask an owner
 
 Spacefast publishes artifacts to new or existing Spaces.
 When publishing through Spacefast and `.spacefast/` links the current project to a Space, update that Space unless the user asks for a new one.
+A requested team is the destination, not a preference. Resolve that team through the publishing connection in read-only preparation before the first create or publish call. Retain its id for every requested Space. Pass that team explicitly on each create or publish call. Never replace it with a credential's default team or a linked project's team.
+If you cannot resolve the requested team or follow the requested publishing method, warn the user before publishing anything. State which instruction you cannot follow. Do not publish to another team or through another method without the user's explicit approval. Do not publish first and warn afterward. After creation, read the Space and check that its team id matches the requested team before reporting success.
 
-If you can run shell commands on the user's computer, publish local files with the `sf` CLI. Claude Code, Codex, and Cursor can run shell commands. A chat app, or a sandbox that is not the user's computer, cannot. In that case, skip these CLI steps and use the MCP tools.
-Run `sf --version`. If the command is missing, install the CLI with `curl -fsSL https://spacefast.com/install.sh | bash`. In Windows PowerShell, use `irm https://spacefast.com/install.ps1 | iex`. If you cannot install it, run each command as `npx -y spacefast <command>`.
-Run `sf whoami`. If it exits with `auth_required`, call `cli_login` and run the command it returns. If that succeeds, run `sf whoami` again and continue. If `cli_login` fails, run `sf login` and show its sign-in link to the user.
-Publish with `sf publish <path> --json`. The CLI reads the files from disk. The MCP publish tool with inline files sends each file through this conversation, so it is slow and has size limits. To update a known Space that the project does not link, add `--space <spaceId>`.
+If the user requests the Spacefast plugin or MCP, publish through the connected MCP tools. Do not install or sign in to the CLI for that request. If MCP cannot publish the artifact, report the limitation and ask before changing the publishing method.
+Otherwise, with shell access on the user's computer, an already installed and signed-in `sf` CLI can publish local files. A chat app or remote sandbox uses the MCP tools instead.
+Run `sf --version`. If it is missing, explain that the optional CLI can be installed with `curl -fsSL https://spacefast.com/install.sh | bash`, or `irm https://spacefast.com/install.ps1 | iex` in Windows PowerShell. Run an installer, update, or `npx` download only when the user explicitly asks for that setup. A publish request alone does not authorize installing software. Otherwise use the connected MCP tools.
+Run `sf whoami` before using the CLI. If it reports `auth_required`, explain that `cli_login` can give the CLI this MCP connection's account access, and call it only when the user explicitly requests that handoff. The handoff link works once and expires after five minutes; the resulting CLI login remains bounded by the connection's grant and stops when the user disconnects Spacefast.
+After a requested handoff, explain what was authorized, run the returned command, and verify with `sf whoami`. Do not hide sign-in links from the user. For ordinary interactive sign-in, run `sf login` when requested and show its sign-in link.
+Publish with `sf publish <path> --json`. For a requested destination team, add `--team <teamId>`. CLI and MCP credentials can authorize different teams, even for the same account. Do not assume their team access matches. The CLI reads the files from disk. The MCP publish tool with inline files sends each file through this conversation, so it is slow and has size limits. To update a known Space that the project does not link, add `--space <spaceId>`.
 Use the CLI only to publish files that are already on disk. For all other Spacefast work, use the MCP tools and their approval steps. To edit a Space whose source is not on disk, use the source workspace flow in execute. Do not download Space files to edit and publish them again.
 
 Before publishing a local folder, inspect it for dotenv files and paths matched by `.gitignore`.
@@ -112,7 +116,7 @@ other archive flow, use a narrower output directory or an explicit safe file lis
 
 Cloud MCP is `https://mcp.spacefast.com` (OAuth). It requires a signed-in connection before any protocol method runs and never falls back to an anonymous publish. It has no filesystem. Every tool is gated by the API scopes your grant carries.
 
-On-Device MCP is `sf mcp` on the user's computer. It reuses `.spacefast/` and the CLI login. When `access` is omitted and no account credential works, `publish` creates an anonymous Space and returns a claim handoff. That fallback never applies to an existing Space or to a publish with explicit access settings.
+On-Device MCP is `sf mcp` on the user's computer. It reuses `.spacefast/` and the CLI login. When both `teamId` and `access` are omitted and no account credential works, `publish` creates an anonymous Space and returns a claim handoff. That fallback never applies to an existing Space, a requested team, or explicit access settings.
 
 Anonymous publishing creates a private, temporary Space. Its preview URL contains a bearer credential.
 The keyless URL grants no access. Claiming assigns ownership and removes the anonymous expiry.
@@ -127,6 +131,8 @@ The CLI waits for serving and prints its receipt. After `sf publish` succeeds, v
 For a new inline artifact, call `publish` with complete `files`. Pass a known `spaceId` when the user intends to update that Space.
 
 Omit `spaceId` for a new Space. Set `teamId` when the destination team is known. Set initial `access` only for a new Space and an explicit access request.
+
+Set `access: "public"` only when the user explicitly asks for public access. Publishing or requesting a preview alone does not make that request. Otherwise omit `access` and keep existing access unchanged.
 
 The hosted `publish` input has no `createNew` field. For existing Space file edits, use source workspaces instead of a replacement upload.
 

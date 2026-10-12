@@ -13,7 +13,7 @@ Verified: **2026-10-02**
 - Door: https://platform.openai.com/plugins
 - Mechanism: portal
 - Source: https://developers.openai.com/plugins/deploy/submission
-- Source commit: `f24510f8fe4c0a7ce6c91f481e75537e45355428`
+- Source commit: `c2e0977beb17e02e97ea4a8b54fb792f5ba5f50f`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `app-6aa80fbfddb0819188f1304e303c856d` (final; do not rename)
 - Privacy: https://automattic.com/privacy/

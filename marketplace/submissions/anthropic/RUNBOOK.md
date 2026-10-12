@@ -18,12 +18,12 @@ Verified: **2026-08-27**
 - Door: https://platform.claude.com/plugins/submit
 - Mechanism: portal
 - Source: https://code.claude.com/docs/en/discover-plugins
-- Source commit: `f24510f8fe4c0a7ce6c91f481e75537e45355428`
+- Source commit: `c2e0977beb17e02e97ea4a8b54fb792f5ba5f50f`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
 - Terms: https://wordpress.com/tos/
-- Support: https://automattic.com/contact/
+- Support: mailto:support@spacefast.com
 - Reviewer account pointer: GitHub marketplace-reviewers environment: SPACEFAST_REVIEWER_ACCOUNT
 
 ## Upload or paste
@@ -34,6 +34,6 @@ Verified: **2026-08-27**
 
 ## Final upstream check
 
-Use the generated entry as the pre-drafted portal, issue, API, or repository submission payload. Do not rewrite store copy by hand.
+Use the generated entry's tools, App-only callback names, server instructions, and prompt examples for the hosted Claude declaration. These fields use the Claude client profile. They describe this source version, not the currently deployed endpoint. Re-check the deployed connection before submitting them.
 
 The store copy, commands, URLs, keywords, and asset paths in these files are generated. Do not edit them by hand. The plugin sends no hook telemetry. CLI setup telemetry is disclosed before use and can be disabled with `SPACEFAST_TELEMETRY_DISABLED=1 or DO_NOT_TRACK=1`.

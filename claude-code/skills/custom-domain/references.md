@@ -26,11 +26,11 @@ A program has a 30-second timeout between tool calls and a 64 MiB memory limit. 
 
 ## Continue a paused task
 
-If `execute` pauses, follow its `resumePrompt` and reuse the exact `executionId`. Do not start another program for the same task. A parked connector run resumes the same way: pass its `runId` (`cxr_…`) as `executionId`.
+If `execute` pauses, follow its `resumePrompt` and reuse the exact `executionId`. Do not start another program for the same task.
 
 On Cloud MCP, call `resume_execution` with only `executionId`. The first call opens the inline approval card and returns. Do not call it again until the card sends a new user message, then call it once more with the same `executionId`. When the paused result includes `approvalUrl`, ask the user to decide on that page, then call `resume_execution` with only `executionId`; if it returns `user_approval_required` again, the user has not decided yet.
 
-On On-Device MCP, `resume_execution` also takes `action` and `content`. Send `accept` only after the user explicitly approves the shown action, `decline` when they refuse, and `cancel` when they stop the task. Send `content: "{}"` when the paused request has no form fields. For a parked connector run in human-approval mode, omit `action`; the control plane reads the decision a person made in the dashboard.
+On On-Device MCP, `resume_execution` also takes `action` and `content`. Send `accept` only after the user explicitly approves the shown action, `decline` when they refuse, and `cancel` when they stop the task. Send `content: "{}"` when the paused request has no form fields.
 
 Finish or resume the current execution before starting the next review stage. Do not request concurrent approvals.
 

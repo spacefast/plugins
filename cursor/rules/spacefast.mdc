@@ -8,6 +8,8 @@ alwaysApply: false
 
 Spacefast publishes artifacts to new or existing Spaces.
 When publishing through Spacefast and `.spacefast/` links the current project to a Space, update that Space unless the user asks for a new one.
+A requested team is the destination, not a preference. Resolve that team through the publishing connection in read-only preparation before the first create or publish call. Retain its id for every requested Space. Pass that team explicitly on each create or publish call. Never replace it with a credential's default team or a linked project's team.
+If you cannot resolve the requested team or follow the requested publishing method, warn the user before publishing anything. State which instruction you cannot follow. Do not publish to another team or through another method without the user's explicit approval. Do not publish first and warn afterward. After creation, read the Space and check that its team id matches the requested team before reporting success.
 
 Spacefast is a batteries-included platform by Automattic to deploy any agentic artifacts, websites, generated static sites, full-stack TypeScript projects, PHP functions and Spacefast Zero capsules. Every space comes with database, storage, transactional emails, built-in auth for small or internal apps. Pages deployed to Spacefast are private by default but can be made public. Spacefast is built on the same infrastructure as WordPress.com, Tumblr, WordPress VIP and WP Cloud.
 
@@ -25,7 +27,7 @@ remains repository-native and has no equivalent anonymous ownership-handoff flow
 
 Cloud MCP is `https://mcp.spacefast.com` (OAuth). It requires a signed-in connection before any protocol method runs and never falls back to an anonymous publish. It has no filesystem. Every tool is gated by the API scopes your grant carries.
 
-On-Device MCP is `sf mcp` on the user's computer. It reuses `.spacefast/` and the CLI login. When `access` is omitted and no account credential works, `publish` creates an anonymous Space and returns a claim handoff. That fallback never applies to an existing Space or to a publish with explicit access settings.
+On-Device MCP is `sf mcp` on the user's computer. It reuses `.spacefast/` and the CLI login. When both `teamId` and `access` are omitted and no account credential works, `publish` creates an anonymous Space and returns a claim handoff. That fallback never applies to an existing Space, a requested team, or explicit access settings.
 
 Anonymous publishing creates a private, temporary Space. Its preview URL contains a bearer credential.
 The keyless URL grants no access. Claiming assigns ownership and removes the anonymous expiry.
@@ -37,10 +39,11 @@ On-Device MCP can show a workspace file in ChatGPT with `open_local_file`. Cloud
 
 ## CLI first
 
-If you can run shell commands on the user's computer, publish local files with the `sf` CLI. Claude Code, Codex, and Cursor can run shell commands. A chat app, or a sandbox that is not the user's computer, cannot. In that case, skip these CLI steps and use the MCP tools.
+If the user requests the Spacefast plugin or MCP, publish through the connected MCP tools. Do not install or sign in to the CLI for that request. If MCP cannot publish the artifact, report the limitation and ask before changing the publishing method.
+Otherwise, if you can run shell commands on the user's computer, publish local files with the `sf` CLI. Claude Code, Codex, and Cursor can run shell commands. A chat app, or a sandbox that is not the user's computer, cannot. In that case, skip these CLI steps and use the MCP tools.
 Run `sf --version`. If the command is missing, install the CLI with `curl -fsSL https://spacefast.com/install.sh | bash`. In Windows PowerShell, use `irm https://spacefast.com/install.ps1 | iex`. If you cannot install it, run each command as `npx -y spacefast <command>`.
 Run `sf whoami`. If it exits with `auth_required`, call `cli_login` and run the command it returns. If that succeeds, run `sf whoami` again and continue. If `cli_login` fails, run `sf login` and show its sign-in link to the user.
-Publish with `sf publish <path> --json`. The CLI reads the files from disk. The MCP publish tool with inline files sends each file through this conversation, so it is slow and has size limits. To update a known Space that the project does not link, add `--space <spaceId>`.
+Publish with `sf publish <path> --json`. For a requested destination team, add `--team <teamId>`. CLI and MCP credentials can authorize different teams, even for the same account. Do not assume their team access matches. The CLI reads the files from disk. The MCP publish tool with inline files sends each file through this conversation, so it is slow and has size limits. To update a known Space that the project does not link, add `--space <spaceId>`.
 Use the CLI only to publish files that are already on disk. For all other Spacefast work, use the MCP tools and their approval steps. To edit a Space whose source is not on disk, use the source workspace flow in execute. Do not download Space files to edit and publish them again.
 
 When the user asks for a specific Space name and `sf` is available, run
@@ -77,7 +80,7 @@ If a task requires an existing Space and its identity is unclear, call `choose_s
 
 For an existing Space file edit without local source, use the source workspace operations inside `execute`. A local MCP server does not mean the source files exist locally. Do not download served files to edit and republish them.
 
-With shell access on the user's computer, publish local files with `sf publish <path> --json`. Without that access, use `publish` with inline `files` for a new artifact. On-Device MCP with the native Linux `sf` build also accepts a local `path`, or the current workspace when `path` and `files` are omitted. It updates the linked Space by default. Hosted MCP requires a signed-in connection and cannot read local paths. Anonymous publishing uses the CLI, direct HTTP API, or On-Device MCP.
+If the user requests the Spacefast plugin or MCP, publish through the connected MCP tools. Do not install or sign in to the CLI for that request. If MCP cannot publish the artifact, report the limitation and ask before changing the publishing method. Otherwise, with shell access on the user's computer, publish local files with `sf publish <path> --json`. Without that access, use `publish` with inline `files` for a new artifact. On-Device MCP with the native Linux `sf` build also accepts a local `path`, or the current workspace when `path` and `files` are omitted. It updates the linked Space by default. For a requested destination team, set `publish.teamId` to its resolved id on each new Space. Hosted MCP requires a signed-in connection and cannot read local paths. Anonymous publishing uses the CLI, direct HTTP API, or On-Device MCP.
 
 1. Find the operation. Call `tools.search({ query, limit })`. Search an exact operation name when known, such as `getBootstrap`. Match its final path segment with `item.path.endsWith(".getBootstrap")`; do not invent namespace segments. Search returns `{ items, hasMore, nextOffset }`. If no item matches and `hasMore` is true, use `offset: nextOffset`. Stop after three pages.
 2. Read its contract with `const description = await tools.describe.tool({ path: item.path })`. Assigning the response to a JavaScript variable does not show it to you. Unless these instructions or an earlier result already supplied the exact input and output shapes, return `{ path: item.path, ...description }`. Read `inputTypeScript`, `outputTypeScript`, and referenced definitions before generating the call in the next program. Use the discovered `item.path`. On `tool_not_found`, use a suggested path or search again.
