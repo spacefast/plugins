@@ -5,7 +5,7 @@ description: "Change who can access a Spacefast Space or path. Use to make it pu
 
 # Share with the right people
 
-Use the connected Spacefast tools. When working in a checkout, preserve unrelated files and changes.
+Use the connected Spacefast MCP tools. Sign-in is required. If the connection is unavailable, ask the user to reconnect in plugin settings.
 
 If a task requires an existing Space and its identity is unclear, call `choose_space`. Use the selected Space as the target. A selection does not approve publishing or other changes.
 

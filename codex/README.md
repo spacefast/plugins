@@ -62,7 +62,7 @@ installation does not create a monitor. Features appear only on hosts that suppo
 
 Linked-project session context and publishing skills remind the agent to run
 `verify-design-system` before deploying changed work. A PreToolUse hook reinforces
-the reminder for Spacefast MCP publishing, deployment-related execute programs,
+the reminder for Spacefast MCP publishing, named deployment tools, deployment-related execute programs,
 and CLI publishing/build/promotion commands. Git pushes are not matched.
 
 These hooks are advisory. They do not run the skill, block the pending call, or
