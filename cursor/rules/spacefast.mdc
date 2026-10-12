@@ -68,13 +68,13 @@ availability with an HTTP request to `<name>.space.fast`.
 | `get-design-import-job-status` | Check a Claude Design import (Cloud MCP) |
 | `open_local_file` | Open a local file (On-Device MCP) |
 
-Use `resume_execution` for a paused program or parked connector run before selecting another task tool.
+Use `resume_execution` for a paused `execute` program or legacy connector run before selecting another task tool. Continue a named connector call through that same named tool.
 
 To find, check, or register a domain, call `show_domains` directly when the connected server advertises it. Use it to reopen registration status.
 
-Use `execute` for other API, connector, source-workspace, and documentation work. Use one bounded JavaScript program per stage. Return unknown contracts from read-only preparation so you can read them before generating calls. Once inputs and outputs are known, keep each write and its read-back verification together.
+Use `execute` for other Spacefast API, source-workspace, and documentation work. Use one bounded JavaScript program per stage. Return unknown contracts from read-only preparation so you can read them before generating calls. Once inputs and outputs are known, keep each write and its read-back verification together.
 
-Use `search` to find what the team connected and which connector tools it can call. Use `show_space` for a read-only visual request.
+Prefer advertised named connector tools for connected-service work. Use `search` for the legacy connector interface only when the server advertises it. Use `show_space` for a read-only visual request.
 
 If a task requires an existing Space and its identity is unclear, call `choose_space`. Use the selected Space as the target. A selection does not approve publishing or other changes.
 
