@@ -55,7 +55,7 @@ availability with an HTTP request to `<name>.space.fast`.
 
 | Tool | Job |
 | --- | --- |
-| `execute` | Run a Spacefast task |
+| `execute` | Run a Spacefast API program |
 | `resume_execution` | Continue a paused Spacefast task |
 | `search_and_execute_tools_connected_in_spacefast` | Search and use tools connected in Spacefast |
 | `publish` | Publish files to Spacefast |

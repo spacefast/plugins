@@ -5,7 +5,7 @@
   "shortDescription": "Build and share your AI work",
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
-  "sourceSha": "5d3b180d670d84d5535e77e9a992042a4e5485ec",
+  "sourceSha": "60ec7ef53bcae3b9bb88fa0697742056b65dc502",
   "pluginsSha": "{{PLUGINS_SHA}}",
   "privacyPolicyUrl": "https://automattic.com/privacy/",
   "termsOfServiceUrl": "https://wordpress.com/tos/",
@@ -36,8 +36,8 @@
   "tools": [
     {
       "name": "execute",
-      "title": "Run a Spacefast task",
-      "description": "Use this tool for Spacefast API tasks: mutations, multi-step tasks, docs, login information, team context, work mode, visual review feedback, comments, screenshots, traffic rules, and reads with no App view.\nDo not use execute to continue a paused program. Use resume_execution."
+      "title": "Run a Spacefast API program",
+      "description": "Run a bounded JavaScript program against the Spacefast API.\nInside the program, tools.search discovers operations, tools.describe.tool returns their contracts, and tools[discoveredPath](input) calls them. These API operations are not separate MCP tools.\nCalls use the current Spacefast connection and its permissions. Operations can read or change Spacefast data; writes may pause for human approval.\nThird-party services connected in Spacefast use search_and_execute_tools_connected_in_spacefast.\nContinue a paused program with resume_execution and its exact executionId."
     },
     {
       "name": "resume_execution",
@@ -47,7 +47,7 @@
     {
       "name": "search_and_execute_tools_connected_in_spacefast",
       "title": "Search and use tools connected in Spacefast",
-      "description": "Search and run tools from third-party services connected in Spacefast, using the team’s configured accounts and permissions.\nSet action to search to list providers and accounts. Add connector or query, and optionally limit, to find matching operations with their exact address, account, inputSchema, safety, and policy. Read the schema before preparing arguments; ask which account if ambiguous.\nSet action to execute with the exact discovered address and arguments matching its inputSchema. Send JSON arguments, not a program. Check the returned status and result before reporting success.\nIf the call pauses, let the user decide at approvalUrl, then set action to resume with only executionId. Resume polls the saved action; it never approves it. Do not send approval decisions, change the saved action, or repeat the original mutation.\nReport unavailable services and permission errors. Keep credentials in connection settings and never retry a blocked call through another account or address."
+      "description": "Search and run tools from third-party services connected in Spacefast, using the team’s configured accounts and permissions.\nProvider operations are discovered at runtime and are not registered as separate MCP tools. Calls can read or change data in the selected service.\nSet action to search to list providers and accounts. Add connector or query, and optionally limit, to find matching operations with their exact address, account, inputSchema, safety, and policy. Read the schema before preparing arguments; ask which account if ambiguous.\nSet action to execute with the exact discovered address and arguments matching its inputSchema. Send JSON arguments, not a program. Check the returned status and result before reporting success.\nIf the call pauses, let the user decide at approvalUrl, then set action to resume with only executionId. Resume polls the saved action; it never approves it. Do not send approval decisions, change the saved action, or repeat the original mutation.\nReport unavailable services and permission errors. Keep credentials in connection settings and never retry a blocked call through another account or address."
     },
     {
       "name": "publish",
@@ -57,7 +57,7 @@
     {
       "name": "show_space",
       "title": "Show a Spacefast Space",
-      "description": "Open one Spacefast view.\nChoose one of `preview`, `deployments`, `domains`, `analytics`, `comments`, `source_files`, `source_changes`, `source_history`, `source_comparison`, `deployment_comparison`, `build_logs`, `database`.\nDetailed views require a claimed Space.\nOpen a view instead of writing its data out. Open each view once per request; it refreshes by itself.\nThis tool does not change files, staging, source versions, deployments, domains, or settings.\nUse execute for agent-driven mutations and reads without a view.\nThe Changes view lets the user stage files with its buttons. Opening the view does not stage changes."
+      "description": "Read and display one Spacefast Space in a selected view.\nEvery supported view and its input fields are declared in this tool's request schema.\nChoose one of `preview`, `deployments`, `domains`, `analytics`, `comments`, `source_files`, `source_changes`, `source_history`, `source_comparison`, `deployment_comparison`, `build_logs`, `database`.\nDetailed views require a claimed Space.\nOpen a view instead of writing its data out. Open each view once per request; it refreshes by itself.\nThis tool does not change files, staging, source versions, deployments, domains, or settings.\nUse execute for agent-driven mutations and reads without a view.\nThe Changes view lets the user stage files with its buttons. Opening the view does not stage changes."
     },
     {
       "name": "show_domains",

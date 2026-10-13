@@ -1,6 +1,6 @@
 {
   "generatedFrom": "spacefast/monorepo",
-  "sourceSha": "5d3b180d670d84d5535e77e9a992042a4e5485ec",
+  "sourceSha": "60ec7ef53bcae3b9bb88fa0697742056b65dc502",
   "pluginsSha": "{{PLUGINS_SHA}}",
-  "version": "0.5.7"
+  "version": "0.5.8"
 }
