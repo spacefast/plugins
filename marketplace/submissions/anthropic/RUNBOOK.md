@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://platform.claude.com/plugins/submit
 - Mechanism: portal
 - Source: https://code.claude.com/docs/en/discover-plugins
-- Source commit: `648ded23830972c7717b7ffc129c5ab88fdea385`
+- Source commit: `5d3b180d670d84d5535e77e9a992042a4e5485ec`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -36,7 +36,7 @@ Verified: **2026-08-27**
 
 Use the generated entry's tools, App-only callback names, server instructions, and prompt examples for the hosted Claude declaration. These fields use the Claude client profile. They describe this source version, not the currently deployed endpoint. Re-check the deployed connection before submitting them.
 
-The tools array describes this source version's MCP catalog. Third-party services connected in Spacefast use one tool, search_and_execute_tools_connected_in_spacefast. Its search action returns available accounts, exact operation addresses, provider input schemas, safety, and policy under the caller's grants. Its execute action takes a discovered address and provider arguments; its resume action polls the saved executionId after a human decides at the approval URL. Connected operations are returned by discovery rather than added to tools/list. Verify the deployed authenticated catalog and gateway behavior before submission; source metadata does not establish directory approval.
+The tools array describes this source version's compact MCP catalog, shared by every client. Spacefast API operations are discovered and called inside execute; resume_execution continues the saved program. Third-party services connected in Spacefast use one tool, search_and_execute_tools_connected_in_spacefast. Its search action returns available accounts, exact operation addresses, provider input schemas, safety, and policy under the caller's grants. Its execute action takes a discovered address and provider arguments; its resume action polls the saved executionId after a human decides at the approval URL. Connected operations are returned by discovery rather than added to tools/list. Verify the deployed authenticated catalog and gateway behavior before submission; source metadata does not establish directory approval.
 
 Verify the directory's third-party API custody requirements before submission.
 

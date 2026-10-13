@@ -14,10 +14,18 @@ Spacefast's hosted MCP server at `https://mcp.spacefast.com` requires OAuth.
 If tools are unavailable or authentication fails, direct the user to connect Spacefast in the host's plugin settings.
 Do not ask for a token in chat. Do not report a working connection until a read succeeds.
 
-Call `getBootstrap` directly with `{}`, or add the optional top-level `teamRef` or `spaceRef` supplied by the user.
-Check the operation receipt. On failure, report the returned error and stop. On success, read the identity and team names from `result.data.data`.
-Report only the account or service identity and team names needed for setup. Read optional reference values only when their `status` is `resolved`.
-Do not return the complete account payload or credentials.
+Run this known read in one bounded `execute` program:
+
+1. Call `tools.search({ query: "getBootstrap", limit: 10 })`.
+   Select the path ending in `.getBootstrap`.
+   If needed, follow `nextOffset` for at most three pages. Do not invent a path.
+2. Call `tools[item.path]({})`.
+   For a user-supplied reference, add the optional `teamRef` or `spaceRef` field at the top level.
+3. On `ok: false`, return the whole result unchanged and stop.
+4. Set `data = result.data.data`.
+   Return `data.me?.subject`, `data.me?.user?.name`, and each team's `id` and `name` from `data.teams`.
+   Read optional reference values only when their `status` is `resolved`.
+   Do not return the complete account payload or credentials.
 
 Report the connected account or service identity. A service connection is not its creator's personal account.
 Reuse the Space already established in the conversation. An ordinary publish does not need a Space chooser.

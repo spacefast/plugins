@@ -5,7 +5,7 @@
   "shortDescription": "Build and share your AI work",
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
-  "sourceSha": "648ded23830972c7717b7ffc129c5ab88fdea385",
+  "sourceSha": "5d3b180d670d84d5535e77e9a992042a4e5485ec",
   "pluginsSha": "{{PLUGINS_SHA}}",
   "privacyPolicyUrl": "https://automattic.com/privacy/",
   "termsOfServiceUrl": "https://wordpress.com/tos/",
@@ -78,7 +78,7 @@
       "description": "Check a pending Claude Design import. Use the job_id returned by import-claude-design-from-url."
     }
   ],
-  "toolCatalogNotes": "The tools array describes this source version's MCP catalog. Third-party services connected in Spacefast use one tool, search_and_execute_tools_connected_in_spacefast. Its search action returns available accounts, exact operation addresses, provider input schemas, safety, and policy under the caller's grants. Its execute action takes a discovered address and provider arguments; its resume action polls the saved executionId after a human decides at the approval URL. Connected operations are returned by discovery rather than added to tools/list. Verify the deployed authenticated catalog and gateway behavior before submission; source metadata does not establish directory approval.",
+  "toolCatalogNotes": "The tools array describes this source version's compact MCP catalog, shared by every client. Spacefast API operations are discovered and called inside execute; resume_execution continues the saved program. Third-party services connected in Spacefast use one tool, search_and_execute_tools_connected_in_spacefast. Its search action returns available accounts, exact operation addresses, provider input schemas, safety, and policy under the caller's grants. Its execute action takes a discovered address and provider arguments; its resume action polls the saved executionId after a human decides at the approval URL. Connected operations are returned by discovery rather than added to tools/list. Verify the deployed authenticated catalog and gateway behavior before submission; source metadata does not establish directory approval.",
   "appOnlyToolNames": [
     "read_execution_approval",
     "decide_execution_approval",
