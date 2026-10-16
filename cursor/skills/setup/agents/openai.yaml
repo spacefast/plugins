@@ -1,4 +1,4 @@
 interface:
   display_name: "Get started"
-  short_description: "Connect Spacefast and see what you can do"
+  short_description: "Connect Spacefast and continue your task"
   default_prompt: "Use $setup to check my Spacefast connection and help me get started."

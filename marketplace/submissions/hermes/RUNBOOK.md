@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://github.com/NousResearch/hermes-agent/compare
 - Mechanism: pull_request
 - Source: https://github.com/NousResearch/hermes-agent
-- Source commit: `60ec7ef53bcae3b9bb88fa0697742056b65dc502`
+- Source commit: `dceae6d4afed5e358918268a43ba9dca056635d5`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
