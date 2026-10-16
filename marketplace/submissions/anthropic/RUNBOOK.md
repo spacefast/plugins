@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://platform.claude.com/plugins/submit
 - Mechanism: portal
 - Source: https://code.claude.com/docs/en/discover-plugins
-- Source commit: `c50bc33efe8adc998e4f3177d9380b989267e210`
+- Source commit: `1bcafbc446a4191d59a65214fe7e5da39f0ced2c`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -36,7 +36,7 @@ Verified: **2026-08-27**
 
 Use the generated entry's tools, App-only callback names, server instructions, and prompt examples for the hosted Claude declaration. These fields use the Claude client profile. They describe this source version, not the currently deployed endpoint. Re-check the deployed connection before submitting them.
 
-The tools array describes this source version's hosted simple MCP catalog for the declared endpoint. Simple mode exposes each first-party Spacefast API operation as a named tool with its input schema. It retains publishing, Space Apps, and approval continuations. Connected-service tools are unavailable on this surface. resume_execution continues a saved execution after its approval decision. Verify the deployed authenticated catalog before submission; source metadata does not establish directory approval.
+The tools array describes this source version's hosted MCP catalog for the declared endpoint. search finds Spacefast API operations and reads their input and output types without calling them; execute calls those operations in a sandboxed program, and resume_execution continues a saved execution after its approval decision. publish, the Space App launchers, and show_domains open MCP Apps for the publish result, previews, deployments, source files and history, comments, analytics, build logs, databases, and domains. Verify the deployed authenticated catalog before submission; source metadata does not establish directory approval.
 
 Verify the directory's third-party API custody requirements before submission.
 

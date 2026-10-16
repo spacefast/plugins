@@ -17,7 +17,7 @@
       "spacefast",
       "--transport",
       "http",
-      "https://mcp.spacefast.com?mode=full"
+      "https://mcp.spacefast.com"
     ]
   },
   "homepage": "https://spacefast.com/setup/cline",

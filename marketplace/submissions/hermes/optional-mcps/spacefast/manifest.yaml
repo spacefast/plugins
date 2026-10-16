@@ -5,7 +5,7 @@ description: >-
 source: https://spacefast.com/setup/hermes
 transport:
   type: http
-  url: https://mcp.spacefast.com?mode=full
+  url: https://mcp.spacefast.com
 auth:
   type: oauth
 suggest:

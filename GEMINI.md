@@ -11,7 +11,7 @@ Configure ~/.gemini/settings.json. One entry in your Gemini CLI settings connect
 {
   "mcpServers": {
     "spacefast": {
-      "httpUrl": "https://mcp.spacefast.com?mode=full",
+      "httpUrl": "https://mcp.spacefast.com",
       "oauth": {
         "enabled": true
       }

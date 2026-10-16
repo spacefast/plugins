@@ -13,11 +13,7 @@ const tool = event?.tool_name;
 const input = event?.tool_input;
 if (tool?.constructor === String && input?.constructor === Object) {
   let deployment = false;
-  if (
-    /^mcp__(?:plugin_spacefast(?:[-_]local)?_)?spacefast(?:[-_]local)?__(?:publish|createPublish|createSpaceBuild|retryBuild|finalizeSpaceVersion|promoteSpaceVersion|commitSpaceSourceWorkspaceChanges)$/.test(
-      tool,
-    )
-  ) {
+  if (/^mcp__(?:plugin_spacefast(?:[-_]local)?_)?spacefast(?:[-_]local)?__publish$/.test(tool)) {
     deployment = true;
   } else if (
     /^mcp__(?:plugin_spacefast(?:[-_]local)?_)?spacefast(?:[-_]local)?__execute$/.test(tool)

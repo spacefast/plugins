@@ -21,16 +21,12 @@ For hosted MCP at `https://mcp.spacefast.com`, use the connection's configured a
 If tools are unavailable, direct the user to the host's configured Spacefast connection controls.
 Do not ask for a token in chat. Do not report a working connection until a read succeeds.
 
-Use this Spacefast connection's advertised catalog, not tools from another server. If it advertises `execute`, follow Full mode below. If it advertises `getBootstrap` directly, follow Simple mode. If neither is available, reconnect before checking account state.
+Run this known read:
 
-### Full mode
-
-Run this known read in one bounded `execute` program:
-
-1. Call `tools.search({ query: "getBootstrap", limit: 10 })`.
-   Select the path ending in `.getBootstrap`.
+1. Call `search` with a program that returns `await tools.search({ query: "getAccount", limit: 10 })`.
+   Select the path ending in `.getAccount`.
    If needed, follow `nextOffset` for at most three pages. Do not invent a path.
-2. Call `tools[item.path]({})`.
+2. Call `execute` with one bounded program that calls `tools[path]({})` with that path.
    For a user-supplied reference, add the optional `teamRef` or `spaceRef` field at the top level.
 3. On `ok: false`, return the whole result unchanged and stop.
 4. Set `data = result.data.data`.
@@ -38,9 +34,7 @@ Run this known read in one bounded `execute` program:
    Read optional reference values only when their `status` is `resolved`.
    Do not return the complete account payload or credentials.
 
-### Simple mode
-
-Call the advertised `getBootstrap` tool with `{}`, or the optional top-level `teamRef` or `spaceRef` supplied by the user. Inspect the execution receipt: wait for `status: completed`, then check `result.ok`. On failure, report its stable error and stop. The API payload is `result.data.data`. Report only `me?.subject`, `me?.user?.name`, and each team's `id` and `name`; read optional references only when their `status` is `resolved`. Do not return the complete account payload or credentials.
+If this Spacefast connection does not advertise `search` and `execute`, reconnect before checking account state. Tools from another server are not part of this connection.
 
 Confirm the connected account or service identity in one short sentence. A service connection is not its creator's personal account.
 Reuse the Space already established in the conversation. An ordinary publish does not need a Space chooser.

@@ -1,7 +1,7 @@
 # Spacefast task skills
 
-Read the skill for the requested task and follow its mode-specific reference.
-Use the matching reference's calling convention, runtime limits, approval flow,
+Read the skill for the requested task and follow its reference.
+Use that reference's calling convention, runtime limits, approval flow,
 and verification steps before management work.
 
 - [Import a design system](../skills/import-design-system/SKILL.md): Save branding, design tokens, component standards, writing guidelines, and asset references from user-provided material into a Spacefast team's design system.

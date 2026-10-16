@@ -15,7 +15,7 @@ about:
   icon: https://spacefast.com/favicon.svg
 remote:
   transport_type: streamable-http
-  url: https://mcp.spacefast.com?mode=full
+  url: https://mcp.spacefast.com
 oauth:
   - provider: spacefast
     secret: spacefast.personal_access_token

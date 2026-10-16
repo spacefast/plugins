@@ -25,7 +25,7 @@ Anonymous publishes go through the CLI: `sf publish` needs no account and return
 - Inspect deployments, domains, and analytics
 - Handle anonymous claim actions and account tokens safely
 - Choose direct publish or hosted MCP for the job
-- Hosted HTTP MCP at `https://mcp.spacefast.com?mode=full` with browser OAuth
+- Hosted HTTP MCP at `https://mcp.spacefast.com` with browser OAuth
 
 ## Publish to your team
 

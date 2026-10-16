@@ -11,7 +11,7 @@ If a task requires an existing Space and its identity is unclear, call `choose_s
 
 Read the MCP calls, approval, and work mode rules in [references.md](references.md) before a management operation.
 
-1. To find, check, or register a domain, call `show_domains` directly when the connected server advertises it. Use it to reopen registration status.
+1. To find or check a domain, or reopen registration status, call `show_domains`.
 2. For domain search or registration, read **Find and register domains** in [references.md](references.md), including the fallback for servers without `show_domains`. A domain belongs to a team; it does not need a Space. Keep owner details in the App or dashboard form.
 3. If the user only requests registration, finish with its status. Continue to Space setup only for a requested connection.
 4. For a requested Space connection, resolve the Space and domain. Open the Space's domains view to read its current state.

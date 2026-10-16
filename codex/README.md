@@ -29,7 +29,7 @@ Anonymous publishes go through the CLI: `sf publish` needs no account and return
 - Inspect deployments, domains, and analytics
 - Handle anonymous claim actions and account tokens safely
 - Choose direct publish or hosted MCP for the job
-- Hosted Streamable HTTP MCP at `https://mcp.spacefast.com?mode=full` with browser OAuth
+- Hosted Streamable HTTP MCP at `https://mcp.spacefast.com` with browser OAuth
 
 ## Publish to your team
 
@@ -62,7 +62,7 @@ installation does not create a monitor. Features appear only on hosts that suppo
 
 Linked-project session context and publishing skills remind the agent to run
 `verify-design-system` before deploying changed work. A PreToolUse hook reinforces
-the reminder for Spacefast MCP publishing, named deployment tools, deployment-related execute programs,
+the reminder for Spacefast MCP publishing, deployment-related execute programs,
 and CLI publishing/build/promotion commands. Git pushes are not matched.
 
 These hooks are advisory. They do not run the skill, block the pending call, or

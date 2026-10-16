@@ -22,7 +22,7 @@ Read the MCP calls, approval, and work mode rules in [references.md](references.
 
 1. For a team Memories or Skills request, resolve the team and optional Space. Read Team Memories and Skills in references.md and perform only the requested context work. Publish only when the user also requests it.
 2. Use the artifact the user wants to publish. Keep its intended destination and access settings.
-3. Before creating or editing, read **Team Memories and Skills** in the reference selected for this Spacefast connection. Read the full context before preparing changes and apply relevant saved practices within the task.
+3. Before creating or editing, read **Team Memories and Skills** in [references.md](references.md). Read the full context before preparing changes and apply relevant saved practices within the task.
 4. Before publishing or deploying new or changed source, run the verify-design-system skill against current saved standards and the exact source/build being deployed. Inspect affected pages and states at desktop and mobile widths, and report gaps. Reuse verification only while the source/build and design revision are unchanged. Report missing standards as unavailable, not a pass. Verify before a source-workspace commit when autoDeploy is enabled. Follow the user's existing publication intent and approval rules.
 5. Read **Publish** in [references.md](references.md). It covers this host's publish route, receipt, and verification.
 6. Do not rebuild an existing Space from its served files. For a file or design change, follow the source workflow instead.

@@ -13,9 +13,10 @@ settings → Install Extension** and select the file.
 Ask Claude: **Publish this with Spacefast.**
 
 The extension runs the Spacefast On-Device MCP surface. It publishes new artifacts inline, edits Space
-source files without a local checkout, and runs OpenAPI-generated management operations. Publishing a
-local folder by path needs the native Linux `sf` build; on macOS and Windows, publish inline files or
-use the CLI.
+source files without a local checkout, and runs OpenAPI-generated management operations. When signed
+in, it also reaches services your team connected in Spacefast through `search_connector_tools`;
+the hosted plugins do not. Publishing a local folder by path needs the native Linux `sf` build; on
+macOS and Windows, publish inline files or use the CLI.
 
 ## Publish to your team
 

@@ -12,9 +12,9 @@ A requested team is the destination, not a preference. Resolve that team through
 If you cannot resolve the requested team or follow the requested publishing method, warn the user before publishing anything. State which instruction you cannot follow. Do not publish to another team or through another method without the user's explicit approval. Do not publish first and warn afterward. After creation, read the Space and check that its team id matches the requested team before reporting success.
 
 Use the connected Spacefast tools and the task skill that fits the user's request.
-Read [Task skills](references.md) to select it. Its reference chooses full or simple
-mode from that Spacefast connection's advertised tools; a tool on another server
-does not identify this connection's mode.
+Read [Task skills](references.md) to select it. Follow that Spacefast connection's advertised tools:
+find API operations and their contracts with `search`, then call them with `execute`.
+A tool on another server is not part of this connection.
 
 Before creating or editing a page, follow the selected skill's Team Memories and
 Skills preparation. Read full relevant context before preparing changes. Preserve
@@ -22,5 +22,5 @@ unrelated source changes and follow the user's publication intent. A selected
 Space and a working connection do not authorize unrelated changes.
 
 If a capability is unavailable, report the limitation. Do not switch connections
-or modes to retry a denied action. The connected server's schema and returned
+to retry a denied action. The connected server's schema and returned
 approval flow govern each call.

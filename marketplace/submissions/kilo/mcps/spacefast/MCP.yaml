@@ -11,5 +11,5 @@ content:
     content: |
       {
         "type": "streamable-http",
-        "url": "https://mcp.spacefast.com?mode=full"
+        "url": "https://mcp.spacefast.com"
       }
