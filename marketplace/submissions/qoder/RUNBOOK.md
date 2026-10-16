@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://qoder.com/account/apphub-publications
 - Mechanism: portal
 - Source: https://qoder.com/marketplace
-- Source commit: `08ac928140180a9117646c76b185752d74febabc`
+- Source commit: `c50bc33efe8adc998e4f3177d9380b989267e210`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
