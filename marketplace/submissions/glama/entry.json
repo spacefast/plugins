@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "spacefast": {
-      "url": "https://mcp.spacefast.com",
+      "url": "https://mcp.spacefast.com?mode=full",
       "type": "streamable-http"
     }
   }

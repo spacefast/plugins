@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://platform.claude.com/plugins/submit
 - Mechanism: portal
 - Source: https://code.claude.com/docs/en/discover-plugins
-- Source commit: `dceae6d4afed5e358918268a43ba9dca056635d5`
+- Source commit: `08ac928140180a9117646c76b185752d74febabc`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -36,7 +36,7 @@ Verified: **2026-08-27**
 
 Use the generated entry's tools, App-only callback names, server instructions, and prompt examples for the hosted Claude declaration. These fields use the Claude client profile. They describe this source version, not the currently deployed endpoint. Re-check the deployed connection before submitting them.
 
-The tools array describes this source version's compact MCP catalog, shared by every client. Spacefast API operations are discovered and called inside execute; resume_execution continues the saved program. Third-party services connected in Spacefast use one tool, search_connector_tools. Its search action returns available accounts, exact operation addresses, provider input schemas, safety, and policy under the caller's grants. Its execute action takes a discovered address and provider arguments; its resume action polls the saved executionId after a human decides at the approval URL. Connected operations are returned by discovery rather than added to tools/list. Verify the deployed authenticated catalog and gateway behavior before submission; source metadata does not establish directory approval.
+The tools array describes this source version's hosted simple MCP catalog for the declared endpoint. Simple mode exposes each first-party Spacefast API operation as a named tool with its input schema. It retains publishing, Space Apps, and approval continuations. Connected-service tools are unavailable on this surface. resume_execution continues a saved execution after its approval decision. Verify the deployed authenticated catalog before submission; source metadata does not establish directory approval.
 
 Verify the directory's third-party API custody requirements before submission.
 

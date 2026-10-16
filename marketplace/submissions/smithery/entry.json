@@ -5,7 +5,7 @@
   "shortDescription": "Build and share your AI work",
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
-  "sourceSha": "dceae6d4afed5e358918268a43ba9dca056635d5",
+  "sourceSha": "08ac928140180a9117646c76b185752d74febabc",
   "pluginsSha": "{{PLUGINS_SHA}}",
   "privacyPolicyUrl": "https://automattic.com/privacy/",
   "termsOfServiceUrl": "https://wordpress.com/tos/",
@@ -16,6 +16,6 @@
     "hosting"
   ],
   "logo": "plugins/assets/logo-400.png",
-  "url": "https://mcp.spacefast.com",
+  "url": "https://mcp.spacefast.com?mode=full",
   "authentication": "oauth"
 }

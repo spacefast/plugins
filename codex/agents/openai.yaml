@@ -14,4 +14,4 @@ dependencies:
       value: "spacefast"
       description: "Spacefast MCP server for publishing, source file edits without a local checkout, source history, deployments, domains, and analytics."
       transport: "streamable_http"
-      url: "https://mcp.spacefast.com"
+      url: "https://mcp.spacefast.com?mode=full"

@@ -5,7 +5,7 @@
   "contextFileName": "GEMINI.md",
   "mcpServers": {
     "spacefast": {
-      "httpUrl": "https://mcp.spacefast.com",
+      "httpUrl": "https://mcp.spacefast.com?mode=full",
       "oauth": true
     }
   }

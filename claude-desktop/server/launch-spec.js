@@ -9,6 +9,6 @@ export function resolveMcpLaunchSpec(platform = process.platform, comSpec = proc
 
   return {
     command: "npx",
-    args: ["-y", packageSpec, "mcp"],
+    args: ["-y", packageSpec, ...["mcp"]],
   };
 }

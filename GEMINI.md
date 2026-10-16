@@ -5,20 +5,25 @@ use https://spacefast.com/docs/agents and the bundled Spacefast skill as the sou
 
 ## Setup
 
-- Use the Spacefast CLI: `npm install -g spacefast && sf setup agent --agent gemini-cli` — Sets up this agent and signs you in. You also get the `sf` command to publish from the terminal yourself.
-- Set it up without installing the CLI: `npx -y spacefast@0.5.0 setup agent --agent gemini-cli -y` — The same setup as the CLI, without keeping the CLI installed afterwards.
-- Configure ~/.gemini/settings.json: `{
+Configure ~/.gemini/settings.json. One entry in your Gemini CLI settings connects Spacefast.
+
+```json
+{
   "mcpServers": {
     "spacefast": {
-      "httpUrl": "https://mcp.spacefast.com",
+      "httpUrl": "https://mcp.spacefast.com?mode=full",
       "oauth": {
         "enabled": true
       }
     }
   }
-}` — One entry in your Gemini CLI settings connects Spacefast.
-- Install just the skill: `npx -y skills@1.5.23 add https://github.com/spacefast/plugins/tree/main/skills/spacefast -y` — Teaches your agent how to publish with Spacefast and adds nothing else. The lightest option.
-- Push to deploy: `git remote add spacefast "$SPACEFAST_GIT_REMOTE" && git -c credential.username=t push spacefast HEAD:main` — Set SPACEFAST_GIT_REMOTE to the existing Space's returned git.remoteUrl. If it is null, use its configured source workflow. Store the key in a Git credential helper with username t. Keep credentials out of the remote URL. Check the deployment receipt before reporting success.
+}
+```
+
+1. Add the entry above to ~/.gemini/settings.json, keeping what's already in the file.
+2. Start Gemini CLI and run `/mcp auth spacefast`.
+3. Sign in to Spacefast and approve access.
+4. Use `/mcp` to check that Spacefast is connected.
 
 ## Safety
 
