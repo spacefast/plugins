@@ -6,7 +6,7 @@ Keep improving it through chat. Change the content or design, share a preview, c
 
 Connect your Spacefast account to publish and manage your team’s Spaces.
 
-Use Spacefast from Claude Code, Codex, Cursor, or GitHub Copilot. Each plugin includes focused skills and the
+Use Spacefast from Claude Code, Codex, Cursor, GitHub Copilot, or Antigravity. Each plugin includes focused skills and the
 MCP configuration its client needs.
 
 ## Install
@@ -48,6 +48,18 @@ copilot plugin install spacefast/plugins
 
 The plugin includes Spacefast's task skills and hosted MCP connection. Connect your Spacefast
 account through Copilot's MCP controls before using the hosted tools.
+
+### Antigravity
+
+Install the plugin directly from this repository:
+
+```bash
+agy plugin install https://github.com/spacefast/plugins
+```
+
+In the Antigravity app, install from the same URL under **Customizations → Plugins**. The plugin
+includes Spacefast's task skills and hosted MCP connection. Authenticate Spacefast from
+Antigravity's MCP settings before using the hosted tools.
 
 ### goose
 
