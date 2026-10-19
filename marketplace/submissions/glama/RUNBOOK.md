@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://glama.ai/mcp/servers
 - Mechanism: repository_manifest
 - Source: https://glama.ai/mcp/servers
-- Source commit: `1bcafbc446a4191d59a65214fe7e5da39f0ced2c`
+- Source commit: `08c3898825c6af0d499ea6af26a0e71b67c57589`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/

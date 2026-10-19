@@ -21,20 +21,22 @@ For hosted MCP at `https://mcp.spacefast.com`, use the connection's configured a
 If tools are unavailable, direct the user to the host's configured Spacefast connection controls.
 Do not ask for a token in chat. Do not report a working connection until a read succeeds.
 
-Run this known read:
+Read the connected account through the advertised Spacefast catalog:
 
-1. Call `search` with a program that returns `await tools.search({ query: "getAccount", limit: 10 })`.
-   Select the path ending in `.getAccount`.
-   If needed, follow `nextOffset` for at most three pages. Do not invent a path.
-2. Call `execute` with one bounded program that calls `tools[path]({})` with that path.
-   For a user-supplied reference, add the optional `teamRef` or `spaceRef` field at the top level.
-3. On `ok: false`, return the whole result unchanged and stop.
-4. Set `data = result.data.data`.
-   Return `data.me?.subject`, `data.me?.user?.name`, and each team's `id` and `name` from `data.teams`.
-   Read optional reference values only when their `status` is `resolved`.
+1. When `getAccount` is advertised as a tool, read its schema and call it directly with `{}`.
+   The host may load it through tool search. For a user-supplied reference, add the optional
+   `teamRef` or `spaceRef` field at the top level.
+2. If the connection instead advertises `search` and `execute` for API work, find
+   `getAccount` and its contract with `search`, then call the discovered path in `execute`.
+   Follow the connected server's program instructions in `spacefast://skills/execute`.
+3. Check the returned status and `result.ok`. Preserve a failed result and its next action.
+   A completed read's account payload is at `result.data.data`.
+4. Report only the subject or account name and the relevant team names and IDs.
+   Use optional reference values only when their `status` is `resolved`.
    Do not return the complete account payload or credentials.
 
-If this Spacefast connection does not advertise `search` and `execute`, reconnect before checking account state. Tools from another server are not part of this connection.
+If neither calling convention is available, reconnect before checking account state.
+Tools from another server are not part of this connection.
 
 Confirm the connected account or service identity in one short sentence. A service connection is not its creator's personal account.
 Reuse the Space already established in the conversation. An ordinary publish does not need a Space chooser.

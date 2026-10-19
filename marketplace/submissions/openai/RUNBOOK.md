@@ -2,18 +2,18 @@
 
 Status: **Live**  
 Customer-facing availability: **Available**  
-Verified: **2026-10-12**
+Verified: **2026-10-19**
 
 ## Hard-gate blockers
 
-- Version 1.0.1 is published. Version 1.0.3 still needs package validation and portal review checks.
+- Version 1.0.3 is published. Version 1.0.4 still needs package validation and portal review checks.
 
 ## Submit
 
 - Door: https://platform.openai.com/plugins
 - Mechanism: portal
 - Source: https://developers.openai.com/plugins/deploy/submission
-- Source commit: `1bcafbc446a4191d59a65214fe7e5da39f0ced2c`
+- Source commit: `08c3898825c6af0d499ea6af26a0e71b67c57589`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `app-6aa80fbfddb0819188f1304e303c856d` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -24,13 +24,13 @@ Verified: **2026-10-12**
 ## Upload or paste
 
 - `marketplace/submissions/openai/entry.json`
-- `dist/openai-plugin/spacefast-openai-1.0.3.zip`
+- `dist/openai-plugin/spacefast-openai-1.0.4.zip`
 - `plugins/assets/logo-400.png`
 - `plugins/assets/logo.svg`
 
 ## Final upstream check
 
-Build the public upload with `bun scripts/marketplaces/openai-package.mjs`. Upload `dist/openai-plugin/spacefast-openai-1.0.3.zip` as a new draft of the existing `app-6aa80fbfddb0819188f1304e303c856d` plugin. Connect the declared MCP server through OAuth in the portal. Check the imported listing, skills, review cases, and release notes on the saved version. The portal creates its app binding; author uploads must not include `.app.json` or the manifest's `apps` field. Preserve bindings in native or private plugin distributions. Draft upload does not submit the version for review or publish it.
+Build the public upload with `bun scripts/marketplaces/openai-package.mjs`. Upload `dist/openai-plugin/spacefast-openai-1.0.4.zip` as a new draft of the existing `app-6aa80fbfddb0819188f1304e303c856d` plugin. Connect the declared MCP server through OAuth in the portal. Check the imported listing, skills, review cases, and release notes on the saved version. The portal creates its app binding; author uploads must not include `.app.json` or the manifest's `apps` field. Preserve bindings in native or private plugin distributions. Draft upload does not submit the version for review or publish it.
 
 The tools array describes this source version's hosted MCP catalog for the declared endpoint. search finds Spacefast API operations and reads their input and output types without calling them; execute calls those operations in a sandboxed program, and resume_execution continues a saved execution after its approval decision. publish, the Space App launchers, and show_domains open MCP Apps for the publish result, previews, deployments, source files and history, comments, analytics, build logs, databases, and domains. Verify the deployed authenticated catalog before submission; source metadata does not establish directory approval.
 

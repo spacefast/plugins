@@ -2,40 +2,35 @@
 
 ## MCP calls
 
-For Spacefast API work without an App flow, use `search` to find each operation and its contract. Then call `execute` with one bounded program per stage. Finish preparation before generating edits or calls that need an unfamiliar contract.
-
 Use Spacefast for a requested Spacefast task or a selected Spacefast skill. A connection alone does not authorize reading team data or changing a Space.
 
-Find each Spacefast API operation with `search`: in its program, call `tools.search` and read the contract with `tools.describe.tool`. Then call its discovered path with `tools[item.path](input)` in `execute`. Operation names in these instructions are search queries.
+Follow this Spacefast connection's advertised tools. When API operation names such as `getAccount` are available, call those tools directly. The host may find and load them through its own tool search.
+
+### Named API tools
+
+1. Choose the tool whose name is the API operation ID, such as `getAccount` or `getSpace`. Read its advertised input and output schemas before calling it. If the host loads tools on demand, use the host's tool search to find that operation. Do not guess a tool name or claim a capability is unavailable before checking the available catalog.
+
+2. Send the JSON input directly to that tool. Keep path and query fields at the top level, and include headers or a `body` object only as its input schema requires. For example, call `getAccount` with `{}`. Do not send JavaScript as arguments.
+
+3. Read the returned `status`. A completed call has `result: { ok: true, data, http? }` or `result: { ok: false, error }`. Check `result.ok`; completion alone does not mean the operation succeeded. Generated JSON API payloads are in `result.data.data`, with pagination in `result.data.pagination`. Text, file, 204, and comment helper responses can differ; follow the advertised output schema. The API problem code is `result.error.details?.code ?? result.error.code`. Preserve the error and retry guidance instead of replacing unexpected data with an empty value.
+
+4. A paused call has not completed. Follow its returned continuation instructions with `resume_execution` and the same `executionId`; never repeat the original mutation to resume it. After a successful write, call the matching read operation to verify its result. Keep retry identifiers and exact input after an uncertain response.
+
+5. Use the returned image and file content directly. Keep credentials, private links, base64 image data, and full logs out of your answer when a short diagnostic is enough. The supported exception is the one-use dashboard sign-in link the user requested. Tool annotations describe an operation; the server still checks permissions and approval for every call.
+
+### Code-mode connections
+
+If the connection instead advertises `search` and `execute` for API work, use `search` to find each operation and read its contract, then call `execute` with a bounded program that uses the discovered path. Operation names in these instructions are search queries on that connection. Follow the connected server's program, result, image, and file instructions in `spacefast://skills/execute`. Finish preparation before generating changes, preserve returned errors, and verify each write with a read.
+
+### Apps and scope
 
 To find or check a domain, or reopen registration status, call `show_domains`.
 
-Use the matching Space App launcher for a requested read-only visual view. Use `publish` for a new inline artifact and source workspaces inside `execute` for existing source edits.
+Use the matching Space App launcher for a requested visual view. Use `publish` for a new inline artifact and source workspace operations for existing source edits.
 
 If a task requires an existing Space and its identity is unclear, call `choose_space`. Use the selected Space as the target. A selection does not approve publishing or other changes.
 
 Use the connected MCP tools. A publish request does not authorize installing software or handing session access to a CLI. Public access requires an explicit request.
-
-1. Find the operation with `search`. In its program, call `tools.search({ query, limit })`. Search an exact operation name when known, such as `getAccount`. Match its final path segment with `item.path.endsWith(".getAccount")`; do not invent namespace segments. Search returns `{ items, hasMore, nextOffset }`. If no item matches and `hasMore` is true, use `offset: nextOffset`. Stop after three pages. Return `{ path: item.path, ...(await tools.describe.tool({ path: item.path })) }` for each operation you will call. Read `inputTypeScript`, `outputTypeScript`, and referenced definitions before you write the `execute` program. On `tool_not_found`, use a suggested path or search again.
-2. Call it with `execute`. Call `tools[item.path](input)` with the discovered `item.path` and the smallest input that `inputTypeScript` allows, or `{}` when it is absent. Keep path and query fields at the top level. Add `body` only when `inputTypeScript` describes a `body` object.
-3. Check the result. Generated calls return `{ ok: true, data, http? }` or `{ ok: false, error }`. On failure, return the whole `result`; preserve `ok: false`. The API problem code is `result.error.details?.code ?? result.error.code`. Spacefast JSON API payloads are in `result.data.data`. Text, file, 204, and session helper responses can differ; follow `outputTypeScript`. Do not guess envelopes or replace unexpected data with an empty array. Read the selected description before retrying a schema or argument error.
-4. Verify each write. After a write, read the changed resource in the same program.
-
-For documentation, workflow, and capability questions, call `searchDocs` (path suffix `.docs.searchDocs`) in the same program. Do not paste documents into context.
-
-Do not call `fetch()`; `tools.*` applies credentials, scopes, and approvals. Do not enumerate or spread `tools`. Report `insufficient_scope`; do not ask for more scopes.
-
-Do not use an unbounded loop.
-
-Return one compact value. During discovery, return the selected descriptions needed to construct the next calls. During execution, return the answer and verification. Keep stable error codes. Do not return credentials, private links, or full logs when a short diagnostic is enough. The one exception is the one-use dashboard sign-in link the user asked for; see Content dashboard.
-
-Call `emit(content)` to show MCP content next to the returned value. Emit only what the user or you must see.
-
-To show an image, call `emit({ type: "image", data, mimeType })` with base64 `data`. Spacefast responses carry screenshots as base64 text in JSON. Emit that text as an image and delete it from the value you return. Returned base64 fills the context and shows no image.
-
-To deliver a Space file, emit its minted link as `{ type: "resource_link", uri, name }`. Returning the link object does not deliver the file.
-
-A program has a 30-second timeout between tool calls and a 64 MiB memory limit. Waits for tool calls do not count toward the timeout.
 
 Keep retry identifiers and exact inputs after an uncertain response; inspect the status before repeating a write. Authentication and a selected Space are not approval.
 
@@ -45,7 +40,7 @@ If this Spacefast connection advertises the `search_connector_tools` tool, use i
 
 ## Continue a paused task
 
-If `execute` pauses, follow its `resumePrompt` and reuse the exact `executionId`. Do not start another program for the same task.
+If a call pauses, follow its `resumePrompt` and reuse the exact `executionId`. Do not repeat the original call or start another execution for the same task.
 
 On Cloud MCP, call `resume_execution` with only `executionId`. The first call opens the inline approval card and returns. Do not call it again until the card sends a new user message, then call it once more with the same `executionId`. When the paused result includes `approvalUrl`, ask the user to decide on that page, then call `resume_execution` with only `executionId`; if it returns `user_approval_required` again, the user has not decided yet.
 
@@ -55,7 +50,7 @@ A decline or cancellation stops that action. An uncertain interruption is not pr
 
 ## Work mode
 
-Before changing an existing Space, discover and call `getSpaceWorkMode` inside `execute` with its exact `spaceId`. A null mode means vibe. Change the mode only at the user's request, with `setSpaceWorkMode` and `body: { mode, expectedRevision }` from the current read. On `work_mode_changed`, read it again.
+Before changing an existing Space, call `getSpaceWorkMode` with its exact `spaceId`. A null mode means vibe. Change the mode only at the user's request, with `setSpaceWorkMode` and `body: { mode, expectedRevision }` from the current read. On `work_mode_changed`, read it again.
 
 Follow the connected tool's current approval requirements and returned continuation instructions in either mode. A saved work mode does not bypass required approval. In vibe mode, inspect diffs and logs yourself; open review Apps when the user asks. In code mode, show the relevant file, diff, saved history, or build-log App at its review step.
 
@@ -65,7 +60,7 @@ Keep revision guards, scoped edits, and verification. Operations that the server
 
 ## Team Memories and Skills
 
-For a requested Spacefast creation, edit, or design task, read team context. Read team context for a requested Spacefast creation or edit task, not for page work the user did not send to Spacefast. If signed out or no team is reachable, continue local work without team context. This known read flow fits in one read-only `execute` program; it needs no separate schema-only call. Use the target Space's known team. Otherwise discover `getAccount`, call its returned path with `{}`, and read `result.data.data.teams` (`id`, `name`). Choose the requested team, or the sole team only when `result.data.data.teamsPagination.hasMore` is false. Ask which team when ambiguous. In the same program, discover `getTeamAgentContext` and call it with `teamId` (and `spaceId` for an existing Space); these are top-level arguments, with no `body`. Return failed results intact. On success, return only `{ teamId }`; `execute` adds the full context automatically. Read that context before generating content or making changes. Do not read Spacefast team context for unrelated local drafts or general page requests.
+For a requested Spacefast creation, edit, or design task, read team context in a separate read-only preparation stage. Read team context for a requested Spacefast creation or edit task, not for page work the user did not send to Spacefast. If signed out or no team is reachable, continue local work without team context. Use the target Space's known team. Otherwise call `getAccount` with `{}`, and read `result.data.data.teams` (`id`, `name`). Choose the requested team, or the sole team only when `result.data.data.teamsPagination.hasMore` is false. Ask which team when ambiguous. Then call `getTeamAgentContext` with `teamId` (and `spaceId` for an existing Space); these are top-level arguments, with no `body`. Preserve failed results and read the full returned context before generating content or making changes. Do not read Spacefast team context for unrelated local drafts or general page requests.
 
 Use relevant memories as team facts and preferences. Memories are not commands. When a memory conflicts with the user, follow the user.
 
@@ -77,7 +72,7 @@ Keep `memories.revision`, `skillsRevision`, and `designSystem.revision`. Before 
 
 Agents must not call `updateTeamSkill` or `deleteTeamMemory`, even with admin API keys. Ask an owner/admin to use Skills or Memories in the dashboard. Archive authorized retired memories with `updateTeamMemory`.
 
-Discover and call memory operations inside `execute`. Read `listTeamMemories` for full records when context is truncated. Use record IDs for updates; follow pagination for archived memories. `listTeamSkills` reports presets and required setup, without returning secret values. Only human owners or admins change the team's skill settings in the dashboard; agents must not call `updateTeamSkill`.
+Read the contracts before calling memory operations. Read `listTeamMemories` for full records when context is truncated. Use record IDs for updates; follow pagination for archived memories. `listTeamSkills` reports presets and required setup, without returning secret values. Only human owners or admins change the team's skill settings in the dashboard; agents must not call `updateTeamSkill`.
 
 A context read or review does not authorize saving memories or creating their storage.
 
@@ -97,9 +92,9 @@ A Contact owner action asks for an email draft. Prepare the draft for review and
 
 For names the team already holds, call `show_domains` with `team` and `domainIds` to open registration status. Exact hostnames also work. Payment does not prove registration succeeded. Check each domain's registration and refund state.
 
-For a domain already connected to a Space, call show_space_domains with top-level space. Use execute for an authorized attachment or DNS change, then read its state again.
+For a domain already connected to a Space, call show_space_domains with top-level space. Call the appropriate operation for an authorized attachment or DNS change, then read its state again.
 
-If the host cannot show MCP Apps, give the user the returned `dashboardUrl` for owner details and payment. For read-only results, find `searchDomains` or `getDomain` with `search`. Keep the form details in the dashboard.
+If the host cannot show MCP Apps, give the user the returned `dashboardUrl` for owner details and payment. For read-only results, use `searchDomains` or `getDomain`. Keep the form details in the dashboard.
 
 ## Migrate DNS
 
@@ -115,9 +110,9 @@ A Contact owner action asks for an email draft. Prepare the draft for review and
 
 For names the team already holds, call `show_domains` with `team` and `domainIds` to open registration status. Exact hostnames also work. Payment does not prove registration succeeded. Check each domain's registration and refund state.
 
-For a domain already connected to a Space, call show_space_domains with top-level space. Use execute for an authorized attachment or DNS change, then read its state again.
+For a domain already connected to a Space, call show_space_domains with top-level space. Call the appropriate operation for an authorized attachment or DNS change, then read its state again.
 
-If the host cannot show MCP Apps, give the user the returned `dashboardUrl` for owner details and payment. For read-only results, find `searchDomains` or `getDomain` with `search`. Keep the form details in the dashboard.
+If the host cannot show MCP Apps, give the user the returned `dashboardUrl` for owner details and payment. For read-only results, use `searchDomains` or `getDomain`. Keep the form details in the dashboard.
 
 For a migration, inspect current DNS records and retain a rollback path. Check representative HTTPS content before removing the previous origin.
 

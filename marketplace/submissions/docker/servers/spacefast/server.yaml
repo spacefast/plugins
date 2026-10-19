@@ -12,7 +12,7 @@ meta:
 about:
   title: Spacefast
   description: Build and share your AI work
-  icon: https://spacefast.com/favicon.svg
+  icon: https://raw.githubusercontent.com/spacefast/plugins/main/assets/logo-400.png
 remote:
   transport_type: streamable-http
   url: https://mcp.spacefast.com
