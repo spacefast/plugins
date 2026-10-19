@@ -57,8 +57,7 @@ Install the plugin directly from this repository:
 agy plugin install https://github.com/spacefast/plugins
 ```
 
-In the Antigravity app, install from the same URL under **Customizations → Plugins**. The plugin
-includes Spacefast's task skills and hosted MCP connection. Authenticate Spacefast from
+The plugin includes Spacefast's task skills and hosted MCP connection. Authenticate Spacefast from
 Antigravity's MCP settings before using the hosted tools.
 
 ### goose
