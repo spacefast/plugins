@@ -1,8 +1,8 @@
 # Spacefast task skills
 
 Read the skill for the requested task and follow its reference.
-Use that reference's calling convention, runtime limits, approval flow,
-and verification steps before management work.
+Call each Spacefast API operation as its named MCP tool. Follow the approval flow
+and the task reference's verification steps before management work.
 
 - [Import a design system](../skills/import-design-system/SKILL.md): Save branding, design tokens, component standards, writing guidelines, and asset references from user-provided material into a Spacefast team's design system.
 - [Apply a design system](../skills/apply-design-system/SKILL.md): Apply a Spacefast team's saved design system to a new build or an explicitly requested source edit. Use its standards and brand assets in the real project, then verify the result.

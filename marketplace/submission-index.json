@@ -12,9 +12,9 @@
   },
   "provenance": {
     "generatedFrom": "spacefast/monorepo",
-    "sourceSha": "08c3898825c6af0d499ea6af26a0e71b67c57589",
+    "sourceSha": "2b4014d1fad8fa03450391e8557a70611b43dcf4",
     "pluginsSha": "{{PLUGINS_SHA}}",
-    "version": "0.8.0"
+    "version": "0.8.1"
   },
   "stores": [
     {

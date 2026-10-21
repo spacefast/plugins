@@ -23,21 +23,20 @@ For hosted MCP at `https://mcp.spacefast.com`, use the connection's configured a
 If tools are unavailable, direct the user to the host's configured Spacefast connection controls.
 Do not ask for a token in chat. Do not report a working connection until a read succeeds.
 
-Read the connected account through the advertised Spacefast catalog:
+Read the connected account through the Spacefast API tools:
 
-1. When `getAccount` is advertised as a tool, read its schema and call it directly with `{}`.
-   The host may load it through tool search. For a user-supplied reference, add the optional
-   `teamRef` or `spaceRef` field at the top level.
-2. If the connection instead advertises `search` and `execute` for API work, find
-   `getAccount` and its contract with `search`, then call the discovered path in `execute`.
-   Follow the connected server's program instructions in `spacefast://skills/execute`.
-3. Check the returned status and `result.ok`. Preserve a failed result and its next action.
-   A completed read's account payload is at `result.data.data`.
-4. Report only the subject or account name and the relevant team names and IDs.
+Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input and output schemas, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
+
+1. Read the contract for `getAccount` and call it with `{}`.
+   For a user-supplied reference, add the optional `teamRef` or `spaceRef` field at the top level.
+2. Keep the complete operation result in the tool receipt. Check its returned status and
+   `result.ok`. Preserve a failed result and its next action. A completed receipt carrying
+   the operation result has its account payload at `result.data.data`.
+3. Report only the subject or account name and the relevant team names and IDs.
    Use optional reference values only when their `status` is `resolved`.
    Do not return the complete account payload or credentials.
 
-If neither calling convention is available, reconnect before checking account state.
+If the connection's tools are unavailable, reconnect before checking account state.
 Tools from another server are not part of this connection.
 
 Confirm the connected account or service identity in one short sentence. A service connection is not its creator's personal account.

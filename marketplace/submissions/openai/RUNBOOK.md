@@ -13,7 +13,7 @@ Verified: **2026-10-19**
 - Door: https://platform.openai.com/plugins
 - Mechanism: portal
 - Source: https://developers.openai.com/plugins/deploy/submission
-- Source commit: `08c3898825c6af0d499ea6af26a0e71b67c57589`
+- Source commit: `2b4014d1fad8fa03450391e8557a70611b43dcf4`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `app-6aa80fbfddb0819188f1304e303c856d` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -32,6 +32,6 @@ Verified: **2026-10-19**
 
 Build the public upload with `bun scripts/marketplaces/openai-package.mjs`. Upload `dist/openai-plugin/spacefast-openai-1.0.4.zip` as a new draft of the existing `app-6aa80fbfddb0819188f1304e303c856d` plugin. Connect the declared MCP server through OAuth in the portal. Check the imported listing, skills, review cases, and release notes on the saved version. The portal creates its app binding; author uploads must not include `.app.json` or the manifest's `apps` field. Preserve bindings in native or private plugin distributions. Draft upload does not submit the version for review or publish it.
 
-The tools array describes this source version's hosted MCP catalog for the declared endpoint. search finds Spacefast API operations and reads their input and output types without calling them; execute calls those operations in a sandboxed program, and resume_execution continues a saved execution after its approval decision. publish, the Space App launchers, and show_domains open MCP Apps for the publish result, previews, deployments, source files and history, comments, analytics, build logs, databases, and domains. Verify the deployed authenticated catalog before submission; source metadata does not establish directory approval.
+The tools array describes this source version's hosted MCP catalog at the declared endpoint. Each API operation is a named tool with its declared input and output schemas; resume_execution continues a saved call after its approval decision. publish, the Space App launchers, and show_domains open MCP Apps for the publish result, previews, deployments, source files and history, comments, analytics, build logs, databases, and domains. Verify the deployed authenticated catalog before submission; source metadata does not establish directory approval.
 
 The store copy, commands, URLs, keywords, and asset paths in these files are generated. Do not edit them by hand. The plugin sends no hook telemetry. CLI setup telemetry is disclosed before use and can be disabled with `SPACEFAST_TELEMETRY_DISABLED=1 or DO_NOT_TRACK=1`.

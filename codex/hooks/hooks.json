@@ -13,7 +13,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "^(Bash|PowerShell|exec_command|shell_command|mcp__(?:plugin_spacefast(?:[-_]local)?_)?spacefast(?:[-_]local)?__(?:publish|execute))$",
+        "matcher": "^(Bash|PowerShell|exec_command|shell_command|mcp__(?:plugin_spacefast(?:[-_]local)?_)?spacefast(?:[-_]local)?__(?:publish|createPublish|createSpaceBuild|retryBuild|finalizeSpaceVersion|promoteSpaceVersion|commitSpaceSourceWorkspaceChanges))$",
         "hooks": [
           {
             "type": "command",

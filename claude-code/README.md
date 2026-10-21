@@ -35,12 +35,12 @@ Complete the browser OAuth flow when Claude prompts you.
 
 Linked-project session context and publishing skills remind the agent to run
 `verify-design-system` before deploying changed work. A PreToolUse hook reinforces
-the reminder for Spacefast MCP publishing, deployment-related execute programs,
+the reminder for supported Spacefast MCP publishing calls
 and CLI publishing/build/promotion commands. Git pushes are not matched.
 
 These hooks are advisory. They do not run the skill, block the pending call, or
 change its arguments or approvals. The agent can read a tool-call reminder after
-the call runs. Dynamic execute programs and shell wrappers may not be recognized.
+the call runs. Shell wrappers may not be recognized.
 
 Manually installed Codex plugins include the hooks. Review and trust new or changed
 definitions with `/hooks` before relying on them; installation does not grant trust.

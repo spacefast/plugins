@@ -2,30 +2,7 @@
 
 ## MCP calls
 
-Follow this Spacefast connection's advertised tools. If API operation names are available as tools, call them directly with their declared JSON inputs and inspect the returned result and image content. The host may find them through its own tool search. The code-mode program and emit instructions below apply only when the connection exposes API work through `search` and `execute`. Finish preparation before generating edits or calls that need an unfamiliar contract.
-
-### Code-mode connections
-
-1. Find the operation with `search`. In its program, call `tools.search({ query, limit })`. Search an exact operation name when known, such as `getAccount`. Match its final path segment with `item.path.endsWith(".getAccount")`; do not invent namespace segments. Search returns `{ items, hasMore, nextOffset }`. If no item matches and `hasMore` is true, use `offset: nextOffset`. Stop after three pages. Return `{ path: item.path, ...(await tools.describe.tool({ path: item.path })) }` for each operation you will call. Read `inputTypeScript`, `outputTypeScript`, and referenced definitions before you write the `execute` program. On `tool_not_found`, use a suggested path or search again.
-2. Call it with `execute`. Call `tools[item.path](input)` with the discovered `item.path` and the smallest input that `inputTypeScript` allows, or `{}` when it is absent. Keep path and query fields at the top level. Add `body` only when `inputTypeScript` describes a `body` object.
-3. Check the result. Generated calls return `{ ok: true, data, http? }` or `{ ok: false, error }`. On failure, return the whole `result`; preserve `ok: false`. The API problem code is `result.error.details?.code ?? result.error.code`. Spacefast JSON API payloads are in `result.data.data`. Text, file, 204, and session helper responses can differ; follow `outputTypeScript`. Do not guess envelopes or replace unexpected data with an empty array. Read the selected description before retrying a schema or argument error.
-4. Verify each write. After a write, read the changed resource in the same program.
-
-For documentation, workflow, and capability questions, call `searchDocs` (path suffix `.docs.searchDocs`) in the same program. Do not paste documents into context.
-
-Do not call `fetch()`; `tools.*` applies credentials, scopes, and approvals. Do not enumerate or spread `tools`. Report `insufficient_scope`; do not ask for more scopes.
-
-Do not use an unbounded loop.
-
-Return one compact value. During discovery, return the selected descriptions needed to construct the next calls. During execution, return the answer and verification. Keep stable error codes. Do not return credentials, private links, or full logs when a short diagnostic is enough. The one exception is the one-use dashboard sign-in link the user asked for; see Content dashboard.
-
-Call `emit(content)` to show MCP content next to the returned value. Emit only what the user or you must see.
-
-To show an image, call `emit({ type: "image", data, mimeType })` with base64 `data`. Spacefast responses carry screenshots as base64 text in JSON. Emit that text as an image and delete it from the value you return. Returned base64 fills the context and shows no image.
-
-To deliver a Space file, emit its minted link as `{ type: "resource_link", uri, name }`. Returning the link object does not deliver the file.
-
-A program has a 30-second timeout between tool calls and a 64 MiB memory limit. Waits for tool calls do not count toward the timeout.
+Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input and output schemas, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
 
 If this Spacefast connection advertises the `search_connector_tools` tool, use it for the user's requested work with services connected in Spacefast, and follow its schema and approval rules. Otherwise, connected services are not available on this connection.
 
@@ -83,11 +60,11 @@ Use `listTeamSkills` to inspect the catalog, enabled state, instructions, and re
 
 Agents must not call `updateTeamSkill` or `deleteTeamMemory`, even with admin API keys. Ask an owner/admin to use Skills or Memories in the dashboard. Archive authorized retired memories with `updateTeamMemory`.
 
-Describe `createTeamMemory` and `updateTeamMemory` before saving lasting user knowledge or correcting a memory. Use `listTeamMemories` for full records or truncated context. Archive stale memories; permanent deletion belongs to owners and admins.
+Read the `createTeamMemory` and `updateTeamMemory` schemas before saving lasting user knowledge or correcting a memory. Use `listTeamMemories` for full records or truncated context. Archive stale memories; permanent deletion belongs to owners and admins.
 
 Outside the Memory & skills beta, `getTeamAgentContext` returns empty context; management operations return `feature_unavailable`. On `feature_unavailable`, continue unrelated work. If the user requested a memory, skill, or design-system operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
 
-Read each named operation's contract through the advertised catalog. Call its tool directly when available; on a code-mode connection, follow the server's search and execute guide. Team context and memory/skill lists require `spaces:read`; memory changes require `spaces:write`. These permissions do not grant team administration.
+Read each named operation tool's schema before calling it. Team context and memory/skill lists require `spaces:read`; memory changes require `spaces:write`. These permissions do not grant team administration.
 
 When `memories.truncated` is true, read `listTeamMemories` with the same team and optional Space. Active memories return together on one page. For archived records, send `status: 'archived'` and follow `pagination.nextCursor` until `hasMore` is false. Use the record IDs for changes, not their position in a list.
 
