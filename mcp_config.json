@@ -1,7 +1,7 @@
 {
   "mcpServers": {
-    "spacefast": {
-      "serverUrl": "https://mcp.spacefast.com"
+    "spacefast-staging": {
+      "serverUrl": "https://mcp.staging.spacefast.com"
     }
   }
 }

@@ -70,7 +70,7 @@ goose skills list
 ```
 
 For the hosted MCP connection, run `goose configure`, choose **Add Extension → Remote Extension
-(Streamable HTTP)**, and enter `https://mcp.spacefast.com`. Complete the Spacefast sign-in flow in your browser.
+(Streamable HTTP)**, and enter `https://mcp.staging.spacefast.com`. Complete the Spacefast sign-in flow in your browser.
 
 goose 1.54.0's plugin importer does not accept remote MCP declarations; install the skills and MCP
 connection separately using the steps above. See the [goose setup guide](https://github.com/spacefast/mcp#goose)

@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "spacefast",
+  "name": "spacefast-staging",
   "description": "Official Spacefast plugin for Claude Code.",
   "owner": {
     "name": "Automattic Inc.",
@@ -8,8 +8,8 @@
   },
   "plugins": [
     {
-      "name": "spacefast",
-      "displayName": "Spacefast",
+      "name": "spacefast-staging",
+      "displayName": "Spacefast Staging",
       "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.",
       "author": {
         "name": "Automattic Inc.",

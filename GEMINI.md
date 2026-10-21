@@ -10,8 +10,8 @@ Configure ~/.gemini/settings.json. One entry in your Gemini CLI settings connect
 ```json
 {
   "mcpServers": {
-    "spacefast": {
-      "httpUrl": "https://mcp.spacefast.com",
+    "spacefast-staging": {
+      "httpUrl": "https://mcp.staging.spacefast.com",
       "oauth": {
         "enabled": true
       }

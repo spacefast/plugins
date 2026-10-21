@@ -1,11 +1,11 @@
 {
-  "name": "spacefast",
+  "name": "spacefast-staging",
   "interface": {
-    "displayName": "Spacefast"
+    "displayName": "Spacefast Staging"
   },
   "plugins": [
     {
-      "name": "spacefast",
+      "name": "spacefast-staging",
       "source": {
         "source": "local",
         "path": "./codex"

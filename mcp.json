@@ -1,9 +1,9 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
-    "spacefast": {
+    "spacefast-staging": {
       "type": "streamable-http",
-      "url": "https://mcp.spacefast.com"
+      "url": "https://mcp.staging.spacefast.com"
     }
   }
 }

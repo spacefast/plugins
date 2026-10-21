@@ -98,7 +98,7 @@ Warn the user when either is present and keep those paths out of the publish. `s
 excludes dotenv files, `.gitignore` matches, `.git`, and `.spacefast` state on its own; for any
 other archive flow, use a narrower output directory or an explicit safe file list.
 
-Cloud MCP is `https://mcp.spacefast.com` (OAuth). It never publishes anonymously. A client that shows MCP Apps can connect before the user signs in, and its first `publish` asks the user to sign in. Other clients sign in when they connect. It has no filesystem. Every tool is gated by the API scopes your grant carries. When a call needs a scope that the grant does not have, a client that supports MCP step-up authorization asks the user to approve the scope and then retries the call.
+Cloud MCP is `https://mcp.staging.spacefast.com` (OAuth). It never publishes anonymously. A client that shows MCP Apps can connect before the user signs in, and its first `publish` asks the user to sign in. Other clients sign in when they connect. It has no filesystem. Every tool is gated by the API scopes your grant carries. When a call needs a scope that the grant does not have, a client that supports MCP step-up authorization asks the user to approve the scope and then retries the call.
 
 On-Device MCP is `sf mcp` on the user's computer. It reuses `.spacefast/` and the CLI login. When both `teamId` and `access` are omitted and no account credential works, `publish` creates an anonymous Space and returns a claim handoff. That fallback never applies to an existing Space, a requested team, or explicit access settings.
 

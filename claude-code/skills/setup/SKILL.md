@@ -19,7 +19,7 @@ Keep any authorization the user already gave for their task. Connecting Spacefas
 
 On-Device MCP uses the existing local Spacefast login or configured service credential. Follow its returned sign-in instructions when account reads need authentication; do not tell the user that a local stdio connection requires host OAuth.
 
-For hosted MCP at `https://mcp.spacefast.com`, use the connection's configured authentication. A direct hosted connection uses the host's OAuth controls; a CLI proxy uses its existing CLI login. If authentication fails, direct the user to reconnect through that method.
+For hosted MCP at `https://mcp.staging.spacefast.com`, use the connection's configured authentication. A direct hosted connection uses the host's OAuth controls; a CLI proxy uses its existing CLI login. If authentication fails, direct the user to reconnect through that method.
 If tools are unavailable, direct the user to the host's configured Spacefast connection controls.
 Do not ask for a token in chat. Do not report a working connection until a read succeeds.
 
