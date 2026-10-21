@@ -125,26 +125,6 @@
       "description": "Returns a fresh upload instruction for an archive build that is still waiting for its source archive. Use it when the original instruction expired before the upload finished."
     },
     {
-      "name": "claimSpace",
-      "title": "claim Space",
-      "description": "Moves an anonymously published Space into a team of the signed-in user, or returns the one decision still needed: sign-in, team choice, or agent consent. Send the Space key saved by the client that published it, plus any team or consent the user chose, and repeat until the response is `claimed`. A claimed Space no longer expires. The server checks eligibility. Never ask the user to paste a Space key into chat."
-    },
-    {
-      "name": "exchangeSpaceClaim",
-      "title": "exchange Space Claim",
-      "description": "One-time exchange of a demoted space key (bearer) for a durable publish API key, available after the owner claimed the space with agent continuation enabled. The API key is shown exactly once; store it and retry the failed request with it."
-    },
-    {
-      "name": "rotateSpaceKey",
-      "title": "rotate Space Key",
-      "description": "Replaces the shown-once space key for one unclaimed Space with a fresh key, door URL, and claim link. The previous key, its URLs, and its view sessions stop authorizing; explicit recipient Links survive."
-    },
-    {
-      "name": "getSpaceClaimStatus",
-      "title": "get Space Claim Status",
-      "description": "Returns the live URL, reserved immutable URL, publish readiness, claim link, and claim expiry for a space-key-authenticated anonymous publish. After the claim, the same key reports `claim.state: \"claimed\"` plus whether the one-time continuation exchange is still open."
-    },
-    {
       "name": "getContext",
       "title": "get Context",
       "description": "Introspects the caller behind the request. Any caller can read it — a browser session, an API key, a machine credential, a Space key, a partner token, or no credential at all — and every answer carries the Spacefast agent instructions as Markdown, filtered by `scopes` and budgeted for the `consumer`. An authenticated caller also gets a `credential` block naming what kind of token it is and what it is bound to, and a user-owned interactive grant gets a `capabilities` map of the operations its scopes allow."
@@ -300,11 +280,6 @@
       "description": "Read the authenticated user's Space Library settings. Team and service identities receive the default values."
     },
     {
-      "name": "readAnonymousPublishOperation",
-      "title": "read Anonymous Publish Operation",
-      "description": "Returns one anonymous publish operation through the read-only URL in its publish receipt. The URL expires and grants no Space access."
-    },
-    {
       "name": "listOperations",
       "title": "list Operations",
       "description": "Returns your workflow operations, newest first. The feed includes publishes, builds, domain and webhook activity, integration releases, agent runs, and approvals. Internal system operations stay out of this feed. Operations your credential cannot reach stay out of this feed. Filter by resource to follow one thread, or by `spaceId` for everything about one Space."
@@ -322,7 +297,7 @@
     {
       "name": "createPublish",
       "title": "create Publish",
-      "description": "Publish files, a zip/tar archive, or a public HTTPS website and get a Spacefast URL. Pass sourceUrl to capture and publish a website; URL publishing must be enabled for the caller and is mutually exclusive with files, deletions, and archive uploads. URL publishes and archives that need a build return a durable Build receipt with next.action=poll; follow links.status until publication completes. The Build's capture field reports URL capture progress and quality evidence; an unmeasured visual comparison is not a passing comparison. Use a stable Idempotency-Key when retrying the same request. Already-built files and static website archives publish directly and wait for finalization by default; pass async=1 to return an operation link to poll instead. For buildable source on a Spacefast-managed Space, the receipt's git block provides the repository remote and the Build's input.commit identifies the source commit; later git pushes continue that repository history. The Open link provides reusable access; anonymous Spaces also receive a Claim link for ownership transfer. New Spaces are Private by default. Pass spaceId to update an existing Space; otherwise a new Space is created."
+      "description": "Publish files, a zip/tar archive, or a public HTTPS website and get a Spacefast URL. Pass sourceUrl to capture and publish a website; URL publishing must be enabled for the caller and is mutually exclusive with files, deletions, and archive uploads. URL publishes and archives that need a build return a durable Build receipt with next.action=poll; follow links.status until publication completes. The Build's capture field reports URL capture progress and quality evidence; an unmeasured visual comparison is not a passing comparison. Use a stable Idempotency-Key when retrying the same request. Already-built files and static website archives publish directly and wait for finalization by default; pass async=1 to return an operation link to poll instead. For buildable source on a Spacefast-managed Space, the receipt's git block provides the repository remote and the Build's input.commit identifies the source commit; later git pushes continue that repository history. The Open link provides reusable access. New Spaces are Private by default. Pass spaceId to update an existing Space; otherwise a new Space is created."
     },
     {
       "name": "getTrafficRuleCatalog",
@@ -372,7 +347,7 @@
     {
       "name": "getSpace",
       "title": "get Space",
-      "description": "Returns one space with its status, URLs, channels, and policy. Accepts a `spc_` id or a slug; a slug that matches spaces in more than one of your teams fails with `ambiguous_space_slug`. Claim-token reads extend an anonymous space's expiry window."
+      "description": "Returns one space with its status, URLs, channels, and policy. Accepts a `spc_` id or a slug; a slug that matches spaces in more than one of your teams fails with `ambiguous_space_slug`."
     },
     {
       "name": "updateSpace",
@@ -382,7 +357,7 @@
     {
       "name": "deleteSpace",
       "title": "delete Space",
-      "description": "Stops serving immediately and retains the space's provider site, versions, and data for operator cleanup. Agent grants without the delete scope receive a temporary-access approval link. A superadmin can purge the retained data later. With a space key (unclaimed space), POST /v1/spaces/:spaceId/restore with the same key restores serving while the claim window remains open."
+      "description": "Stops serving immediately and retains the space's provider site, versions, and data for operator cleanup. Agent grants without the delete scope receive a temporary-access approval link. A superadmin can purge the retained data later."
     },
     {
       "name": "listSpaceAccessRequests",
@@ -453,11 +428,6 @@
       "name": "listSpaceChannelHistory",
       "title": "list Space Channel History",
       "description": "Returns the channel.promoted activity log for the named channel, newest first. This is the deploy log."
-    },
-    {
-      "name": "createSpaceClaimReminder",
-      "title": "create Space Claim Reminder",
-      "description": "Registers an email reminder for an unclaimed anonymous space (sent ~3 hours before expiry). Authenticate with the claim token; the address is deleted on claim or expiry and never logged."
     },
     {
       "name": "getSpaceCollaboration",
@@ -737,7 +707,7 @@
     {
       "name": "createSpaceOpenLink",
       "title": "create Space Open Link",
-      "description": "Returns the reusable open link for an anonymous space's live `/`. Targeted or account-authorized opens use an internal one-use browser handoff. `spaceId` also accepts a host the space serves, so a person the space was shared with can open it from its URL (agent credentials need the `person-pages:read` scope)."
+      "description": "Returns a link that opens a private space's live `/`. Targeted or account-authorized opens use an internal one-use browser handoff. `spaceId` also accepts a host the space serves, so a person the space was shared with can open it from its URL (agent credentials need the `person-pages:read` scope)."
     },
     {
       "name": "listSpacePasswordCredentials",
@@ -797,7 +767,7 @@
     {
       "name": "restoreSpace",
       "title": "restore Space",
-      "description": "Restores an archived space with its original versions, data, and URLs. A space key can also undo its own deletion while the claim window remains open."
+      "description": "Restores an archived space with its original versions, data, and URLs."
     },
     {
       "name": "computeSpaceRouting",
@@ -1372,7 +1342,7 @@
     {
       "name": "getSpaceVersion",
       "title": "get Space Version",
-      "description": "Returns one version with its status, number, permanent Version URL, and diagnostics. Anonymous claim tokens can poll this route to follow a publish."
+      "description": "Returns one version with its status, number, permanent Version URL, and diagnostics."
     },
     {
       "name": "deleteSpaceVersion",
@@ -2207,7 +2177,7 @@
     {
       "name": "operation_status",
       "title": "Check a pending Spacefast publish",
-      "description": "Use this tool when publish returns status publishing.\nPass job.poll.url as url when present. Otherwise, pass job.poll.operationId as operationId.\nIf done is false, call this tool again after two seconds.\nStop when result.done is true.\nReport success only when result.status is succeeded.\nFor an archive build, inspect result.receipt.activation. Only activated confirms that this version is live.\nIf result.status is skipped, report that the build did not run.\nFor deployment or build status, call show_space_deployments with top-level space only after the user claims the Space."
+      "description": "Use this tool when publish returns status publishing.\nPass job.poll.url as url when present. Otherwise, pass job.poll.operationId as operationId.\nIf done is false, call this tool again after two seconds.\nStop when result.done is true.\nReport success only when result.status is succeeded.\nFor an archive build, inspect result.receipt.activation. Only activated confirms that this version is live.\nIf result.status is skipped, report that the build did not run.\nFor deployment or build status, call show_space_deployments with top-level space for an owned Space."
     },
     {
       "name": "cli_login",
