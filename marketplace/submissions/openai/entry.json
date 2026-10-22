@@ -5,7 +5,7 @@
   "shortDescription": "Build and share your AI work",
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
-  "sourceSha": "2b4014d1fad8fa03450391e8557a70611b43dcf4",
+  "sourceSha": "7d5df3ff7ebdba8c0663125280321225ba1df5cc",
   "pluginsSha": "{{PLUGINS_SHA}}",
   "privacyPolicyUrl": "https://automattic.com/privacy/",
   "termsOfServiceUrl": "https://wordpress.com/tos/",
@@ -837,12 +837,12 @@
     {
       "name": "getSpaceSourceAvailability",
       "title": "get Space Source Availability",
-      "description": "Returns whether the current repository permits independent forks of its main branch and the remix URL. Website access is independent."
+      "description": "Returns whether the current repository permits independent forks of its main branch, the remix URL, and whether the live website shows a Remix button. Website access is independent."
     },
     {
       "name": "setSpaceSourceAvailability",
       "title": "set Space Source Availability",
-      "description": "Allow independent forks of the current repository’s main branch. Sharing does not change website access. Repository replacement and ownership transfer require fresh consent."
+      "description": "Allow independent forks of the current repository’s main branch, and show or hide a Remix button on the live website. Sharing does not change website access. Repository replacement and ownership transfer require fresh consent."
     },
     {
       "name": "getSpaceSourceBlame",
@@ -1103,16 +1103,6 @@
       "name": "deleteSpaceStorageObject",
       "title": "delete Space Storage Object",
       "description": "Force-deletes an app storage object as the space owner, including objects uploaded by another signed-in visitor."
-    },
-    {
-      "name": "getSpaceSubTeams",
-      "title": "get Space Sub Teams",
-      "description": "Returns the Enterprise subteams assigned to this Space and whether team-member access is restricted."
-    },
-    {
-      "name": "setSpaceSubTeams",
-      "title": "set Space Sub Teams",
-      "description": "Restricts team-member access to the selected subteams. Owners, admins and team-owned machine credentials retain access. An empty list explicitly restores team-wide access. Public and guest grants are independent."
     },
     {
       "name": "getSpaceTags",
@@ -1707,37 +1697,37 @@
     {
       "name": "listSubTeams",
       "title": "list Sub Teams",
-      "description": "Lists member groups in an Enterprise team."
+      "description": "Lists the subteams of an Enterprise team. Every member of the team can see them."
     },
     {
       "name": "createSubTeam",
       "title": "create Sub Team",
-      "description": "Creates a Better Auth member group in an Enterprise team. Requires team administration."
+      "description": "Creates a subteam, a team inside this team that it bills. Requires an Enterprise team and a team owner or admin. The team's owners and admins become the subteam's owners and admins."
     },
     {
       "name": "updateSubTeam",
       "title": "update Sub Team",
-      "description": "Updates the name of a subteam in an Enterprise team. Requires team administration."
+      "description": "Renames a subteam. Requires an Enterprise team and a team owner or admin."
     },
     {
       "name": "deleteSubTeam",
       "title": "delete Sub Team",
-      "description": "Removes the group and its memberships. Assigned Spaces retain restricted access, including when the final group is deleted."
+      "description": "Deletes a subteam and its memberships. Requires an Enterprise team and a team owner or admin. Delete or transfer the subteam's Spaces first."
     },
     {
       "name": "listSubTeamMembers",
       "title": "list Sub Team Members",
-      "description": "Lists the current team members assigned to this Enterprise subteam."
+      "description": "Lists the members of an Enterprise subteam. The subteam's members and the team's owners and admins can read it."
     },
     {
       "name": "addSubTeamMember",
       "title": "add Sub Team Member",
-      "description": "Adds an existing live team member. Repeating the same request keeps one membership."
+      "description": "Adds an existing Enterprise team member to the subteam. No invitation and no new seat. Repeating the same request keeps one membership."
     },
     {
       "name": "removeSubTeamMember",
       "title": "remove Sub Team Member",
-      "description": "Removes a member from this subteam and revokes access to its assigned Spaces unless another grant applies."
+      "description": "Removes a member from the Enterprise subteam and its Spaces. They stay on the team. The team's owners and admins are in every subteam; change their team role instead."
     },
     {
       "name": "listTeamTagActivity",

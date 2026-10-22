@@ -13,7 +13,7 @@ Verified: **2026-08-27**
 - Door: https://registry.modelcontextprotocol.io
 - Mechanism: oidc_publish
 - Source: https://github.com/modelcontextprotocol/registry
-- Source commit: `2b4014d1fad8fa03450391e8557a70611b43dcf4`
+- Source commit: `7d5df3ff7ebdba8c0663125280321225ba1df5cc`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
