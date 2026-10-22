@@ -16,5 +16,6 @@
     "hosting"
   ],
   "displayName": "Spacefast",
-  "homepage": "https://spacefast.com/setup/claude-code"
+  "homepage": "https://spacefast.com/setup/claude-code",
+  "icon": "./assets/logo.png"
 }
