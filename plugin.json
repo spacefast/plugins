@@ -8,6 +8,7 @@
     "url": "https://spacefast.com"
   },
   "repository": "https://github.com/spacefast/plugins",
+  "privacyPolicyUrl": "https://automattic.com/privacy/",
   "license": "MIT",
   "keywords": [
     "spacefast",
