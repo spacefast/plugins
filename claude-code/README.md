@@ -35,14 +35,15 @@ Complete the browser OAuth flow when Claude prompts you.
 
 ## Design verification reminders
 
-Linked-project session context and publishing skills remind the agent to run
-`verify-design-system` before deploying changed work. A PreToolUse hook reinforces
-the reminder for supported Spacefast MCP publishing calls
-and CLI publishing/build/promotion commands. Git pushes are not matched.
+The session hook checks whether .spacefast/space.json exists and reminds the agent to use the
+Spacefast skill to read it. The PreToolUse hook adds a fixed reminder before supported Spacefast
+MCP publishing calls. Both hooks run as small shell scripts and need no Node.js runtime.
 
-These hooks are advisory. They do not run the skill, block the pending call, or
-change its arguments or approvals. The agent can read a tool-call reminder after
-the call runs. Shell wrappers may not be recognized.
+The publishing skills require design verification before CLI publishing, builds, and promotion.
+The hook matcher covers MCP calls; shell commands and Git pushes rely on those skill instructions.
+
+These reminders are advisory. They do not run the skill, block a call, change its arguments,
+or grant approval. Follow the user's existing task and approval requirements.
 
 ## Data handling
 
@@ -53,8 +54,9 @@ include personal data. Account and team features also use profile information su
 and email addresses. Claude manages its OAuth credentials; the plugin does not bundle them.
 
 If you choose to use the optional CLI, it sends API requests to `https://api.spacefast.com`
-and uploads your selected files to the destinations returned by that API. The hooks only read
-local project metadata and tool input to show reminders. They do not send data over the network.
+and uploads your selected files to the destinations returned by that API. The hooks only check
+whether the local project marker exists and print fixed reminders. They do not read its contents
+or tool input, and do not send data over the network.
 CLI transfers happen outside the declared MCP connection. Published content is served according
 to the Space's access settings.
 
