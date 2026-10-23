@@ -1,5 +1,7 @@
 # Spacefast for Claude Code
 
+![Spacefast](assets/logo.png)
+
 Publish local files and manage Spacefast spaces without leaving Claude Code. The plugin adds 10 task skills and setup, linked-project and design verification hooks, and one hosted HTTP MCP connection.
 
 ## Install

@@ -16,10 +16,5 @@
     "publish-to-spacefast",
     "artifact-sharing",
     "hosting"
-  ],
-  "icon": "./assets/logo.png",
-  "privacyPolicyUrl": "https://automattic.com/privacy/",
-  "supportUrl": "https://automattic.com/contact/",
-  "documentationUrl": "https://spacefast.com/docs/agents",
-  "termsOfServiceUrl": "https://wordpress.com/tos/"
+  ]
 }
