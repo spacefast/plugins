@@ -42,11 +42,22 @@ These hooks are advisory. They do not run the skill, block the pending call, or
 change its arguments or approvals. The agent can read a tool-call reminder after
 the call runs. Shell wrappers may not be recognized.
 
-Manually installed Codex plugins include the hooks. Review and trust new or changed
-definitions with `/hooks` before relying on them; installation does not grant trust.
-The OpenAI public-directory package includes the skill guidance but no lifecycle hooks.
-See [Codex hooks](https://learn.chatgpt.com/docs/hooks) and
-[plugin packaging](https://developers.openai.com/plugins/build/plugins#bundled-mcp-servers-and-lifecycle-hooks).
+## Data handling
+
+Spacefast is developed by Automattic Inc. The hosted MCP connection sends the content and account
+data needed for your requested task to `https://mcp.spacefast.com` over HTTPS. Claude manages its OAuth
+credentials. The plugin does not bundle account credentials.
+
+If you choose to use the optional CLI, it sends API requests to `https://api.spacefast.com`
+and uploads your selected files to the destinations returned by that API. The hooks only read
+local project metadata and tool input to show reminders. They do not send data over the network.
+
+Spacefast stores published content and Space data so you can keep using and updating your Space.
+This data can remain longer than 30 days, including after deletion until it is purged. Install
+and setup telemetry has separate retention periods described below.
+
+See the [privacy policy](https://automattic.com/privacy/), [terms of service](https://wordpress.com/tos/),
+and [support page](https://automattic.com/contact/).
 
 ## Telemetry
 

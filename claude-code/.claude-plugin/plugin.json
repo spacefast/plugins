@@ -11,6 +11,15 @@
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
   "license": "MIT",
-  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "hosting"],
-  "icon": "./assets/logo.png"
+  "keywords": [
+    "spacefast",
+    "publish-to-spacefast",
+    "artifact-sharing",
+    "hosting"
+  ],
+  "icon": "./assets/logo.png",
+  "privacyPolicyUrl": "https://automattic.com/privacy/",
+  "supportUrl": "https://automattic.com/contact/",
+  "documentationUrl": "https://spacefast.com/docs/agents",
+  "termsOfServiceUrl": "https://wordpress.com/tos/"
 }
