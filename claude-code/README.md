@@ -45,16 +45,20 @@ the call runs. Shell wrappers may not be recognized.
 ## Data handling
 
 Spacefast is developed by Automattic Inc. The hosted MCP connection sends the content and account
-data needed for your requested task to `https://mcp.spacefast.com` over HTTPS. Claude manages its OAuth
-credentials. The plugin does not bundle account credentials.
+data needed for your requested task to `https://mcp.spacefast.com` over HTTPS. Spacefast reads and stores
+the files, source code, and other content you choose to publish or manage. This content can
+include personal data. Account and team features also use profile information such as names
+and email addresses. Claude manages its OAuth credentials; the plugin does not bundle them.
 
 If you choose to use the optional CLI, it sends API requests to `https://api.spacefast.com`
 and uploads your selected files to the destinations returned by that API. The hooks only read
 local project metadata and tool input to show reminders. They do not send data over the network.
+CLI transfers happen outside the declared MCP connection. Published content is served according
+to the Space's access settings.
 
-Spacefast stores published content and Space data so you can keep using and updating your Space.
-This data can remain longer than 30 days, including after deletion until it is purged. Install
-and setup telemetry has separate retention periods described below.
+Content and account data can remain longer than 30 days. Deleting a Space takes it offline;
+its content remains until Spacefast purges it. CLI install and setup telemetry goes to
+`https://api.spacefast.com/v1/events` and has the separate retention periods and opt-outs below.
 
 See the [privacy policy](https://automattic.com/privacy/), [terms of service](https://wordpress.com/tos/),
 and [support page](https://automattic.com/contact/).
