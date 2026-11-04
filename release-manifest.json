@@ -39,12 +39,12 @@
   "checksums": {
     ".cursor-plugin/marketplace.json": "b72b2117031b0bb736ed1bcec9aa7b73a8c5f56162adfd5efbe3cdea51f40efd",
     "claude-code.tgz": "d7127ba8f83d0eb04eb7bd6dd4881e2055a6d7c28d0e1b2c63084067c2576eb6",
-    "claude-desktop.tgz": "f438969dcfad6c475da91caf6f32826e717addf330ebbbac822194f8b66a1193",
-    "codex.tgz": "2fda9e6b719557a61c36e11d85768b1b98035fdb0273bd3cabc8879e137873ab",
-    "cursor.tgz": "72cce0db0ec8ed365a2c7e20622a7789358ad28d5b069f6dd7e235a3030f5944",
-    "spacefast-plugins.tgz": "7e8f23a23091558ea10f3b7cfa7a59f4b717b006960eedf3fcb4fee070be6a2b",
-    "spacefast-plugins.zip": "0c4557e3308b80cce74a5ce70f2ffe1a0a5a7202a4843a21f709965bfdf06d79",
-    "spacefast.mcpb": "02ef6a9aa39c862b98259674587ff8b79072e9db08635503025188cbebc1e78e"
+    "claude-desktop.tgz": "eac3357bf6b4194c63ba28b8e9b6741685262065f960ee3de5e0bfcf0c271954",
+    "codex.tgz": "05ffea76fc13360d6f9b9d352aad80bb6b8dc3d185976964708bade84270e99d",
+    "cursor.tgz": "06b10c4ff06edb92f933d9cd439f147fe30827afe236de74cf7ebfe6401fa9ce",
+    "spacefast-plugins.tgz": "59201c5036b0a09dbc00dff7d8cb31a624291ed21965172e088702d7b34444eb",
+    "spacefast-plugins.zip": "0a0dd518fdf3b558a2d5527bdbe49b316277404d50ba2f12d0fc8b611d19f469",
+    "spacefast.mcpb": "28c9a150d783902231ec24713496fa2ff07ddc6c8d04888e637ac0b01e399dfc"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",
@@ -52,7 +52,7 @@
   ],
   "mcpb": {
     "path": "spacefast.mcpb",
-    "sha256": "02ef6a9aa39c862b98259674587ff8b79072e9db08635503025188cbebc1e78e"
+    "sha256": "28c9a150d783902231ec24713496fa2ff07ddc6c8d04888e637ac0b01e399dfc"
   },
   "provenance": {
     "sourceSha": "7d5df3ff7ebdba8c0663125280321225ba1df5cc",
