@@ -13,7 +13,7 @@ Verified: **2026-10-28**
 - Door: https://cursor.com/marketplace/publish
 - Mechanism: portal
 - Source: https://cursor.com/docs/reference/plugins
-- Source commit: `c5a89d86a3f3b003a5c2338bfe083dca088f284a`
+- Source commit: `16c4fead82cd4f618439f9d0dbe9be004448fe9e`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
