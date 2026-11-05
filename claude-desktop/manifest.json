@@ -23,19 +23,7 @@
     "entry_point": "server/index.js",
     "mcp_config": {
       "command": "node",
-      "args": ["${__dirname}/server/index.js"],
-      "env": {
-        "SPACEFAST_TOKEN": "${user_config.api_token}"
-      }
-    }
-  },
-  "user_config": {
-    "api_token": {
-      "type": "string",
-      "title": "Spacefast API key",
-      "description": "Your Spacefast API key (from https://my.spacefast.com/account/api-keys). Leave blank to publish anonymously.",
-      "sensitive": true,
-      "required": false
+      "args": ["${__dirname}/server/index.js"]
     }
   },
   "tools_generated": true,

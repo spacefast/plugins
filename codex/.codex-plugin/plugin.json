@@ -34,8 +34,8 @@
       "Update the content and design of my existing Spacefast site."
     ],
     "brandColor": "#0c0c0c",
-    "composerIcon": "./assets/logo.svg",
-    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": ["./assets/publish-workflow.png"]
   }
 }

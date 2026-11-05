@@ -25,3 +25,6 @@ Space and a working connection do not authorize unrelated changes.
 If a capability is unavailable, report the limitation. Do not switch connections
 to retry a denied action. The connected server's schema and returned
 approval flow govern each call.
+
+For large files, follow the connected API guide's Large file uploads workflow.
+Keep upload IDs between calls, complete the upload, then publish its `uploadId`.

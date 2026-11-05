@@ -4,6 +4,8 @@ Read the skill for the requested task and follow its reference.
 Call each Spacefast API operation as its named MCP tool. Follow the approval flow
 and the task reference's verification steps before management work.
 
+- [Share work in Show & Tell](../skills/show-and-tell/SKILL.md): Submit a public Space to Show & Tell, read feedback, withdraw an entry, or browse approved work.
+- [Moderate Show & Tell](../skills/moderate-show-and-tell/SKILL.md): Review Show & Tell submissions as an authorized moderator. Edit, approve, decline, or unlist entries.
 - [Import a design system](../skills/import-design-system/SKILL.md): Save branding, design tokens, component standards, writing guidelines, and asset references from user-provided material into a Spacefast team's design system.
 - [Apply a design system](../skills/apply-design-system/SKILL.md): Apply a Spacefast team's saved design system to a new build or an explicitly requested source edit. Use its standards and brand assets in the real project, then verify the result.
 - [Verify design application](../skills/verify-design-system/SKILL.md): Check a Spacefast source build or preview against its saved team design system, including visual and editorial results. Report deviations and fix them when the task includes corrections.

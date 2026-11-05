@@ -12,7 +12,7 @@
   },
   "provenance": {
     "generatedFrom": "spacefast/monorepo",
-    "sourceSha": "7d5df3ff7ebdba8c0663125280321225ba1df5cc",
+    "sourceSha": "047ddc3be68c4fc633ad32094bbdb12377a6d7e9",
     "pluginsSha": "{{PLUGINS_SHA}}",
     "version": "0.8.1"
   },
@@ -21,7 +21,7 @@
       "id": "anthropic",
       "name": "Anthropic plugin directory",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -47,25 +47,18 @@
     {
       "id": "cursor",
       "name": "Cursor Marketplace",
-      "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
-      "registryStatus": "planned",
-      "submissionState": "blocked",
-      "blockedBy": [
-        "published_setup_ui",
-        "downstream_setup_ui_pins",
-        "openai_app_registration",
-        "live_openai_challenge",
-        "reviewer_account",
-        "submission_day_reverification"
-      ],
+      "checkedAt": "2026-10-28",
+      "availabilityLabel": "Available",
+      "registryStatus": "live",
+      "submissionState": "live",
+      "blockedBy": [],
       "runbook": "marketplace/submissions/cursor/RUNBOOK.md"
     },
     {
       "id": "awesome-copilot",
       "name": "GitHub awesome-copilot",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -82,7 +75,7 @@
       "id": "grok",
       "name": "Grok Build plugin marketplace",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -99,7 +92,7 @@
       "id": "kimi",
       "name": "Kimi Code plugin marketplace",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -116,7 +109,7 @@
       "id": "cline",
       "name": "Cline Marketplace",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -133,7 +126,7 @@
       "id": "qoder",
       "name": "Qoder plugin marketplace",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -150,7 +143,7 @@
       "id": "codebuddy",
       "name": "CodeBuddy marketplace",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -167,7 +160,7 @@
       "id": "skillhub",
       "name": "SkillHub",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -184,7 +177,7 @@
       "id": "opencode",
       "name": "OpenCode ecosystem",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -201,7 +194,7 @@
       "id": "goose",
       "name": "Goose via the official MCP Registry",
       "checkedAt": "2026-10-09",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "published",
       "blockedBy": [],
@@ -211,7 +204,7 @@
       "id": "kilo",
       "name": "Kilo marketplace",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -228,7 +221,7 @@
       "id": "docker",
       "name": "Docker MCP Catalog",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -245,7 +238,7 @@
       "id": "glama",
       "name": "Glama MCP directory",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -262,7 +255,7 @@
       "id": "gemini",
       "name": "Gemini CLI extensions",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -279,7 +272,7 @@
       "id": "hermes",
       "name": "Hermes MCP catalog",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [
@@ -296,7 +289,7 @@
       "id": "smithery",
       "name": "Smithery MCP directory",
       "checkedAt": "2026-08-27",
-      "availabilityLabel": "Soon",
+      "availabilityLabel": "Not listed",
       "registryStatus": "planned",
       "submissionState": "blocked",
       "blockedBy": [

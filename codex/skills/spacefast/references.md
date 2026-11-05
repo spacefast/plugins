@@ -4,7 +4,7 @@
 
 Use Spacefast for a requested Spacefast task or a selected Spacefast skill. A connection alone does not authorize reading team data or changing a Space.
 
-Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input and output schemas, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
+Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input schema and any advertised output schema, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
 
 ### Apps and scope
 
@@ -82,9 +82,9 @@ If `publish.result.status` is `publishing`, call `operation_status`. Pass `publi
 
 Call `operation_status` again only while `operation_status.result.done` is false, two seconds apart. Continue only when `operation_status.result.status` is `succeeded`. Report `failed` or `canceled` and stop.
 
-If `publish.result.receipt.claim` is present, the Space is unclaimed. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
+If `publish.result.receipt.claim` is present, the Space is unclaimed and expires unless the user claims it. Send the user `publish.result.shareBlurb` word for word, then stop. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
 
-For an unclaimed Space, point to the claim action in the publish card and state its expiry. Keep its key-bearing URL and raw claim credential outside model text; never ask the user to paste one.
+For an unclaimed Space, send the user `publish.result.shareBlurb` word for word: it carries the preview, the claim link, and the deadline. Never print the bare space key on its own; never ask the user to paste a credential.
 
 After publication to a claimed Space, call show_space_deployments with top-level space set to the receipt's Space ID. Confirm the intended team, version, and live state. A ready preview is not a live version. Return the useful live, access, and version URLs disclosed by the receipt, and verify the requested page before reporting success.
 
@@ -110,7 +110,7 @@ Keep production unchanged. For an inline preview, use a separate requested Space
 
 ### Verify
 
-- If `publish.result.receipt.claim` is present, the Space is unclaimed. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
+- If `publish.result.receipt.claim` is present, the Space is unclaimed and expires unless the user claims it. Send the user `publish.result.shareBlurb` word for word, then stop. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
 
 - If `publish.result.receipt.claim` is absent, open the deployments App for each affected Space. Confirm that the preview changed. Confirm that production did not change.
 
@@ -122,7 +122,7 @@ Read existing routing, then apply the smallest requested `_redirects` change thr
 
 ### Verify
 
-- If `publish.result.receipt.claim` is present, the Space is unclaimed. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
+- If `publish.result.receipt.claim` is present, the Space is unclaimed and expires unless the user claims it. Send the user `publish.result.shareBlurb` word for word, then stop. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
 
 - If `publish.result.receipt.claim` is absent, open the deployments App for `publish.result.receipt.space.id`. Confirm that the new version is current and ready.
 

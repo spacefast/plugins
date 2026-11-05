@@ -4,7 +4,7 @@
 
 Use Spacefast for a requested Spacefast task or a selected Spacefast skill. A connection alone does not authorize reading team data or changing a Space.
 
-Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input and output schemas, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
+Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input schema and any advertised output schema, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
 
 ### Apps and scope
 

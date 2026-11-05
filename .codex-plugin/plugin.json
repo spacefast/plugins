@@ -43,8 +43,8 @@
     "termsOfServiceURL": "https://wordpress.com/tos/",
     "supportURL": "https://automattic.com/contact/",
     "brandColor": "#0c0c0c",
-    "composerIcon": "./assets/logo.svg",
-    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png",
     "screenshots": [
       "./assets/publish-workflow.png"
     ]

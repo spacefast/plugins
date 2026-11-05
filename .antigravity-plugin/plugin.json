@@ -1,7 +1,7 @@
 {
   "name": "spacefast",
   "version": "0.8.1",
-  "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.",
+  "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in chat or bring your own work, and publish it with Spacefast.",
   "author": {
     "name": "Automattic Inc.",
     "url": "https://spacefast.com"
@@ -16,10 +16,11 @@
   ],
   "displayName": "Spacefast",
   "homepage": "https://spacefast.com",
-  "logo": "assets/logo.svg",
+  "logo": "assets/logo-padded.svg",
   "suggestedPrompts": [
     "Build a website for my project and publish it on Spacefast.",
     "Publish this dashboard and give me a link to share.",
     "Update the content and design of my existing Spacefast site."
-  ]
+  ],
+  "category": "Developer Tools"
 }

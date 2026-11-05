@@ -16,7 +16,7 @@
   ],
   "displayName": "Spacefast",
   "homepage": "https://spacefast.com/setup/cursor",
-  "logo": "./assets/logo.svg",
+  "logo": "./assets/logo.png",
   "mcpServers": "./.mcp.json",
   "skills": "./skills/"
 }

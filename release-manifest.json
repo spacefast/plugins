@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T20:49:56.000Z",
+  "generatedAt": "2026-11-05T21:43:17.000Z",
   "version": "0.8.1",
   "packageManager": "pnpm@11.22.0",
   "publicRepoRoot": ".",
@@ -38,13 +38,13 @@
   ],
   "checksums": {
     ".cursor-plugin/marketplace.json": "b72b2117031b0bb736ed1bcec9aa7b73a8c5f56162adfd5efbe3cdea51f40efd",
-    "claude-code.tgz": "d7127ba8f83d0eb04eb7bd6dd4881e2055a6d7c28d0e1b2c63084067c2576eb6",
-    "claude-desktop.tgz": "eac3357bf6b4194c63ba28b8e9b6741685262065f960ee3de5e0bfcf0c271954",
-    "codex.tgz": "05ffea76fc13360d6f9b9d352aad80bb6b8dc3d185976964708bade84270e99d",
-    "cursor.tgz": "06b10c4ff06edb92f933d9cd439f147fe30827afe236de74cf7ebfe6401fa9ce",
-    "spacefast-plugins.tgz": "59201c5036b0a09dbc00dff7d8cb31a624291ed21965172e088702d7b34444eb",
-    "spacefast-plugins.zip": "0a0dd518fdf3b558a2d5527bdbe49b316277404d50ba2f12d0fc8b611d19f469",
-    "spacefast.mcpb": "28c9a150d783902231ec24713496fa2ff07ddc6c8d04888e637ac0b01e399dfc"
+    "claude-code.tgz": "4a1334db85a3b9dab92d0dce4aa260c39c9cbe5c3298a03159c52339779b5dd2",
+    "claude-desktop.tgz": "947c30f40d724edee3c46ec32946f697b9447afbebf4d346b367a49ca7d5bd20",
+    "codex.tgz": "8850b8185ca40b62a3ccc4ad6a9fc7851244cc0982e2a3d3c6f1fb261206ae35",
+    "cursor.tgz": "5254fff311a2f48d63e3dbca57a26e6e46557f9845dc796dce7bc787191cd04e",
+    "spacefast-plugins.tgz": "257f85caf61aeab8412eaf9a872ac22fde812ed8fa2524d09ce1b9a7699bfbf4",
+    "spacefast-plugins.zip": "9e1a8bad124488e89c8b29240c1f3ad1f888ff75d9dbcecbc2bc25eea5881cef",
+    "spacefast.mcpb": "0b79ed44ed3c2ee9d5ca004059e909d63556eb93b5ea231e890887fbbd5a288e"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",
@@ -52,10 +52,10 @@
   ],
   "mcpb": {
     "path": "spacefast.mcpb",
-    "sha256": "28c9a150d783902231ec24713496fa2ff07ddc6c8d04888e637ac0b01e399dfc"
+    "sha256": "0b79ed44ed3c2ee9d5ca004059e909d63556eb93b5ea231e890887fbbd5a288e"
   },
   "provenance": {
-    "sourceSha": "7d5df3ff7ebdba8c0663125280321225ba1df5cc",
+    "sourceSha": "047ddc3be68c4fc633ad32094bbdb12377a6d7e9",
     "pluginsSha": "{{PLUGINS_SHA}}"
   },
   "marketplace": {
@@ -76,6 +76,8 @@
       "LICENSE",
       "PROVENANCE.json",
       "assets/logo-400.png",
+      "assets/logo-padded.svg",
+      "assets/logo.png",
       "assets/logo.svg",
       "assets/publish-workflow.png",
       "gemini-extension.json",

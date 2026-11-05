@@ -2,7 +2,7 @@
 
 ## MCP calls
 
-Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input and output schemas, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
+Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input schema and any advertised output schema, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
 
 If this Spacefast connection advertises the `search_connector_tools` tool, use it for the user's requested work with services connected in Spacefast, and follow its schema and approval rules. Otherwise, connected services are not available on this connection.
 
@@ -62,7 +62,7 @@ Agents must not call `updateTeamSkill` or `deleteTeamMemory`, even with admin AP
 
 Read the `createTeamMemory` and `updateTeamMemory` schemas before saving lasting user knowledge or correcting a memory. Use `listTeamMemories` for full records or truncated context. Archive stale memories; permanent deletion belongs to owners and admins.
 
-Outside the Memory & skills beta, `getTeamAgentContext` returns empty context; management operations return `feature_unavailable`. On `feature_unavailable`, continue unrelated work. If the user requested a memory, skill, or design-system operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
+Memories, Skills, and Design System are separate team features, each turned on in Settings → Labs. `getTeamAgentContext` leaves out each part the team does not have; that part's operations return `feature_unavailable`. On `feature_unavailable`, continue unrelated work. If the user requested a memory, skill, or design-system operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
 
 Read each named operation tool's schema before calling it. Team context and memory/skill lists require `spaces:read`; memory changes require `spaces:write`. These permissions do not grant team administration.
 
@@ -88,9 +88,11 @@ If you cannot resolve the requested team or follow the requested publishing meth
 If the user requests the Spacefast plugin or MCP, publish through the connected MCP tools. Do not install or sign in to the CLI for that request. If MCP cannot publish the artifact, report the limitation and ask before changing the publishing method.
 Otherwise, with shell access on the user's computer, an already installed and signed-in `sf` CLI can publish local files. A chat app or remote sandbox uses the MCP tools instead.
 Run `sf --version`. If it is missing, explain that CLI setup is optional and link to the [CLI installation guide](https://spacefast.com/docs/cli). Read that guide and run an installer, update, or `npx` download only when the user explicitly asks for that setup. A publish request alone does not authorize installing software. Otherwise use the connected MCP tools.
-Run `sf whoami` before using the CLI. If it reports `auth_required`, explain that `cli_login` can give the CLI this MCP connection's account access, and call it only when the user explicitly requests that handoff. The handoff link works once and expires after five minutes; the resulting CLI login remains bounded by the connection's grant and stops when the user disconnects Spacefast.
-After a requested handoff, explain what was authorized, run the returned command, and verify with `sf whoami`. Do not hide sign-in links from the user. For ordinary interactive sign-in, run `sf login` when requested and show its sign-in link.
+Run `sf whoami` before using the CLI. If it reports `auth_required`, explain that `cli_login` can give the CLI this MCP connection's account access, and call it only when the user explicitly requests that handoff. Its sign-in code works once and expires after five minutes; the resulting CLI login remains bounded by the connection's grant and stops when the user disconnects Spacefast.
+After a requested handoff, explain what was authorized, run the returned command, and verify with `sf whoami`. For ordinary interactive sign-in, run `sf login` when requested and show its sign-in link.
+If device login is interrupted, run the same login command again. Keep the same CLI home, API URL, and access profile. The CLI resumes the saved request or prints a new link if it expired. Ask the user to approve the link printed by that run if needed. If the command stops during approval, run it again after approval. A stopped polling process alone does not require a new sign-in method.
 Publish with `sf publish <path> --json`. For a requested destination team, add `--team <teamId>`. CLI and MCP credentials can authorize different teams, even for the same account. Do not assume their team access matches. The CLI reads the files from disk. The MCP publish tool with inline files sends each file through this conversation, so it is slow and has size limits. To update a known Space that the project does not link, add `--space <spaceId>`.
+The CLI names the agent that runs it in its `X-Spacefast-Client` header when it detects Claude Code or Cursor. If your harness is not detected, set `SPACEFAST_AGENT` to your agent id (for example `gemini-cli` or `opencode`) before running `sf`.
 Use the CLI only to publish files that are already on disk. For all other Spacefast work, use the MCP tools and their approval steps. To edit a Space whose source is not on disk, use the source workspace operations. Do not download Space files to edit and publish them again.
 
 Before publishing a local folder, inspect it for dotenv files and paths matched by `.gitignore`.
@@ -120,9 +122,15 @@ Set `access: "public"` only when the user explicitly asks for public access. Pub
 
 The hosted `publish` input has no `createNew` field. For existing Space file edits, use source workspaces instead of a replacement upload.
 
-For larger artifacts, read the contracts for `createPublish`, `finalizeSpaceVersion`, and `refreshSpaceVersionUpload`. Follow their manifest and upload schemas.
+## Large file uploads
 
-Keep upload tokens private. Do not pass large base64 archives in tool arguments.
+For large files, call createUpload, appendUploadChunk or importUploadFile, getUpload, completeUpload, and cancelUpload as needed. Sign-in is required; uploads expire after 24 hours. Upload intake allows 64 MiB per file and 256 MiB outstanding per team across all members. Cancel unused uploads to reclaim capacity.
+
+Append utf8/base64 chunks up to 16 KiB decoded per call. Keep upload/file IDs and chunk indices. After uncertainty, retry identical bytes at the same index, then check getUpload. The server computes hashes and sizes.
+
+For a host attachment, pass importUploadFile's top-level file with its host-provided download_url and file_id. Keep that reference private. HTTPS body.url also works. Without file bytes or a downloadable reference, report attachment transfer as unsupported.
+
+After completeUpload, call publish with uploadId and requestId; reuse requestId on retry. For source edits, upsert with uploadFileId instead of contents, keeping expectedRevision and operationId; stage and commit normally.
 
 For an authenticated `publish`, set a unique `requestId` before the first call. Reuse it only with the same input after an uncertain response.
 
@@ -130,11 +138,15 @@ If `publish.result.status` is `publishing`, call `operation_status`. Pass `publi
 
 Call `operation_status` again only while `operation_status.result.done` is false, two seconds apart. Continue only when `operation_status.result.status` is `succeeded`. Report `failed` or `canceled` and stop.
 
-If `publish.result.receipt.claim` is present, the Space is unclaimed. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
+If `publish.result.receipt.claim` is present, the Space is unclaimed and expires unless the user claims it. Send the user `publish.result.shareBlurb` word for word, then stop. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
+
+Relay `referral.message` unchanged when present in a publish receipt; upgrade before referral.
+
+Preserve the editable project source when you publish. Connect the existing source repository or save the original source in Spacefast. If a build produces separate output, keep the source files as well as that output. A repository URL or commit in publish metadata does not save source. Before connecting a repository, read the existing source connection and preserve its settings. Use the existing source tools; connecting a repository does not save uncommitted or unpushed changes. Source sharing and Remix require separate permission.
 
 Report the stable Live URL and the immutable Version URL. For a claimed Space, report the reusable Access URL only when the receipt discloses it. For private verification without that URL, follow `workflow/publish-receipt` to mint a bounded version preview session with `versions:download` permission. Keep its proof URL and cookie private.
 
-For an unclaimed Space, point the user to the claim action in the publish card and state `publish.result.receipt.claim.expiresAt`. Do not put the key-bearing claim URL or any claim credential in model text. Never ask the user to paste a credential into chat.
+For an unclaimed Space, send the user `publish.result.shareBlurb` word for word: it carries the private preview, the claim link, and the deadline. Never print the bare space key on its own, and never ask the user to paste a credential into chat.
 
 After the user claims, the next requested On-Device publish exchanges the saved claim credential automatically. Do not extract that credential or call the exchange yourself. Read the claimed Space with `getSpace` through the connected account; if account access is unavailable, reconnect Spacefast in the client.
 

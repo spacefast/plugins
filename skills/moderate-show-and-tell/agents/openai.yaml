@@ -1,0 +1,4 @@
+interface:
+  display_name: "Moderate Show & Tell"
+  short_description: "Review and manage showcase submissions."
+  default_prompt: "Use $moderate-show-and-tell to review the Show & Tell queue."

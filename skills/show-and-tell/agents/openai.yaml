@@ -1,0 +1,4 @@
+interface:
+  display_name: "Share work in Show & Tell"
+  short_description: "Submit, track, or withdraw your showcase entry."
+  default_prompt: "Use $show-and-tell to help me share this Space in Show & Tell."

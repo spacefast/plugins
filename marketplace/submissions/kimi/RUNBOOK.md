@@ -1,7 +1,7 @@
 # Kimi Code plugin marketplace submission
 
 Status: **Blocked by hard-gate prerequisites**  
-Customer-facing availability: **Soon**  
+Customer-facing availability: **Not listed**  
 Verified: **2026-08-27**
 
 ## Hard-gate blockers
@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://github.com/MoonshotAI/kimi-code/compare
 - Mechanism: pull_request
 - Source: https://github.com/MoonshotAI/kimi-code
-- Source commit: `7d5df3ff7ebdba8c0663125280321225ba1df5cc`
+- Source commit: `047ddc3be68c4fc633ad32094bbdb12377a6d7e9`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -30,6 +30,7 @@ Verified: **2026-08-27**
 
 - `marketplace/submissions/kimi/entry.json`
 - `marketplace/submissions/kimi/plugins/marketplace.spacefast.json`
+- `plugins/assets/logo.png`
 - `plugins/assets/logo-400.png`
 - `plugins/assets/logo.svg`
 

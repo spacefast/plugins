@@ -2,7 +2,7 @@
 
 ## MCP calls
 
-Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input and output schemas, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
+Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input schema and any advertised output schema, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
 
 If this Spacefast connection advertises the `search_connector_tools` tool, use it for the user's requested work with services connected in Spacefast, and follow its schema and approval rules. Otherwise, connected services are not available on this connection.
 
@@ -62,7 +62,7 @@ Agents must not call `updateTeamSkill` or `deleteTeamMemory`, even with admin AP
 
 Read the `createTeamMemory` and `updateTeamMemory` schemas before saving lasting user knowledge or correcting a memory. Use `listTeamMemories` for full records or truncated context. Archive stale memories; permanent deletion belongs to owners and admins.
 
-Outside the Memory & skills beta, `getTeamAgentContext` returns empty context; management operations return `feature_unavailable`. On `feature_unavailable`, continue unrelated work. If the user requested a memory, skill, or design-system operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
+Memories, Skills, and Design System are separate team features, each turned on in Settings → Labs. `getTeamAgentContext` leaves out each part the team does not have; that part's operations return `feature_unavailable`. On `feature_unavailable`, continue unrelated work. If the user requested a memory, skill, or design-system operation, report that it is unavailable. Do not change feature flags. Before private context storage exists, context returns default enabled skills and no saved memories or design system. Empty context alone does not identify the cause.
 
 Read each named operation tool's schema before calling it. Team context and memory/skill lists require `spaces:read`; memory changes require `spaces:write`. These permissions do not grant team administration.
 
@@ -110,7 +110,7 @@ Read each named operation tool's schema before calling it.
 Use this exact workflow:
 
 1. `listSpaceSourceWorkspaces`: Use `{ spaceId, status: "open", limit: 20 }`. Reuse a workspace only when its ID was already established in this task, or its exact task-specific name matches and `hasPendingChanges` is false. Never match by target branch alone.
-2. `createSpaceSourceWorkspace`: Use `{ spaceId, body: { operationId, name } }` when there is no clear match. Set a unique `operationId` before the call. Read `result.data.data.workspace` and copy its `id` into `workspaceId`. Do not reuse or close another task's workspace.
+2. `createSpaceSourceWorkspace`: Use `{ spaceId, body: { operationId, name } }` when there is no clear match. Set a unique `operationId` before the call. Read `result.data.data.workspace` and copy its `id` into `workspaceId`. When `result.data.operation` is present, the upload is still importing: call `getOperation` with its `id` until `status` is `succeeded`, then read status. If it fails, report its error; a new attempt needs a new `operationId`. On `source_import_pending`, wait for the named operation instead of creating another workspace. Do not reuse or close another task's workspace.
 3. `getSpaceSourceWorkspaceStatus`: Use `{ spaceId, workspaceId }`. Read `revision` and `workingCommitSha` from `result.data.data.workspace`. While `state` is `initializing`, `workingCommitSha` is null; read status again before the next step.
 4. `getSpaceSourceFile`: Read each complete target file with top-level `spaceId`, `connectionType: "hosted"`, `ref: workingCommitSha`, `path`, `head: false`, and `maxBytes: 1048576`. Pin the same `workingCommitSha` for the whole read.
 5. `editSpaceSourceWorkspaceFiles`: Send complete contents for each upsert and an explicit deletion for each removed file, at most 100 operations per call. This changes working files only.
@@ -149,6 +149,16 @@ Connected repositories are read-only through these source tools. Use their estab
 History follows first parents. Keep the source commit pinned across pages. Use source comparison for saved Git source and deployment comparison for served artifacts. Reading deployment contents requires `versions:download`.
 
 Show compact cards instead of repeating full trees or logs when the work mode calls for review. Do not expose internal staging refs. Do not invent a form that asks the user to trigger a write; Apps carry only the writes they support.
+
+## Large file uploads
+
+For large files, call createUpload, appendUploadChunk or importUploadFile, getUpload, completeUpload, and cancelUpload as needed. Sign-in is required; uploads expire after 24 hours. Upload intake allows 64 MiB per file and 256 MiB outstanding per team across all members. Cancel unused uploads to reclaim capacity.
+
+Append utf8/base64 chunks up to 16 KiB decoded per call. Keep upload/file IDs and chunk indices. After uncertainty, retry identical bytes at the same index, then check getUpload. The server computes hashes and sizes.
+
+For a host attachment, pass importUploadFile's top-level file with its host-provided download_url and file_id. Keep that reference private. HTTPS body.url also works. Without file bytes or a downloadable reference, report attachment transfer as unsupported.
+
+After completeUpload, call publish with uploadId and requestId; reuse requestId on retry. For source edits, upsert with uploadFileId instead of contents, keeping expectedRevision and operationId; stage and commit normally.
 
 ## Visual review
 

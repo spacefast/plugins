@@ -13,7 +13,7 @@ Verified: **2026-10-19**
 - Door: https://platform.openai.com/plugins
 - Mechanism: portal
 - Source: https://developers.openai.com/plugins/deploy/submission
-- Source commit: `7d5df3ff7ebdba8c0663125280321225ba1df5cc`
+- Source commit: `047ddc3be68c4fc633ad32094bbdb12377a6d7e9`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `app-6aa80fbfddb0819188f1304e303c856d` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -25,6 +25,7 @@ Verified: **2026-10-19**
 
 - `marketplace/submissions/openai/entry.json`
 - `dist/openai-plugin/spacefast-openai-1.0.4.zip`
+- `plugins/assets/logo.png`
 - `plugins/assets/logo-400.png`
 - `plugins/assets/logo.svg`
 

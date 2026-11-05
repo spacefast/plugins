@@ -4,7 +4,7 @@
 
 Use Spacefast for a requested Spacefast task or a selected Spacefast skill. A connection alone does not authorize reading team data or changing a Space.
 
-Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input and output schemas, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
+Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input schema and any advertised output schema, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
 
 ### Apps and scope
 
@@ -93,7 +93,7 @@ Use source workspace operations for existing Space edits. Read `getSpaceWorkMode
 Use this exact workflow:
 
 1. `listSpaceSourceWorkspaces`: Use `{ spaceId, status: "open", limit: 20 }`. Reuse a workspace only when its ID was already established in this task, or its exact task-specific name matches and `hasPendingChanges` is false. Never match by target branch alone.
-2. `createSpaceSourceWorkspace`: Use `{ spaceId, body: { operationId, name } }` when there is no clear match. Set a unique `operationId` before the call. Read `result.data.data.workspace` and copy its `id` into `workspaceId`. Do not reuse or close another task's workspace.
+2. `createSpaceSourceWorkspace`: Use `{ spaceId, body: { operationId, name } }` when there is no clear match. Set a unique `operationId` before the call. Read `result.data.data.workspace` and copy its `id` into `workspaceId`. When `result.data.operation` is present, the upload is still importing: call `getOperation` with its `id` until `status` is `succeeded`, then read status. If it fails, report its error; a new attempt needs a new `operationId`. On `source_import_pending`, wait for the named operation instead of creating another workspace. Do not reuse or close another task's workspace.
 3. `getSpaceSourceWorkspaceStatus`: Use `{ spaceId, workspaceId }`. Read `revision` and `workingCommitSha` from `result.data.data.workspace`. While `state` is `initializing`, `workingCommitSha` is null; read status again before the next step.
 4. `getSpaceSourceFile`: Read each complete target file with top-level `spaceId`, `connectionType: "hosted"`, `ref: workingCommitSha`, `path`, `head: false`, and `maxBytes: 1048576`. Pin the same `workingCommitSha` for the whole read.
 5. `editSpaceSourceWorkspaceFiles`: Send complete contents for each upsert and an explicit deletion for each removed file, at most 100 operations per call. This changes working files only.

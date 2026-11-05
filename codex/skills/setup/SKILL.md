@@ -23,7 +23,7 @@ Do not ask for a token in chat. Do not report a working connection until a read 
 
 Read the connected account through the Spacefast API tools:
 
-Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input and output schemas, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
+Each Spacefast API operation is an MCP tool named by its operation ID, such as `getAccount`. Read its input schema and any advertised output schema, then send its declared JSON input directly; the host may find the tool through its own tool search. Use only tools advertised by this connection. Finish read-only preparation before generating changes. Preserve failed results and continuation instructions, verify each successful write with a read, and use returned images and files directly.
 
 1. Read the contract for `getAccount` and call it with `{}`.
    For a user-supplied reference, add the optional `teamRef` or `spaceRef` field at the top level.

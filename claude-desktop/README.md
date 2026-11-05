@@ -20,8 +20,9 @@ macOS and Windows, publish inline files or use the CLI.
 
 ## Publish to your team
 
-The API key requested during installation is optional. Leave it blank to publish anonymously and
-receive a claim action.
+Ask Claude to sign you in. It shows a link and a code; approve them in the browser and the
+extension, and the `sf` CLI on this computer, are signed in. Signed out, it publishes anonymously and returns
+a claim action.
 
 ## Telemetry
 

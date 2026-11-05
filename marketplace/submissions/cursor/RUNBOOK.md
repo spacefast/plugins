@@ -1,24 +1,19 @@
 # Cursor Marketplace submission
 
-Status: **Blocked by hard-gate prerequisites**  
-Customer-facing availability: **Soon**  
-Verified: **2026-08-27**
+Status: **Live**  
+Customer-facing availability: **Available**  
+Verified: **2026-10-28**
 
 ## Hard-gate blockers
 
-- `published_setup_ui`
-- `downstream_setup_ui_pins`
-- `openai_app_registration`
-- `live_openai_challenge`
-- `reviewer_account`
-- `submission_day_reverification`
+- None. The generated bundle passed every prerequisite.
 
 ## Submit
 
 - Door: https://cursor.com/marketplace/publish
 - Mechanism: portal
 - Source: https://cursor.com/docs/reference/plugins
-- Source commit: `7d5df3ff7ebdba8c0663125280321225ba1df5cc`
+- Source commit: `047ddc3be68c4fc633ad32094bbdb12377a6d7e9`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -29,6 +24,7 @@ Verified: **2026-08-27**
 ## Upload or paste
 
 - `marketplace/submissions/cursor/entry.json`
+- `plugins/assets/logo.png`
 - `plugins/assets/logo-400.png`
 - `plugins/assets/logo.svg`
 

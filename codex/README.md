@@ -1,6 +1,6 @@
 # Spacefast for Codex
 
-Publish local files and manage Spacefast spaces from Codex. The plugin adds 10 task skills and setup,
+Publish local files and manage Spacefast spaces from Codex. The plugin adds 12 task skills and setup,
 plus one hosted Streamable HTTP MCP connection.
 
 ## Install
