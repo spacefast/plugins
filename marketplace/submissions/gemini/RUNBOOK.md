@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://github.com/topics/gemini-cli-extension
 - Mechanism: repository_topic
 - Source: https://geminicli.com/docs/extensions
-- Source commit: `047ddc3be68c4fc633ad32094bbdb12377a6d7e9`
+- Source commit: `c5a89d86a3f3b003a5c2338bfe083dca088f284a`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
