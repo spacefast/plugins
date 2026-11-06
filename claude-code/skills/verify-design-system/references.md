@@ -107,6 +107,8 @@ Read the work mode before an existing Space edit. Use a source workspace when th
 
 Read each named operation tool's schema before calling it.
 
+Before calling `commitSpaceSourceWorkspaceChanges` with `workspace.autoDeploy` enabled, verify the exact staged source against current standards using its matching build at desktop and mobile widths. If verification cannot finish before the commit, leave changes staged and report the blocker. Follow the user's existing publication intent and approval rules.
+
 Use this exact workflow:
 
 1. `listSpaceSourceWorkspaces`: Use `{ spaceId, status: "open", limit: 20 }`. Reuse a workspace only when its ID was already established in this task, or its exact task-specific name matches and `hasPendingChanges` is false. Never match by target branch alone.

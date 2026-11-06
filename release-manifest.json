@@ -38,12 +38,12 @@
   ],
   "checksums": {
     ".cursor-plugin/marketplace.json": "b72b2117031b0bb736ed1bcec9aa7b73a8c5f56162adfd5efbe3cdea51f40efd",
-    "claude-code.tgz": "abe0689922092262df026fa8a6104db0c0c7815cca441e21a9fd5fc90b789e45",
+    "claude-code.tgz": "8454f522c0aefc37a757eebd099c87786a4a13ec883ed1f33b50ab5bd0418c9d",
     "claude-desktop.tgz": "7bc5ff42b3b43945a1f4d99adf80d4072ba0fd7344c61d77eee51594933b4299",
     "codex.tgz": "7f587d7db430bbb1466567c534c9723b6f135dd8aad03b768c566eed0325a531",
     "cursor.tgz": "5b91044ec0e06c18ac40bd14aa19a2414f186c5d012fe79800ec437f16f2f459",
-    "spacefast-plugins.tgz": "9f3f5d1aef7fcb72ab584d0120d85b44fd2cfa57df92314c3cc3a2b1eab8328a",
-    "spacefast-plugins.zip": "6a43ba07ea3dd98d2685abf325f9f7bfda2b273af80567947154778d0a015787",
+    "spacefast-plugins.tgz": "fe76a0bcee0c175fa21151eb78f6b5a395fdb67d6528e254f84a24f75443d789",
+    "spacefast-plugins.zip": "388a0f630f05ecf6bc3a203f3b33ffd9cf7e8a8e3dc330b52212d47cb1ffbc67",
     "spacefast.mcpb": "49a7adf7f2171b3da5d3ffcfc0ad1eec40774a14bb30b29778ee2028181b852a"
   },
   "releaseCommands": [
