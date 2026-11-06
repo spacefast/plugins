@@ -2,7 +2,7 @@
 
 ![Spacefast](assets/logo.png)
 
-Publish local files and manage Spacefast spaces without leaving Claude Code. The plugin adds 12 task skills and setup, linked-project and design verification hooks, and one hosted HTTP MCP connection.
+Publish local files and manage Spacefast spaces without leaving Claude Code. The plugin adds 12 task skills, a setup skill, and one hosted HTTP MCP connection.
 
 ## Install
 
@@ -33,17 +33,15 @@ Anonymous publishes go through the CLI: `sf publish` needs no account and return
 
 Complete the browser OAuth flow when Claude prompts you.
 
-## Design verification reminders
+## Linked projects and design verification
 
-The session hook checks whether .spacefast/space.json exists and reminds the agent to use the
-Spacefast skill to read it. The PreToolUse hook adds a fixed reminder before supported Spacefast
-MCP publishing calls. Both hooks run as small shell scripts and need no Node.js runtime.
+The skills read `.spacefast/space.json` when working with a linked project and preserve its existing
+Space link. Treat `.spacefast/state.json` as credential material: never print, commit, or archive it.
 
-The publishing skills require design verification before CLI publishing, builds, and promotion.
-The hook matcher covers MCP calls; shell commands and Git pushes rely on those skill instructions.
+The publishing skills require `verify-design-system` before deploying changed work through MCP
+or the CLI, including builds and promotion. Follow the user's existing task and approval requirements.
 
-These reminders are advisory. They do not run the skill, block a call, change its arguments,
-or grant approval. Follow the user's existing task and approval requirements.
+The Claude plugin includes no lifecycle hooks. These checks rely on the skill instructions.
 
 ## Data handling
 
@@ -54,9 +52,7 @@ include personal data. Account and team features also use profile information su
 and email addresses. Claude manages its OAuth credentials; the plugin does not bundle them.
 
 If you choose to use the optional CLI, it sends API requests to `https://api.spacefast.com`
-and uploads your selected files to the destinations returned by that API. The hooks only check
-whether the local project marker exists and print fixed reminders. They do not read its contents
-or tool input, and do not send data over the network.
+and uploads your selected files to the destinations returned by that API.
 CLI transfers happen outside the declared MCP connection. Published content is served according
 to the Space's access settings.
 
@@ -69,7 +65,7 @@ and [support page](https://automattic.com/contact/).
 
 ## Telemetry
 
-Plugin hooks send no telemetry. The CLI records only install and setup outcomes: agent, method,
+The CLI records only install and setup outcomes: agent, method,
 outcome, reason code, CLI version, OS, and timestamp. It never sends a machine, user, team, path,
 file-content, or credential identifier. Set `SPACEFAST_TELEMETRY_DISABLED=1` or `DO_NOT_TRACK=1`
 to disable disclosure and delivery before any event is sent.
