@@ -10,7 +10,7 @@
   "repository": "https://github.com/spacefast/plugins",
   "license": "MIT",
   "logo": "./assets/logo.png",
-  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "hosting"],
+  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "websites"],
   "mcpServers": "./.mcp.json",
   "rules": "./rules/"
 }

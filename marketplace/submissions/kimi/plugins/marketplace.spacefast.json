@@ -9,7 +9,7 @@
     "spacefast",
     "publish-to-spacefast",
     "artifact-sharing",
-    "hosting"
+    "websites"
   ],
   "source": "https://github.com/spacefast/plugins/releases/download/plugins-v0.8.1/spacefast-plugins.zip"
 }
