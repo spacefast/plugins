@@ -28,3 +28,11 @@ approval flow govern each call.
 
 For large files, follow the connected API guide's Large file uploads workflow.
 Keep upload IDs between calls, complete the upload, then publish its `uploadId`.
+
+## Zero apps
+
+Start a Zero app with `sf zero init`, then `sf publish` from the directory with
+`zero.config.ts`. Hosted MCP publishes raw `zero.config.ts` source. Content
+projects use Zero collections with `sync: "content/posts/*.md"` and Markdown
+front matter; follow `recipes/migrate-to-zero-content` instead of building an
+Astro replacement.

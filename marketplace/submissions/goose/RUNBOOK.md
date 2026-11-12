@@ -15,11 +15,11 @@ For a future update, validate the canonical `server.json` and authenticate owner
 - Door: https://registry.modelcontextprotocol.io
 - Mechanism: oidc_publish
 - Source: https://github.com/aaif-goose/goose/discussions/10830
-- Source commit: `16c4fead82cd4f618439f9d0dbe9be004448fe9e`
+- Source commit: `e318b07ef4efcb2f378a2424dab318cbcaecc204`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `io.github.spacefast/mcp` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
-- Terms: https://wordpress.com/tos/
+- Terms: https://automattic.com/tos/
 - Support: https://automattic.com/contact/
 - Reviewer account pointer: Not required for the official MCP Registry.
 

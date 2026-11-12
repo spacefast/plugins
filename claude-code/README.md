@@ -60,7 +60,7 @@ Content and account data can remain longer than 30 days. Deleting a Space takes 
 its content remains until Spacefast purges it. CLI install and setup telemetry goes to
 `https://api.spacefast.com/v1/events` and has the separate retention periods and opt-outs below.
 
-See the [privacy policy](https://automattic.com/privacy/), [terms of service](https://wordpress.com/tos/),
+See the [privacy policy](https://automattic.com/privacy/), [terms of service](https://automattic.com/tos/),
 and [support page](https://automattic.com/contact/).
 
 ## Telemetry

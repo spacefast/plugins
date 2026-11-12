@@ -13,11 +13,11 @@ Verified: **2026-11-06**
 - Door: https://platform.openai.com/plugins
 - Mechanism: portal
 - Source: https://developers.openai.com/plugins/deploy/submission
-- Source commit: `16c4fead82cd4f618439f9d0dbe9be004448fe9e`
+- Source commit: `e318b07ef4efcb2f378a2424dab318cbcaecc204`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `app-6aa80fbfddb0819188f1304e303c856d` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
-- Terms: https://wordpress.com/tos/
+- Terms: https://automattic.com/tos/
 - Support: https://automattic.com/contact/
 - Reviewer account pointer: GitHub marketplace-reviewers environment: SPACEFAST_REVIEWER_ACCOUNT
 

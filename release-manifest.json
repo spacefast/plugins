@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-05T21:54:34.000Z",
-  "version": "0.8.1",
+  "generatedAt": "2026-11-11T10:25:15.000Z",
+  "version": "0.9.0",
   "packageManager": "pnpm@11.22.0",
   "publicRepoRoot": ".",
   "marketplaces": {
@@ -38,13 +38,13 @@
   ],
   "checksums": {
     ".cursor-plugin/marketplace.json": "b72b2117031b0bb736ed1bcec9aa7b73a8c5f56162adfd5efbe3cdea51f40efd",
-    "claude-code.tgz": "8454f522c0aefc37a757eebd099c87786a4a13ec883ed1f33b50ab5bd0418c9d",
-    "claude-desktop.tgz": "7bc5ff42b3b43945a1f4d99adf80d4072ba0fd7344c61d77eee51594933b4299",
-    "codex.tgz": "7f587d7db430bbb1466567c534c9723b6f135dd8aad03b768c566eed0325a531",
-    "cursor.tgz": "5b91044ec0e06c18ac40bd14aa19a2414f186c5d012fe79800ec437f16f2f459",
-    "spacefast-plugins.tgz": "fe76a0bcee0c175fa21151eb78f6b5a395fdb67d6528e254f84a24f75443d789",
-    "spacefast-plugins.zip": "388a0f630f05ecf6bc3a203f3b33ffd9cf7e8a8e3dc330b52212d47cb1ffbc67",
-    "spacefast.mcpb": "49a7adf7f2171b3da5d3ffcfc0ad1eec40774a14bb30b29778ee2028181b852a"
+    "claude-code.tgz": "da190e30c4a3f5a3fda76a1a5b10d11e4d0a0486d89ceac2fa30ff1be1fc49ae",
+    "claude-desktop.tgz": "04302debf0eebe5234c475addfb7e960cd29db67f590b2b71cff4551d7c79073",
+    "codex.tgz": "3a250b6988313b043eb6ae3240f40f51337c788cbc78ff0f26a261dba21d9adc",
+    "cursor.tgz": "f2aeded20b328a5d7d16f8147b00334993a4e60997fe156a0fa3f7538e7ead15",
+    "spacefast-plugins.tgz": "e16ab947529b4e366c86c07c6b9365a7d43d2a6c5f767361d08273fd9577a99c",
+    "spacefast-plugins.zip": "a76ec9ef95aeddf7f6e650eeb63feb0d90af02ac32253bb607ff3c7890c0d173",
+    "spacefast.mcpb": "79b41e4a5cb98f9ca1a8bfbb265c70dfabbfa5d69e7769efae536eec67734089"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",
@@ -52,10 +52,10 @@
   ],
   "mcpb": {
     "path": "spacefast.mcpb",
-    "sha256": "49a7adf7f2171b3da5d3ffcfc0ad1eec40774a14bb30b29778ee2028181b852a"
+    "sha256": "79b41e4a5cb98f9ca1a8bfbb265c70dfabbfa5d69e7769efae536eec67734089"
   },
   "provenance": {
-    "sourceSha": "16c4fead82cd4f618439f9d0dbe9be004448fe9e",
+    "sourceSha": "e318b07ef4efcb2f378a2424dab318cbcaecc204",
     "pluginsSha": "{{PLUGINS_SHA}}"
   },
   "marketplace": {

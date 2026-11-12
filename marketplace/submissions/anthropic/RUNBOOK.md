@@ -18,11 +18,11 @@ Verified: **2026-08-27**
 - Door: https://claude.ai/directory/manage/new/plugin
 - Mechanism: portal
 - Source: https://code.claude.com/docs/en/discover-plugins
-- Source commit: `16c4fead82cd4f618439f9d0dbe9be004448fe9e`
+- Source commit: `e318b07ef4efcb2f378a2424dab318cbcaecc204`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
-- Terms: https://wordpress.com/tos/
+- Terms: https://automattic.com/tos/
 - Support: mailto:support@spacefast.com
 - Reviewer account pointer: GitHub marketplace-reviewers environment: SPACEFAST_REVIEWER_ACCOUNT
 

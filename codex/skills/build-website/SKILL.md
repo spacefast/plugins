@@ -13,11 +13,12 @@ Read the MCP calls, approval, and work mode rules in [references.md](references.
 
 Create complete inline files for a small site. For a larger app, read the advertised source and build tool schemas before choosing its structure.
 
-1. Use the user's brief and real content. Infer optional design choices; ask only for information that blocks the requested result.
-2. Before creating or editing, read **Team Memories and Skills** in [references.md](references.md). Read the full context before preparing changes and apply relevant saved practices within the task.
-3. Before publishing or deploying new or changed source, run the verify-design-system skill against current saved standards and the exact source/build being deployed. Inspect affected pages and states at desktop and mobile widths, and report gaps. Reuse verification only while the source/build and design revision are unchanged. Report missing standards as unavailable, not a pass. Verify before a source-workspace commit when autoDeploy is enabled. Follow the user's existing publication intent and approval rules.
-4. Build an accessible, responsive website with working links and useful interaction states.
-5. When team context includes a design system, read **Design system** in [references.md](references.md), prepare its handoff, and verify the built components against it.
-6. Keep app capabilities honest. Static files do not provide a database or server; use a declared runtime when required.
-7. For data from a connected service, follow **MCP calls** in [references.md](references.md). Use only data the user supplied or a connection they authorized.
-8. Follow **Publish** in [references.md](references.md). After deployment, inspect the page and its main interaction before reporting success.
+1. Use the user's brief and real content. Infer optional design choices the team's design system leaves open; ask only for information that blocks the requested result.
+2. For any website that creates, changes, or uploads user data, settle data durability before building. If the brief does not explicitly choose, ask whether the data should persist on the server across sessions and devices, or stay only in this browser/device, where it will not sync and may be lost. Read **Application data and identity** in [references.md](references.md) for persistent data, uploads, or multiple users. Do not use browser storage or a sync code as a substitute for requested server storage or accounts.
+3. Before creating or editing, read **Team Memories and Skills** in [references.md](references.md). Read the full context before preparing changes and apply relevant saved practices within the task.
+4. Before publishing or deploying new or changed source, run the verify-design-system skill against current saved standards and the exact source/build being deployed. Inspect affected pages and states at desktop and mobile widths, and report gaps. Reuse verification only while the source/build and design revision are unchanged. Report missing standards as unavailable, not a pass. Verify before a source-workspace commit when autoDeploy is enabled. Follow the user's existing publication intent and approval rules.
+5. Build an accessible, responsive website with working links and useful interaction states.
+6. When team context includes a design system, read **Design system** in [references.md](references.md), prepare its handoff, and verify the built components against it.
+7. Keep app capabilities honest. Static files do not provide a database or server; use a declared runtime when required.
+8. For data from a connected service, follow **MCP calls** in [references.md](references.md). Use only data the user supplied or a connection they authorized.
+9. Follow **Publish** in [references.md](references.md). After deployment, inspect the page and its main interaction before reporting success.
