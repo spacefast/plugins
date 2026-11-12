@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://claude.ai/directory/manage/new/plugin
 - Mechanism: portal
 - Source: https://code.claude.com/docs/en/discover-plugins
-- Source commit: `e318b07ef4efcb2f378a2424dab318cbcaecc204`
+- Source commit: `d5bcd8b1b4b06af778710e7ae4412d81f3bda008`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/

@@ -8,7 +8,7 @@ Each Spacefast API operation is an MCP tool named by its operation ID, such as `
 
 ### Apps and scope
 
-To find or check a domain, or reopen registration status, call `show_domains`.
+To find, check, or register a domain, or reopen registration status, call `show_domains`.
 
 Use the matching Space App launcher for a requested visual view. Use `publish` for a new inline artifact and source workspace operations for existing source edits.
 

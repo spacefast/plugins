@@ -282,6 +282,8 @@ Call `operation_status` again only while `operation_status.result.done` is false
 
 If `publish.result.receipt.claim` is present, the Space is unclaimed and expires unless the user claims it. Send the user `publish.result.shareBlurb` word for word, then stop. Use the completed publish receipt as verification. Do not open a Space App or try to open the private Space until the user claims it.
 
+After publishing, relay `receipt.audience.message` unchanged when present so the user knows who can view the Space and where to change the audience.
+
 Relay `referral.message` unchanged when present in a publish receipt; upgrade before referral.
 
 Preserve the editable project source when you publish. Connect the existing source repository or save the original source in Spacefast. If a build produces separate output, keep the source files as well as that output. A repository URL or commit in publish metadata does not save source. Before connecting a repository, read the existing source connection and preserve its settings. Use the existing source tools; connecting a repository does not save uncommitted or unpushed changes. Source sharing and Remix require separate permission.

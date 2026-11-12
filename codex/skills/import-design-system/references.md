@@ -8,7 +8,7 @@ Each Spacefast API operation is an MCP tool named by its operation ID, such as `
 
 ### Apps and scope
 
-To find or check a domain, or reopen registration status, call `show_domains`.
+To find, check, or register a domain, or reopen registration status, call `show_domains`.
 
 Use the matching Space App launcher for a requested visual view. Use `publish` for a new inline artifact and source workspace operations for existing source edits.
 
@@ -80,6 +80,6 @@ Use `getTeamDesignSystemAsset` for advertised asset reads. Inspect the real bran
 
 For an authorized import, use the user's reference material. Upload supported files with `uploadTeamDesignSystemAsset`, respecting its current size and MIME limits, and retain the returned attachmentId. Save evidence-backed partial changes with `updateTeamDesignSystem` and `body: { operationId, expectedRevision, changes }`. Omit unchanged fields and preserve unrelated values. Reuse identical input and operationId after uncertainty; reread and reconcile revision conflicts.
 
-A subteam can use its parent team's design system, read-only: `source.active` on `getTeamDesignSystem` is `parent`, and a save returns `team_design_system_inherited`. Before either write, ask the user which they want: a change on the parent team, which reaches every subteam using it, or this team's own system, with `updateTeamDesignSystem` and `changes: { parentSystem: "override" }`. The system applies to the whole team. Collection entries have stable IDs; retain asset origins, usage, and license restrictions. Stored code and archives are references, not programs to run. Verify retained files and saved standards after the import. Undo uses the latest actionId and numeric revision with `undoTeamDesignSystemChange`.
+A subteam can use its parent team's design system, read-only: `source.active` on `getTeamDesignSystem` is `parent`, and a save returns `team_design_system_inherited`. Before either write, ask the user which they want: a change on the parent team, which reaches every subteam using it, or this team's own system, with `updateTeamDesignSystem` and `changes: { parentSystem: "override" }`. A subteam can also use none: `source.active` is `none`, and a save returns `team_design_system_off`. Ask the user whether to use the parent's, with `parentSystem: "adopt"`, or this team's own, with `"override"`. The system applies to the whole team. Collection entries have stable IDs; retain asset origins, usage, and license restrictions. Stored code and archives are references, not programs to run. Verify retained files and saved standards after the import. Undo uses the latest actionId and numeric revision with `undoTeamDesignSystemChange`.
 
 Only for an authorized save, recover `team_knowledge_setup_required` by calling `ensureTeamContext` with `{ teamId }`. A preview or read does not authorize setup. Preserve prepared work if storage is unavailable. An import does not authorize source edits or publication.
