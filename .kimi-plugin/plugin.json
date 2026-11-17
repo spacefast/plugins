@@ -12,7 +12,7 @@
     "spacefast",
     "publish-to-spacefast",
     "artifact-sharing",
-    "hosting"
+    "websites"
   ],
   "mcpServers": "./.mcp.json",
   "skills": "./skills/",

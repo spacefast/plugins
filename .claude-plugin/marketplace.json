@@ -17,7 +17,7 @@
       },
       "category": "deployment",
       "homepage": "https://spacefast.com",
-      "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "hosting"],
+      "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "websites"],
       "source": "./claude-code"
     }
   ]

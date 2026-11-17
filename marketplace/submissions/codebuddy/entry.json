@@ -13,7 +13,7 @@
     "spacefast",
     "publish-to-spacefast",
     "artifact-sharing",
-    "hosting"
+    "websites"
   ],
   "logo": "plugins/assets/logo-400.png",
   "ref": "{{PLUGINS_SHA}}"

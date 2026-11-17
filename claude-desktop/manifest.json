@@ -17,7 +17,7 @@
   },
   "icon": "assets/logo.png",
   "license": "MIT",
-  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "hosting"],
+  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "websites"],
   "server": {
     "type": "node",
     "entry_point": "server/index.js",
