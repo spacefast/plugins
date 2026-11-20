@@ -20,4 +20,5 @@ Read the MCP calls, approval, and work mode rules in [references.md](references.
 7. For visual notes, read **Visual review** in [references.md](references.md). Keep each note tied to its reviewed version.
 8. For saved comment threads and screenshots, read **Comments** in [references.md](references.md).
 9. For a requested CMS or admin panel, read **Content dashboard** in [references.md](references.md) before building anything.
-10. Save the intended source changes, then follow the Space's build and promotion flow. Report saved source and live deployment separately.
+10. To read or change the rows a Space stores, not its source, list the tables with listSpaceDatabaseTables (`sf db tables`), read with listSpaceDatabaseRows, and change rows by primary key. Read the rows and confirm with the user before deleting any.
+11. Save the intended source changes, then follow the Space's build and promotion flow. Report saved source and live deployment separately.

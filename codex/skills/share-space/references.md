@@ -64,7 +64,7 @@ On `feature_unavailable`, continue unrelated work. If the user requested a memor
 
 ## Share
 
-Read current `listSpaceGrants` and `listSpaceShareLinks`. Apply only the user's explicit access intent with the matching grant or link operation, then reread state and call `checkSpaceGrantAccess` for the intended actor and path. Public access requires an explicit request. Verify a new link in its intended signed-out context; unrelated paths must remain inaccessible. Keep link and machine secrets out of logs and source.
+Read current access with `listSpaceAccess`. Apply only the user's explicit access intent with `createSpaceAccess`, `updateSpaceAccess` or `revokeSpaceAccess`, then reread state and call `checkSpaceGrantAccess` for the intended actor and path. Public access requires an explicit request. Verify a new link in its intended signed-out context; unrelated paths must remain inaccessible. Keep link and machine secrets out of logs and source.
 
 ### Verify
 

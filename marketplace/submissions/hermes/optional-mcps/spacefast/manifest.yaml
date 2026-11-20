@@ -2,12 +2,16 @@ manifest_version: 1
 name: spacefast
 description: >-
   Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.
-source: https://spacefast.com/setup/hermes
+source: https://spacefast.com/docs/setup/hermes/
 transport:
-  type: http
-  url: https://mcp.spacefast.com
+  type: stdio
+  command: npx
+  args:
+    - "-y"
+    - "spacefast@latest"
+    - mcp
 auth:
-  type: oauth
+  type: none
 suggest:
   keywords:
     - spacefast
@@ -15,5 +19,7 @@ suggest:
   hosts:
     - spacefast.com
 post_install: |
-  Authenticate in the browser when Hermes prompts you.
-  To reconnect manually, run: hermes mcp login spacefast
+  Spacefast runs on this machine through npx, so it needs Node.js 22.19 or later.
+  Publishing works before you sign in. When a tool needs your account, Spacefast
+  opens a browser to sign in, or run `npx -y spacefast@latest login`.
+  Start a new Hermes session so the Spacefast tools load.

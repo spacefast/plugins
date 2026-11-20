@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://github.com/NousResearch/hermes-agent/compare
 - Mechanism: pull_request
 - Source: https://github.com/NousResearch/hermes-agent
-- Source commit: `d5bcd8b1b4b06af778710e7ae4412d81f3bda008`
+- Source commit: `6e6aaa55e82c26ae5ae77654cb268c4eace06ceb`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/
@@ -36,6 +36,6 @@ Verified: **2026-08-27**
 
 ## Final upstream check
 
-Copy the generated manifest to `optional-mcps/spacefast/manifest.yaml`, then run the upstream catalog checks.
+Copy the generated manifest to `optional-mcps/spacefast/manifest.yaml`, then run the upstream catalog checks (`tests/hermes_cli/test_mcp_catalog.py`). The entry runs On-Device MCP over stdio through `npx`, so it needs Node.js 22.19 or later. Sign-in happens in the browser the first time a tool needs the account; publishing without an account works before that.
 
 The store copy, commands, URLs, keywords, and asset paths in these files are generated. Do not edit them by hand. The plugin sends no hook telemetry. CLI setup telemetry is disclosed before use and can be disabled with `SPACEFAST_TELEMETRY_DISABLED=1 or DO_NOT_TRACK=1`.

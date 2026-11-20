@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-12T17:30:47.000Z",
-  "version": "0.9.0",
+  "generatedAt": "2026-11-20T11:13:07.000Z",
+  "version": "0.10.0",
   "packageManager": "pnpm@11.22.0",
   "publicRepoRoot": ".",
   "marketplaces": {
@@ -38,13 +38,13 @@
   ],
   "checksums": {
     ".cursor-plugin/marketplace.json": "b72b2117031b0bb736ed1bcec9aa7b73a8c5f56162adfd5efbe3cdea51f40efd",
-    "claude-code.tgz": "9a6ca0fda936872b769e69290b55a3fe58435045d8091f97f86f89298dc6ccf7",
-    "claude-desktop.tgz": "9c606fa654d3c33310e24d33bf893b0b4a3fc2d7b9872617650459a3411799c6",
-    "codex.tgz": "5a89e5cd06884e88699c31f45854d43429ea05c13eaedce47eaaf2de382796be",
-    "cursor.tgz": "1ea25fdccd7d845e1f6f99812b2d85331863078284644e36df770febac0d0447",
-    "spacefast-plugins.tgz": "d41ab37d55910cb0819e2e57054900827914d5da9038794a9bd38df1b1998bb7",
-    "spacefast-plugins.zip": "a456c6590d832b5d18058273dc980d1c0402ce706e44209fdc0b4cf5a8c7d482",
-    "spacefast.mcpb": "6ed58184a8299015db394453eeab66fd18c1fcec905c67618a61b3f451ab07e2"
+    "claude-code.tgz": "dce444eb65711a0147b641dd9e210e0634e74275e55a04f169d33d89c1b3f602",
+    "claude-desktop.tgz": "c1f24d40a046d2f7212fbd3c2dad2989bf599f3328375f41716780df3be26fea",
+    "codex.tgz": "d2f100dbc100d42fc490605a6e8ea6a39ac7f465eae3518c52fff05987161df4",
+    "cursor.tgz": "f84c87ae4c803acd45b239788e1157f0d26eaad440452f6780a828353d624312",
+    "spacefast-plugins.tgz": "b364391910710164d4fdc47963e2327ee5e021e5a26cd3d460a09efb0edb7be4",
+    "spacefast-plugins.zip": "3a424051350bc91c46a6e26f6081e1ea30b9401aab6058d421e54edba9799477",
+    "spacefast.mcpb": "35963020e0a52ef5cfcbeb41d8d614ca790c3560b2cffb60bec30466a7c6cc0e"
   },
   "releaseCommands": [
     "bun run generate:agent-artifacts",
@@ -52,10 +52,10 @@
   ],
   "mcpb": {
     "path": "spacefast.mcpb",
-    "sha256": "6ed58184a8299015db394453eeab66fd18c1fcec905c67618a61b3f451ab07e2"
+    "sha256": "35963020e0a52ef5cfcbeb41d8d614ca790c3560b2cffb60bec30466a7c6cc0e"
   },
   "provenance": {
-    "sourceSha": "d5bcd8b1b4b06af778710e7ae4412d81f3bda008",
+    "sourceSha": "6e6aaa55e82c26ae5ae77654cb268c4eace06ceb",
     "pluginsSha": "{{PLUGINS_SHA}}"
   },
   "marketplace": {
@@ -87,6 +87,8 @@
       "marketplace/submissions/anthropic/entry.json",
       "marketplace/submissions/awesome-copilot/RUNBOOK.md",
       "marketplace/submissions/awesome-copilot/entry.json",
+      "marketplace/submissions/clawhub/RUNBOOK.md",
+      "marketplace/submissions/clawhub/entry.json",
       "marketplace/submissions/cline/RUNBOOK.md",
       "marketplace/submissions/cline/entry.json",
       "marketplace/submissions/cline/registry/mcps/spacefast/entry.json",

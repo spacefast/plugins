@@ -1,5 +1,5 @@
 export function resolveMcpLaunchSpec(platform = process.platform, comSpec = process.env.ComSpec) {
-  const packageSpec = "spacefast@0.9.0";
+  const packageSpec = "spacefast@0.10.0";
   if (platform === "win32") {
     return {
       command: comSpec || "cmd.exe",

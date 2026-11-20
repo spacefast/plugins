@@ -18,7 +18,7 @@ Verified: **2026-08-27**
 - Door: https://github.com/anomalyco/opencode/compare
 - Mechanism: pull_request
 - Source: https://github.com/anomalyco/opencode
-- Source commit: `d5bcd8b1b4b06af778710e7ae4412d81f3bda008`
+- Source commit: `6e6aaa55e82c26ae5ae77654cb268c4eace06ceb`
 - Public plugin commit: `{{PLUGINS_SHA}}`
 - Slug: `spacefast` (final; do not rename)
 - Privacy: https://automattic.com/privacy/

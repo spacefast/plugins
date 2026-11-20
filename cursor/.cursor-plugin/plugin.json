@@ -1,7 +1,7 @@
 {
   "name": "spacefast",
   "displayName": "Spacefast",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Turn an idea into a website, dashboard, report, or small web tool you can share. Build it in your conversation, or bring something you already made, and publish it with Spacefast.",
   "author": {
     "name": "Automattic Inc."
@@ -10,7 +10,7 @@
   "repository": "https://github.com/spacefast/plugins",
   "license": "MIT",
   "logo": "./assets/logo.png",
-  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "hosting"],
+  "keywords": ["spacefast", "publish-to-spacefast", "artifact-sharing", "publishing"],
   "mcpServers": "./.mcp.json",
   "rules": "./rules/"
 }

@@ -22,17 +22,15 @@ Skills preparation. Read full relevant context before preparing changes. Preserv
 unrelated source changes and follow the user's publication intent. A selected
 Space and a working connection do not authorize unrelated changes.
 
+A connection can be narrowed to read-only (`sf mcp --read-only`, or
+`https://mcp.spacefast.com/?access=read`) or to some permission groups (`--groups
+spaces,domains`, or `?groups=spaces,domains`). It then lists only the tools it can
+use. If the task needs a tool it does not list, tell the user which access is
+missing. Without a preset, a call that needs more access asks the user first.
+
 If a capability is unavailable, report the limitation. Do not switch connections
 to retry a denied action. The connected server's schema and returned
 approval flow govern each call.
 
 For large files, follow the connected API guide's Large file uploads workflow.
 Keep upload IDs between calls, complete the upload, then publish its `uploadId`.
-
-## Zero apps
-
-Start a Zero app with `sf zero init`, then `sf publish` from the directory with
-`zero.config.ts`. Hosted MCP publishes raw `zero.config.ts` source. Content
-projects use Zero collections with `sync: "content/posts/*.md"` and Markdown
-front matter; follow `recipes/migrate-to-zero-content` instead of building an
-Astro replacement.

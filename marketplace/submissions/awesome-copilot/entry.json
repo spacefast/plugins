@@ -5,7 +5,7 @@
   "shortDescription": "Build and share your AI work",
   "homepage": "https://spacefast.com",
   "repository": "https://github.com/spacefast/plugins",
-  "sourceSha": "d5bcd8b1b4b06af778710e7ae4412d81f3bda008",
+  "sourceSha": "6e6aaa55e82c26ae5ae77654cb268c4eace06ceb",
   "pluginsSha": "{{PLUGINS_SHA}}",
   "privacyPolicyUrl": "https://automattic.com/privacy/",
   "termsOfServiceUrl": "https://automattic.com/tos/",
@@ -13,7 +13,7 @@
     "spacefast",
     "publish-to-spacefast",
     "artifact-sharing",
-    "hosting"
+    "publishing"
   ],
   "logo": "plugins/assets/logo-400.png",
   "commit": "{{PLUGINS_SHA}}",
